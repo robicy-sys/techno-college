@@ -487,8 +487,23 @@
       <input type="text" id="f-theme" placeholder="Ex : Matériaux, Informatique, Énergie…">
     </div>
     <div class="form-row">
-      <label for="f-url">Lien / URL (optionnel)</label>
-      <input type="url" id="f-url" placeholder="https://…">
+      <label>Fichier / Lien</label>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button type="button" class="filter-chip active" id="mode-url" onclick="setLinkMode('url')" style="border-radius:var(--radius-md)"><i class="ti ti-link"></i> Lien web</button>
+        <button type="button" class="filter-chip" id="mode-pdf" onclick="setLinkMode('pdf')" style="border-radius:var(--radius-md)"><i class="ti ti-file-type-pdf"></i> PDF local</button>
+      </div>
+      <div id="url-field">
+        <input type="url" id="f-url" placeholder="https://…">
+      </div>
+      <div id="pdf-field" style="display:none">
+        <div style="display:flex;gap:6px;align-items:center">
+          <input type="text" id="f-pdf" placeholder="nom-du-fichier.pdf" style="flex:1;padding:8px 10px;border:0.5px solid var(--border-hover);border-radius:var(--radius-md);font-size:13px;background:var(--surface);color:var(--text);font-family:inherit;outline:none">
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">
+          <i class="ti ti-info-circle" style="vertical-align:middle"></i>
+          Place le PDF dans <code style="background:var(--bg);padding:1px 5px;border-radius:4px">~/techno-college/pdf/</code> puis clique <strong>Synchroniser</strong>.
+        </p>
+      </div>
     </div>
     <div class="form-actions">
       <button class="btn" onclick="closeModal()">Annuler</button>
@@ -519,7 +534,7 @@
         <div class="sync-num">2</div>
         <div style="flex:1">
           <div class="sync-label">Déplacer dans le dossier du site et pousser — colle cette commande dans Terminal :</div>
-          <div class="sync-cmd" id="sync-cmd" onclick="copyCmd()" title="Cliquer pour copier">cp ~/Downloads/ressources.json ~/techno-college/ressources.json &amp;&amp; cd ~/techno-college &amp;&amp; git add ressources.json &amp;&amp; git commit -m "Sync ressources" &amp;&amp; git push</div>
+          <div class="sync-cmd" id="sync-cmd" onclick="copyCmd()" title="Cliquer pour copier">cp ~/Downloads/ressources.json ~/techno-college/ &amp;&amp; cd ~/techno-college &amp;&amp; git add ressources.json pdf/ &amp;&amp; git commit -m "Sync ressources" &amp;&amp; git push</div>
           <button class="btn" onclick="copyCmd()" style="margin-top:8px;font-size:12px;padding:6px 12px">
             <i class="ti ti-copy"></i> Copier la commande
           </button>
@@ -637,8 +652,9 @@ function renderCards() {
 
   g.innerHTML = filtered.map(r => {
     const ic = ICONS[r.type] || ICONS.document;
+    const isPdf = r.url && r.url.startsWith('pdf/');
     const linkBtn = r.url
-      ? `<a class="icon-btn" href="${escHtml(r.url)}" target="_blank" rel="noopener" title="Ouvrir le lien"><i class="ti ti-external-link"></i></a>`
+      ? `<a class="icon-btn" href="${escHtml(r.url)}" target="_blank" rel="noopener" title="${isPdf ? 'Ouvrir le PDF' : 'Ouvrir le lien'}"><i class="ti ${isPdf ? 'ti-file-type-pdf' : 'ti-external-link'}"></i></a>`
       : '';
     return `<article class="card">
       <div class="card-header">
@@ -680,8 +696,19 @@ function deleteRes(id) {
   showToast('Ressource supprimée');
 }
 
+let linkMode = 'url';
+
+function setLinkMode(mode) {
+  linkMode = mode;
+  document.getElementById('url-field').style.display = mode === 'url' ? '' : 'none';
+  document.getElementById('pdf-field').style.display = mode === 'pdf' ? '' : 'none';
+  document.getElementById('mode-url').classList.toggle('active', mode === 'url');
+  document.getElementById('mode-pdf').classList.toggle('active', mode === 'pdf');
+}
+
 function openModal() {
   document.getElementById('modal-bg').classList.add('open');
+  setLinkMode('url');
   setTimeout(() => document.getElementById('f-titre').focus(), 50);
 }
 
@@ -696,6 +723,9 @@ function closeBg(e) {
 function addResource() {
   const titre = document.getElementById('f-titre').value.trim();
   if (!titre) { document.getElementById('f-titre').focus(); return; }
+  const url = linkMode === 'pdf'
+    ? (document.getElementById('f-pdf').value.trim() ? 'pdf/' + document.getElementById('f-pdf').value.trim().replace(/^pdf\//,'') : '')
+    : document.getElementById('f-url').value.trim();
   resources.unshift({
     id: nextId++,
     titre,
@@ -703,10 +733,10 @@ function addResource() {
     type: document.getElementById('f-type').value,
     niveau: document.getElementById('f-niveau').value,
     theme: document.getElementById('f-theme').value.trim() || 'Général',
-    url: document.getElementById('f-url').value.trim(),
+    url,
   });
   save();
-  ['f-titre','f-desc','f-theme','f-url'].forEach(id => document.getElementById(id).value = '');
+  ['f-titre','f-desc','f-theme','f-url','f-pdf'].forEach(id => document.getElementById(id).value = '');
   closeModal();
   renderCards();
   showToast('Ressource ajoutée');
@@ -726,7 +756,7 @@ function downloadForSync() {
 }
 
 function copyCmd() {
-  const cmd = `cp ~/Downloads/ressources.json ~/techno-college/ressources.json && cd ~/techno-college && git add ressources.json && git commit -m "Sync ressources" && git push`;
+  const cmd = `cp ~/Downloads/ressources.json ~/techno-college/ && cd ~/techno-college && git add ressources.json pdf/ && git commit -m "Sync ressources" && git push`;
   navigator.clipboard.writeText(cmd).then(() => showToast('Commande copiée !'));
 }
 
