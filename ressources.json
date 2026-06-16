@@ -1,0 +1,248 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "titre": "Famille, lignée, fonctions techniques et invention",
+      "desc": "Introduction aux systèmes techniques : famille, lignée, fonctions techniques et notion d'invention.",
+      "type": "document",
+      "niveau": "6",
+      "theme": "Systèmes techniques",
+      "url": "pdf/1-Famille lignée - Fonctions Techniques - Invention.pdf"
+    },
+    {
+      "id": 2,
+      "titre": "Mode de représentation",
+      "desc": "Les différents modes de représentation des objets techniques : croquis, schémas, maquettes.",
+      "type": "document",
+      "niveau": "6",
+      "theme": "Conception",
+      "url": "pdf/6-Mode de représentation.pdf"
+    },
+    {
+      "id": 3,
+      "titre": "Notice",
+      "desc": "Lecture et utilisation d'une notice technique ou d'utilisation.",
+      "type": "document",
+      "niveau": "6",
+      "theme": "Communication",
+      "url": "pdf/7-Notice.pdf"
+    },
+    {
+      "id": 4,
+      "titre": "Caractéristiques des matériaux",
+      "desc": "Les familles de matériaux et leurs propriétés mécaniques, thermiques et électriques.",
+      "type": "document",
+      "niveau": "6",
+      "theme": "Matériaux",
+      "url": "pdf/14-Caractéristique des matériaux.pdf"
+    },
+    {
+      "id": 5,
+      "titre": "Cahier des charges — partie 1",
+      "desc": "Le cahier des charges fonctionnel : définition des besoins et contraintes d'un projet.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Conception",
+      "url": "pdf/4.1-Cahier des charges.pdf"
+    },
+    {
+      "id": 6,
+      "titre": "Cahier des charges — partie 2",
+      "desc": "Approfondissement du cahier des charges : critères, niveaux et flexibilité.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Conception",
+      "url": "pdf/4.2-Cahier des charges.pdf"
+    },
+    {
+      "id": 7,
+      "titre": "Système d'information et stockage des données",
+      "desc": "Notion de système d'information, données numériques et modes de stockage.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Numérique",
+      "url": "pdf/5.1-Système d'information et stockage des données.pdf"
+    },
+    {
+      "id": 8,
+      "titre": "Représentation des données",
+      "desc": "Codage binaire, codage des couleurs, des sons et des images numériques.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Numérique",
+      "url": "pdf/5.2-Representation des données.pdf"
+    },
+    {
+      "id": 9,
+      "titre": "Fiabilité, durabilité, efficacité, réparabilité",
+      "desc": "Critères d'évaluation de la qualité d'un objet technique tout au long de sa vie.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Systèmes techniques",
+      "url": "pdf/8-Fiabilite-Durabilite-Efficacite-Reparabilite.pdf"
+    },
+    {
+      "id": 10,
+      "titre": "Cycle de vie",
+      "desc": "Les étapes du cycle de vie d'un objet : fabrication, utilisation, fin de vie et recyclage.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Développement durable",
+      "url": "pdf/9-Cycle de vie.pdf"
+    },
+    {
+      "id": 11,
+      "titre": "Grandeurs et protocole",
+      "desc": "Mesure de grandeurs physiques et protocoles de communication entre systèmes.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Énergie",
+      "url": "pdf/10- Grandeurs et Protocole.pdf"
+    },
+    {
+      "id": 12,
+      "titre": "Énergie",
+      "desc": "Les formes d'énergie, conversions et notion de puissance et rendement.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Énergie",
+      "url": "pdf/11-Energie.pdf"
+    },
+    {
+      "id": 13,
+      "titre": "Planification d'un projet",
+      "desc": "Outils de planification : diagramme de Gantt, répartition des tâches.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Projet",
+      "url": "pdf/21.1-Planification.pdf"
+    },
+    {
+      "id": 14,
+      "titre": "Étapes du projet et revue de projet",
+      "desc": "Déroulement d'un projet technologique et bilan de revue de projet.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Projet",
+      "url": "pdf/21.2-Etapes du projet - Revue.pdf"
+    },
+    {
+      "id": 15,
+      "titre": "Écoconception et bioinspiration",
+      "desc": "Concevoir en limitant l'impact environnemental ; s'inspirer du vivant pour innover.",
+      "type": "document",
+      "niveau": "5",
+      "theme": "Développement durable",
+      "url": "pdf/22-Ecoconception-Bioinspiration.pdf"
+    },
+    {
+      "id": 16,
+      "titre": "Énergie, chaîne d'énergie et transmission",
+      "desc": "La chaîne d'énergie d'un système : alimentation, distribution, conversion et transmission.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Énergie",
+      "url": "pdf/12-Energie-Chaîne d'énergie-Transmission.pdf"
+    },
+    {
+      "id": 17,
+      "titre": "Mécanismes de transmission",
+      "desc": "Les principaux mécanismes de transmission du mouvement : engrenages, poulies, vis.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Mécanique",
+      "url": "pdf/13-Mecanisme de transmission.pdf"
+    },
+    {
+      "id": 18,
+      "titre": "Procédés de mise en forme",
+      "desc": "Les procédés de fabrication : usinage, moulage, formage, assemblage.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Matériaux",
+      "url": "pdf/15-Procédés de mise en forme.pdf"
+    },
+    {
+      "id": 19,
+      "titre": "Information, capteur, microcontrôleur et IHM",
+      "desc": "Acquisition de données avec capteurs, traitement par microcontrôleur et interface homme-machine.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Numérique",
+      "url": "pdf/16-Information-Capteur-Microcontroleur-IHM.pdf"
+    },
+    {
+      "id": 20,
+      "titre": "Traitement des données",
+      "desc": "Traitement numérique de l'information : filtrage, analyse et exploitation des données.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Numérique",
+      "url": "pdf/17-Traitement des données.pdf"
+    },
+    {
+      "id": 21,
+      "titre": "Réseau local, adresse IP, commutateur, routeur",
+      "desc": "Architecture d'un réseau local : équipements, adressage IP et rôle du routeur.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Réseaux",
+      "url": "pdf/18.1-ReseauLocal-AdresseIP-Commutateur-Routeur.pdf"
+    },
+    {
+      "id": 22,
+      "titre": "Réseau Internet",
+      "desc": "Fonctionnement d'Internet : protocoles, DNS, HTTP et architecture mondiale.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Réseaux",
+      "url": "pdf/18.2-Reseau Internet.pdf"
+    },
+    {
+      "id": 23,
+      "titre": "Liaison et débit",
+      "desc": "Les types de liaisons filaires et sans fil, notion de débit et de bande passante.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Réseaux",
+      "url": "pdf/18.3-Liaison - Debit.pdf"
+    },
+    {
+      "id": 24,
+      "titre": "Algorithme et programmation",
+      "desc": "Les bases de l'algorithmique : variables, conditions, boucles et fonctions.",
+      "type": "document",
+      "niveau": "4",
+      "theme": "Programmation",
+      "url": "pdf/19-Algorithme et Programmation.pdf"
+    },
+    {
+      "id": 25,
+      "titre": "Intelligence artificielle",
+      "desc": "Principe du machine learning, reconnaissance d'images et enjeux éthiques de l'IA.",
+      "type": "document",
+      "niveau": "3",
+      "theme": "Numérique",
+      "url": "pdf/2-Intelligence Artificielle.pdf"
+    },
+    {
+      "id": 26,
+      "titre": "Cybersécurité et cyberviolence",
+      "desc": "Les risques numériques, protection des données personnelles et comportements responsables en ligne.",
+      "type": "document",
+      "niveau": "3",
+      "theme": "Numérique",
+      "url": "pdf/3-Cybersécurité-Cyberviolence.pdf"
+    },
+    {
+      "id": 27,
+      "titre": "Programmation et IHM",
+      "desc": "Programmation avancée avec interface homme-machine : événements, affichage, interactions.",
+      "type": "document",
+      "niveau": "3",
+      "theme": "Programmation",
+      "url": "pdf/20-Programmation et IHM.pdf"
+    }
+  ],
+  "nextId": 28
+}
