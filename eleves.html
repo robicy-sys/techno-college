@@ -288,6 +288,21 @@
   .btn-quiz { background: var(--accent-bg); color: var(--accent-text); border-color: transparent; }
   .btn-quiz:hover { background: var(--accent); color: #fff; }
 
+  /* ── Carte séquence — placeholder visuel ── */
+  .seq-thumb {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(145deg, var(--accent-bg) 0%, rgba(99,102,241,0.06) 100%);
+    color: var(--accent);
+  }
+  .seq-thumb i { font-size: 38px; opacity: .65; }
+  .seq-num {
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    background: rgba(99,102,241,0.14); color: var(--accent-dark);
+    padding: 3px 10px; border-radius: 12px;
+  }
+
   /* Empty */
   .empty {
     text-align: center; padding: 4rem 1rem; color: var(--text-muted);
@@ -517,9 +532,13 @@ function cardHtml(r) {
   const critereShort = r.critere ? r.critere.split(' — ').slice(1).join(' — ') : '';
   const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
 
+  const thumbInner = r.type === 'sequence'
+    ? `<div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ${THEME_ICON[r.theme]||'ti-book'}"></i></div>`
+    : `<img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">`;
+
   return `<div class="card" title="${escHtml(r.critere||'')}">
     <div class="card-thumb">
-      <img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">
+      ${thumbInner}
       <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
       ${scoreBadge}
     </div>
