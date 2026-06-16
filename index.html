@@ -100,19 +100,37 @@
   nav {
     background: var(--nav-bg);
     padding: 0 1.5rem;
-    display: flex; gap: 2px; overflow-x: auto;
+    display: flex; gap: 0; overflow-x: auto;
+    position: sticky; top: 58px; z-index: 20;
   }
   .nav-tab {
-    padding: 11px 15px; font-size: 13px; cursor: pointer;
-    border: none; border-bottom: 2px solid transparent;
-    color: #a5b4fc; background: none; white-space: nowrap;
+    padding: 12px 18px; font-size: 13px; cursor: pointer;
+    border: none; border-bottom: 3px solid transparent;
+    color: rgba(165,180,252,0.7); background: none; white-space: nowrap;
     font-family: inherit; transition: color 0.15s;
   }
   .nav-tab:hover { color: #e0e7ff; }
-  .nav-tab.active { color: #fff; border-bottom-color: #a5b4fc; font-weight: 500; }
+  .nav-tab.active { color: #fff; border-bottom-color: #818cf8; font-weight: 500; }
+  .nav-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.15); border-radius: 10px;
+    padding: 1px 7px; font-size: 11px; margin-left: 6px; font-weight: 400;
+  }
+
+  /* Search inline header */
+  .search-inline {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.08); border-radius: 8px;
+    padding: 6px 11px; color: #a5b4fc; font-size: 13px;
+  }
+  .search-inline input {
+    background: none; border: none; outline: none;
+    color: #e0e7ff; font-size: 13px; font-family: inherit; width: 160px;
+  }
+  .search-inline input::placeholder { color: #a5b4fc; }
 
   /* Main */
-  main { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+  main { padding: 1rem 1.5rem 2rem; max-width: 1400px; margin: 0 auto; }
 
   /* Stats — 3 axes BO + total */
   .stats {
@@ -131,88 +149,142 @@
   .stat-n { font-size: 24px; font-weight: 500; color: var(--accent); margin-bottom: 2px; }
   .stat-l { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
 
-  /* Filters */
-  .filter-section { margin-bottom: 1.25rem; }
-  .filter-row {
-    display: flex; gap: 7px; flex-wrap: wrap;
-    align-items: center; margin-bottom: 7px;
-  }
-  .filter-label {
-    font-size: 11px; color: var(--text-hint);
-    text-transform: uppercase; letter-spacing: .04em;
-    white-space: nowrap; padding: 0 2px;
-  }
-  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 300px; }
-  .search-wrap .ti {
-    position: absolute; left: 10px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-hint); font-size: 16px; pointer-events: none;
-  }
-  .search-wrap input {
-    width: 100%; padding: 8px 10px 8px 34px;
-    border: 0.5px solid var(--border-hover);
-    border-radius: var(--radius-md); font-size: 13px;
-    background: var(--surface); color: var(--text);
-    font-family: inherit; outline: none;
-  }
-  .search-wrap input:focus { border-color: var(--accent); }
-  .filter-chip {
-    border: 0.5px solid var(--border-hover);
-    border-radius: 20px; padding: 5px 13px;
-    font-size: 12px; cursor: pointer;
+  /* Filtre thème */
+  .filter-bar { margin-bottom: 1rem; }
+  .chip {
+    border: 0.5px solid var(--border-hover); border-radius: 20px;
+    padding: 5px 12px; font-size: 12px; cursor: pointer;
     background: transparent; color: var(--text-muted);
-    font-family: inherit; display: inline-flex;
-    align-items: center; gap: 4px; transition: all 0.15s;
-    white-space: nowrap;
+    font-family: inherit; display: inline-flex; align-items: center;
+    gap: 4px; transition: all 0.15s;
+  }
+  .chip:hover, .chip.active {
+    background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text);
+  }
+  /* Reste du formulaire d'ajout */
+  .filter-chip {
+    border: 0.5px solid var(--border-hover); border-radius: 20px; padding: 5px 13px;
+    font-size: 12px; cursor: pointer; background: transparent; color: var(--text-muted);
+    font-family: inherit; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s;
   }
   .filter-chip:hover, .filter-chip.active {
     background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text);
   }
 
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+  /* ── Section thème / sous-thème ── */
+  .theme-section { margin-bottom: 2rem; }
+  .theme-heading {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 0.85rem; padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent-bg);
   }
-  .card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-  }
-  .card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(99,102,241,0.12); transform: translateY(-2px); }
-  .card-img {
-    height: 130px; overflow: hidden; flex-shrink: 0;
-    background: var(--accent-bg);
-    position: relative;
-  }
-  .card-img img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    transition: transform 0.3s;
-  }
-  .card:hover .card-img img { transform: scale(1.04); }
-  .card-img-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 40px; color: var(--accent);
-    background: var(--accent-bg);
-  }
-  .card-body { padding: 0.85rem 1rem; flex: 1; display: flex; flex-direction: column; }
-  .card-header { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 7px; }
-  .card-icon {
-    width: 32px; height: 32px; border-radius: 8px;
+  .theme-icon {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--accent-bg); color: var(--accent);
     display: flex; align-items: center; justify-content: center;
     font-size: 15px; flex-shrink: 0;
   }
-  .card-meta { flex: 1; min-width: 0; }
-  .card-title { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
-  .card-sub { font-size: 11px; color: var(--text-muted); }
-  .card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; flex: 1; }
-  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .theme-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .theme-count { font-size: 12px; color: var(--text-muted); margin-left: 4px; }
+  .subtheme-section { margin-bottom: 1.5rem; }
+  .subtheme-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 0.65rem; margin-left: 2px; }
+  .subtheme-code { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: .02em; flex-shrink: 0; }
+  .code-ost  { background: #dcfce7; color: #15803d; }
+  .code-sfc  { background: #dbeafe; color: #1d4ed8; }
+  .code-ccri { background: #ffedd5; color: #c2410c; }
+  @media (prefers-color-scheme: dark) {
+    .code-ost  { background: #14532d; color: #4ade80; }
+    .code-sfc  { background: #1e3a5f; color: #93c5fd; }
+    .code-ccri { background: #431407; color: #fdba74; }
+  }
+  .subtheme-name { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+
+  /* ── Grille ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  /* ── Carte portrait A4 ── */
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(99,102,241,0.16);
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+  }
+  .card-thumb {
+    aspect-ratio: 210 / 297;
+    background: #fff;
+    border-bottom: 0.5px solid var(--border);
+    overflow: hidden; flex-shrink: 0; position: relative;
+  }
+  .card-thumb img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+    transition: transform 0.3s;
+  }
+  .card:hover .card-thumb img { transform: scale(1.03); }
+
+  /* Badge niveau */
+  .level-badge {
+    position: absolute; top: 6px; left: 6px;
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 8px; pointer-events: none;
+  }
+  .lb-5 { background: #FAEEDA; color: #633806; }
+  .lb-4 { background: #FAECE7; color: #712B13; }
+  .lb-3 { background: #EEEDFE; color: #3C3489; }
+  @media (prefers-color-scheme: dark) {
+    .lb-5 { background: #412402; color: #FAC775; }
+    .lb-4 { background: #4A1B0C; color: #F0997B; }
+    .lb-3 { background: #26215C; color: #AFA9EC; }
+  }
+
+  /* Placeholder séquence */
+  .seq-thumb {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(145deg, var(--accent-bg) 0%, rgba(99,102,241,0.06) 100%);
+    color: var(--accent);
+  }
+  .seq-thumb i { font-size: 38px; opacity: .65; }
+  .seq-num {
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    background: rgba(99,102,241,0.14); color: var(--accent-dark);
+    padding: 3px 10px; border-radius: 12px;
+  }
+
+  /* Corps carte */
+  .card-body { padding: 8px 10px 10px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .card-code { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; display: inline-block; }
+  .card-title { font-size: 12px; font-weight: 600; line-height: 1.35; color: var(--text);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-critere { font-size: 10px; color: var(--text-hint); line-height: 1.3;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-actions { display: flex; gap: 5px; margin-top: auto; flex-wrap: wrap; }
+  .card-teacher { display: flex; gap: 5px; justify-content: flex-end; }
+
+  .btn-open, .btn-quiz {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center;
+    gap: 4px; padding: 6px 4px;
+    border-radius: 6px; font-size: 11px; font-weight: 500;
+    text-decoration: none; border: 0.5px solid var(--border-hover);
+    transition: all 0.15s; font-family: inherit; cursor: pointer; background: transparent;
+  }
+  .btn-open { color: var(--text-muted); }
+  .btn-open:hover { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent); }
+  .btn-quiz { background: var(--accent-bg); color: var(--accent-text); border-color: transparent; }
+  .btn-quiz:hover { background: var(--accent); color: #fff; }
+
   .badges { display: flex; gap: 4px; flex-wrap: wrap; }
   .badge { font-size: 11px; padding: 2px 9px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
 
@@ -385,33 +457,26 @@
     Techno Collège
   </a>
   <div class="header-right">
-    <a class="btn btn-ghost" href="eleves.html" target="_blank" title="Vue élèves">
-      <i class="ti ti-users"></i> Vue élèves
-    </a>
-    <button class="btn btn-ghost" onclick="window.print()" title="Imprimer / PDF">
-      <i class="ti ti-printer"></i> Imprimer
-    </button>
-    <button class="btn" onclick="openSync()">
-      <i class="ti ti-cloud-upload"></i> Synchroniser
-    </button>
-    <button class="btn" onclick="exportData()">
-      <i class="ti ti-download"></i> Exporter
-    </button>
-    <label class="btn" style="cursor:pointer">
-      <i class="ti ti-upload"></i> Importer
-      <input type="file" accept=".json" style="display:none" onchange="importData(event)">
-    </label>
-    <button class="btn btn-primary" onclick="openModal()">
-      <i class="ti ti-plus"></i> Ajouter
-    </button>
+    <div class="search-inline">
+      <i class="ti ti-search" style="font-size:14px"></i>
+      <input type="text" id="search" placeholder="Rechercher…" oninput="renderCards()">
+    </div>
+    <a class="btn btn-ghost" href="eleves.html" target="_blank"><i class="ti ti-users"></i> Vue élèves</a>
+    <button class="btn btn-ghost" onclick="window.print()"><i class="ti ti-printer"></i></button>
+    <button class="btn" onclick="openSync()"><i class="ti ti-cloud-upload"></i> Sync</button>
+    <button class="btn" onclick="exportData()"><i class="ti ti-download"></i></button>
+    <label class="btn" style="cursor:pointer"><i class="ti ti-upload"></i><input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+    <button class="btn btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Ajouter</button>
   </div>
 </header>
 
 <nav>
-  <button class="nav-tab active" onclick="setTab(this,'')">Tout</button>
-  <button class="nav-tab" onclick="setTab(this,'5')">5ème</button>
-  <button class="nav-tab" onclick="setTab(this,'4')">4ème</button>
-  <button class="nav-tab" onclick="setTab(this,'3')">3ème</button>
+  <button class="nav-tab active" onclick="setTab(this,'')">Tout <span class="nav-count" id="cnt-all">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'5')">5ème <span class="nav-count" id="cnt-5">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'4')">4ème <span class="nav-count" id="cnt-4">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'3')">3ème <span class="nav-count" id="cnt-3">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'connaissance')">Connaissances <span class="nav-count" id="cnt-conn">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'outil')">Outils <span class="nav-count" id="cnt-outil">0</span></button>
 </nav>
 
 <main>
@@ -427,27 +492,9 @@
     <div class="stat"><div class="stat-n" id="s-ax3">0</div><div class="stat-l">Conception &amp; réal.</div></div>
   </div>
 
-  <div class="filter-section">
-    <div class="filter-row">
-      <div class="search-wrap">
-        <i class="ti ti-search"></i>
-        <input type="text" id="search" placeholder="Rechercher…" oninput="renderCards()">
-      </div>
-      <span class="filter-label">Type :</span>
-      <button class="filter-chip active" onclick="setType(this,'')">Tout</button>
-      <button class="filter-chip" onclick="setType(this,'document')"><i class="ti ti-file-text"></i> Document</button>
-      <button class="filter-chip" onclick="setType(this,'video')"><i class="ti ti-video"></i> Vidéo</button>
-      <button class="filter-chip" onclick="setType(this,'lien')"><i class="ti ti-link"></i> Lien</button>
-      <button class="filter-chip" onclick="setType(this,'exercice')"><i class="ti ti-pencil"></i> Exercice</button>
-      <button class="filter-chip" onclick="setType(this,'sequence')"><i class="ti ti-list-details"></i> Séquence</button>
-    </div>
-    <div class="filter-row" id="theme-filters">
-      <span class="filter-label">Thème :</span>
-      <button class="filter-chip active" onclick="setTheme(this,'')">Tous</button>
-    </div>
-  </div>
+  <div class="filter-bar" id="theme-row" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:1rem"></div>
 
-  <div class="grid" id="grid">
+  <div id="content">
     <div class="empty"><i class="ti ti-loader"></i>Chargement…</div>
   </div>
 </main>
@@ -695,117 +742,168 @@ function save() {
   localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId, sheetsUrl }));
 }
 
+const THEME_ICON_MAP = {
+  'Objets et systèmes techniques': 'ti-cpu',
+  'Structure et fonctionnement':   'ti-settings-2',
+  'Conception et réalisation':     'ti-ruler-2',
+};
+
+function isCours(r) { return !r.categorie || r.categorie === 'cours'; }
+
 // ── Tabs / Filtres ───────────────────────────────────────────────────────────
 
 function setTab(el, niv) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  tabNiv = niv;
-  renderAll();
+  tabNiv = niv; themeFilter = '';
+  buildThemes(); renderAll();
 }
 
-function setType(el, t) {
-  document.querySelectorAll('.filter-row:first-child .filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  typeFilter = t;
+function setTheme(th) {
+  themeFilter = th;
+  document.querySelectorAll('#theme-row .chip').forEach(c => c.classList.remove('active'));
+  document.querySelector(`#theme-row .chip[data-theme="${th}"]`)?.classList.add('active');
   renderCards();
 }
 
-function setTheme(el, t) {
-  document.querySelectorAll('#theme-filters .filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  themeFilter = t;
-  renderCards();
-}
-
-function buildThemeFilters() {
-  const themes = [...new Set(resources.map(r => r.theme).filter(Boolean))].sort();
-  const container = document.getElementById('theme-filters');
-  container.innerHTML = '<span class="filter-label">Thème :</span>';
-  const allBtn = document.createElement('button');
-  allBtn.className = 'filter-chip' + (themeFilter === '' ? ' active' : '');
-  allBtn.textContent = 'Tous';
-  allBtn.onclick = () => setTheme(allBtn, '');
-  container.appendChild(allBtn);
+function buildThemes() {
+  const visible = resources.filter(r => matchTab(r));
+  const themes = [...new Set(visible.map(r => r.theme).filter(Boolean))].sort();
+  const row = document.getElementById('theme-row');
+  row.innerHTML = '';
+  if (themes.length <= 1) return;
+  const lbl = document.createElement('span');
+  lbl.style.cssText = 'font-size:11px;font-weight:600;color:var(--text-hint);text-transform:uppercase;letter-spacing:.05em';
+  lbl.textContent = 'Thème :';
+  row.appendChild(lbl);
+  const all = document.createElement('button');
+  all.className = 'chip active'; all.dataset.theme = ''; all.textContent = 'Tous';
+  all.onclick = () => setTheme('');
+  row.appendChild(all);
   themes.forEach(th => {
     const btn = document.createElement('button');
-    btn.className = 'filter-chip' + (themeFilter === th ? ' active' : '');
-    btn.textContent = th;
-    btn.onclick = () => setTheme(btn, th);
-    container.appendChild(btn);
+    btn.className = 'chip'; btn.dataset.theme = th;
+    btn.innerHTML = `<i class="ti ${THEME_ICON_MAP[th]||'ti-folder'}" style="font-size:12px"></i> ${escHtml(th)}`;
+    btn.onclick = () => setTheme(th);
+    row.appendChild(btn);
   });
+}
+
+function matchTab(r) {
+  const cat = r.categorie || 'cours';
+  if (tabNiv === 'connaissance') return cat === 'connaissance';
+  if (tabNiv === 'outil') return cat === 'outil';
+  if (tabNiv) return cat === 'cours' && r.niveau === tabNiv;
+  return true;
 }
 
 // ── Rendu ────────────────────────────────────────────────────────────────────
 
 function renderAll() {
-  buildThemeFilters();
+  updateCounts();
   updateStats();
+  buildThemes();
   renderCards();
   document.getElementById('print-subtitle').textContent =
     'Niveau : ' + (tabNiv ? tabNiv + 'ème' : 'Tous') + ' — ' + resources.length + ' ressources';
 }
 
+function updateCounts() {
+  const cours = resources.filter(r => isCours(r));
+  document.getElementById('cnt-all').textContent = resources.length;
+  document.getElementById('cnt-5').textContent = cours.filter(r => r.niveau === '5').length;
+  document.getElementById('cnt-4').textContent = cours.filter(r => r.niveau === '4').length;
+  document.getElementById('cnt-3').textContent = cours.filter(r => r.niveau === '3').length;
+  document.getElementById('cnt-conn').textContent = resources.filter(r => r.categorie === 'connaissance').length;
+  document.getElementById('cnt-outil').textContent = resources.filter(r => r.categorie === 'outil').length;
+}
+
 function renderCards() {
-  const q = document.getElementById('search').value.toLowerCase().trim();
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
   const filtered = resources.filter(r => {
-    if (tabNiv && r.niveau !== tabNiv) return false;
-    if (typeFilter && r.type !== typeFilter) return false;
+    if (!matchTab(r)) return false;
     if (themeFilter && r.theme !== themeFilter) return false;
-    if (q && !r.titre.toLowerCase().includes(q) && !(r.desc||'').toLowerCase().includes(q) && !(r.theme||'').toLowerCase().includes(q)) return false;
+    if (q && ![r.titre, r.desc, r.theme, r.sous_theme, r.code].some(v => (v||'').toLowerCase().includes(q))) return false;
     return true;
   });
 
-  const g = document.getElementById('grid');
+  const content = document.getElementById('content');
   if (!filtered.length) {
-    g.innerHTML = '<div class="empty"><i class="ti ti-search-off"></i>Aucune ressource trouvée</div>';
+    content.innerHTML = '<div class="grid"><div class="empty"><i class="ti ti-search-off"></i>Aucune ressource trouvée</div></div>';
     return;
   }
 
-  g.innerHTML = filtered.map(r => {
-    const ic = ICONS[r.type] || ICONS.document;
-    const isPdf = r.url && r.url.startsWith('pdf/');
-    const linkBtn = r.url
-      ? `<a class="icon-btn" href="${escHtml(r.url)}" target="_blank" rel="noopener" title="${isPdf ? 'Ouvrir le PDF' : 'Ouvrir le lien'}"><i class="ti ${isPdf ? 'ti-file-type-pdf' : 'ti-external-link'}"></i></a>`
-      : '';
-    const qrBtn = r.url
-      ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code"><i class="ti ti-qrcode"></i></button>`
-      : '';
-    const quizBtn = `<a class="icon-btn" href="quiz/?id=${r.id}" target="_blank" title="Faire le quiz"><i class="ti ti-brain"></i></a>`;
-    const thumbSrc = `img/thumbs/thumb-${r.id}.png`;
-    const imgHtml = `<div class="card-img"><img src="${escHtml(thumbSrc)}" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.display='none'"></div>`;
-    return `<article class="card">
-      ${imgHtml}
-      <div class="card-body">
-        <div class="card-header">
-          <div class="card-icon" style="background:${ic.bg};color:${ic.c}"><i class="ti ${ic.i}"></i></div>
-          <div class="card-meta">
-            <div class="card-title">${escHtml(r.titre)}</div>
-            <div class="card-sub">${r.sous_theme ? escHtml(r.sous_theme) : escHtml(r.theme||'')}</div>
-          </div>
+  // Grouper par thème puis sous-thème
+  const byTheme = {};
+  filtered.forEach(r => {
+    const th = r.theme || 'Général';
+    const st = r.sous_theme || 'Autre';
+    if (!byTheme[th]) byTheme[th] = {};
+    if (!byTheme[th][st]) byTheme[th][st] = [];
+    byTheme[th][st].push(r);
+  });
+
+  content.innerHTML = Object.entries(byTheme).map(([theme, subthemes]) => {
+    const total = Object.values(subthemes).flat().length;
+    const subHtml = Object.entries(subthemes).map(([st, items]) => {
+      const stCode = items[0].code || '';
+      const codeClass = stCode.startsWith('OST') ? 'code-ost' : stCode.startsWith('SFC') ? 'code-sfc' : 'code-ccri';
+      return `<div class="subtheme-section">
+        <div class="subtheme-heading">
+          <span class="subtheme-code ${codeClass}">${escHtml(stCode)}</span>
+          <span class="subtheme-name">${escHtml(st)}</span>
         </div>
-        <p class="card-desc">${escHtml(r.desc||'')}</p>
-        <div class="card-footer">
-          <div class="badges">
-            <span class="badge b-${r.niveau}">${r.niveau}ème</span>
-            ${r.categorie && r.categorie !== 'cours'
-              ? `<span class="badge b-${r.categorie}">${r.categorie === 'connaissance' ? 'Connaissances' : 'Outil'}</span>`
-              : r.code
-                ? `<span class="badge b-${r.code.startsWith('OST')?'ost':r.code.startsWith('SFC')?'sfc':'ccri'}">${escHtml(r.code)}</span>`
-                : `<span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>`}
-          </div>
-          <div class="card-actions">
-            ${quizBtn}${qrBtn}${linkBtn}
-            <button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer"><i class="ti ti-trash"></i></button>
-          </div>
-        </div>
+        <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
+      </div>`;
+    }).join('');
+    return `<div class="theme-section">
+      <div class="theme-heading">
+        <div class="theme-icon"><i class="ti ${THEME_ICON_MAP[theme]||'ti-folder'}"></i></div>
+        <span class="theme-name">${escHtml(theme)}</span>
+        <span class="theme-count">${total} fiche${total > 1 ? 's' : ''}</span>
       </div>
-    </article>`;
+      ${subHtml}
+    </div>`;
   }).join('');
 }
 
+function cardHtml(r) {
+  const url = r.url ? (r.url.startsWith('http') ? r.url : BASE_URL + r.url) : null;
+  const openBtn = url
+    ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="btn-open"><i class="ti ti-external-link" style="font-size:11px"></i> Ouvrir</a>`
+    : `<span class="btn-open" style="opacity:.4;cursor:default"><i class="ti ti-external-link" style="font-size:11px"></i> Ouvrir</span>`;
+  const quizBtn = `<a href="quiz/?id=${r.id}" target="_blank" class="btn-quiz"><i class="ti ti-brain" style="font-size:11px"></i> Quiz</a>`;
+  const qrBtn = url ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code" style="flex-shrink:0"><i class="ti ti-qrcode"></i></button>` : '';
+  const delBtn = `<button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer" style="flex-shrink:0"><i class="ti ti-trash"></i></button>`;
+
+  const thumbInner = r.type === 'sequence'
+    ? `<div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ${THEME_ICON_MAP[r.theme]||'ti-book'}"></i></div>`
+    : `<img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.opacity='.3'">`;
+
+  const codeClass = (r.code||'').startsWith('OST') ? 'code-ost' : (r.code||'').startsWith('SFC') ? 'code-sfc' : 'code-ccri';
+  const codeBadge = r.code ? `<span class="card-code ${codeClass}">${escHtml(r.code)}</span>` : '';
+  const critereShort = r.critere ? r.critere.split(' — ').slice(1).join(' — ') : '';
+  const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
+
+  return `<article class="card" title="${escHtml(r.critere||'')}">
+    <div class="card-thumb">
+      ${thumbInner}
+      <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
+    </div>
+    <div class="card-body">
+      ${codeBadge}
+      <div class="card-title">${escHtml(r.titre)}</div>
+      ${critereHtml}
+      <div class="card-actions">${openBtn}${quizBtn}</div>
+      <div class="card-teacher">${qrBtn}${delBtn}</div>
+    </div>
+  </article>`;
+}
+
 function updateStats() {
-  const src = tabNiv ? resources.filter(r => r.niveau === tabNiv) : resources;
+  const src = tabNiv && tabNiv !== 'connaissance' && tabNiv !== 'outil'
+    ? resources.filter(r => r.niveau === tabNiv)
+    : resources;
   document.getElementById('s-total').textContent = src.length;
   document.getElementById('s-ax1').textContent = src.filter(r => r.theme === 'Objets et systèmes techniques').length;
   document.getElementById('s-ax2').textContent = src.filter(r => r.theme === 'Structure et fonctionnement').length;
