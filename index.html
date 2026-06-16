@@ -179,21 +179,39 @@
     background: var(--surface);
     border: 0.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1rem 1.1rem;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    padding: 0;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
     display: flex; flex-direction: column;
+    overflow: hidden;
   }
-  .card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.07); }
-  .card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
-  .card-icon {
-    width: 36px; height: 36px; border-radius: 9px;
+  .card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(99,102,241,0.12); transform: translateY(-2px); }
+  .card-img {
+    height: 130px; overflow: hidden; flex-shrink: 0;
+    background: var(--accent-bg);
+    position: relative;
+  }
+  .card-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.3s;
+  }
+  .card:hover .card-img img { transform: scale(1.04); }
+  .card-img-placeholder {
+    width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 17px; flex-shrink: 0;
+    font-size: 40px; color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .card-body { padding: 0.85rem 1rem; flex: 1; display: flex; flex-direction: column; }
+  .card-header { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 7px; }
+  .card-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
   }
   .card-meta { flex: 1; min-width: 0; }
-  .card-title { font-size: 13.5px; font-weight: 500; line-height: 1.3; margin-bottom: 2px; }
+  .card-title { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
   .card-sub { font-size: 11px; color: var(--text-muted); }
-  .card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; flex: 1; }
+  .card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; flex: 1; }
   .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .badges { display: flex; gap: 4px; flex-wrap: wrap; }
   .badge { font-size: 11px; padding: 2px 9px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
@@ -549,6 +567,36 @@
 <script>
 const BASE_URL = 'https://robicy-sys.github.io/techno-college/';
 
+const THEME_IMG = {
+  'Objets et systèmes techniques': 'img/themes/systemes.jpg',
+  'Structure et fonctionnement':   'img/themes/mecanique.jpg',
+  'Conception et réalisation':     'img/themes/conception.jpg',
+  'Énergie':                       'img/themes/energie.jpg',
+  'Matériaux':                     'img/themes/materiaux.jpg',
+  'Mécanique':                     'img/themes/mecanique.jpg',
+  'Numérique':                     'img/themes/numerique.jpg',
+  'Réseaux':                       'img/themes/reseaux.jpg',
+  'Programmation':                 'img/themes/programmation.jpg',
+  'Projet':                        'img/themes/projet.jpg',
+  'Développement durable':         'img/themes/developpement-durable.jpg',
+  'Communication':                 'img/themes/communication.jpg',
+};
+
+const THEME_ICON = {
+  'Objets et systèmes techniques': 'ti-cpu',
+  'Structure et fonctionnement':   'ti-settings',
+  'Conception et réalisation':     'ti-ruler-2',
+  'Énergie':                       'ti-bolt',
+  'Matériaux':                     'ti-building-factory',
+  'Mécanique':                     'ti-tool',
+  'Numérique':                     'ti-device-laptop',
+  'Réseaux':                       'ti-network',
+  'Programmation':                 'ti-code',
+  'Projet':                        'ti-checklist',
+  'Développement durable':         'ti-leaf',
+  'Communication':                 'ti-antenna',
+};
+
 const ICONS = {
   document: { i: 'ti-file-text', bg: '#E6F1FB', c: '#185FA5' },
   video:    { i: 'ti-video',     bg: '#FBEAF0', c: '#99355A' },
@@ -666,30 +714,36 @@ function renderCards() {
   g.innerHTML = filtered.map(r => {
     const ic = ICONS[r.type] || ICONS.document;
     const isPdf = r.url && r.url.startsWith('pdf/');
-    const fullUrl = r.url ? (r.url.startsWith('http') ? r.url : BASE_URL + r.url) : '';
     const linkBtn = r.url
       ? `<a class="icon-btn" href="${escHtml(r.url)}" target="_blank" rel="noopener" title="${isPdf ? 'Ouvrir le PDF' : 'Ouvrir le lien'}"><i class="ti ${isPdf ? 'ti-file-type-pdf' : 'ti-external-link'}"></i></a>`
       : '';
     const qrBtn = r.url
       ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code"><i class="ti ti-qrcode"></i></button>`
       : '';
+    const imgSrc = THEME_IMG[r.theme];
+    const imgHtml = imgSrc
+      ? `<div class="card-img"><img src="${escHtml(imgSrc)}" alt="${escHtml(r.theme||'')}" loading="lazy"></div>`
+      : `<div class="card-img"><div class="card-img-placeholder"><i class="ti ${THEME_ICON[r.theme]||'ti-file'}"></i></div></div>`;
     return `<article class="card">
-      <div class="card-header">
-        <div class="card-icon" style="background:${ic.bg};color:${ic.c}"><i class="ti ${ic.i}"></i></div>
-        <div class="card-meta">
-          <div class="card-title">${escHtml(r.titre)}</div>
-          <div class="card-sub">${escHtml(r.theme||'')}</div>
+      ${imgHtml}
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:${ic.bg};color:${ic.c}"><i class="ti ${ic.i}"></i></div>
+          <div class="card-meta">
+            <div class="card-title">${escHtml(r.titre)}</div>
+            <div class="card-sub">${escHtml(r.theme||'')}</div>
+          </div>
         </div>
-      </div>
-      <p class="card-desc">${escHtml(r.desc||'')}</p>
-      <div class="card-footer">
-        <div class="badges">
-          <span class="badge b-${r.niveau}">${r.niveau}ème</span>
-          <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
-        </div>
-        <div class="card-actions">
-          ${qrBtn}${linkBtn}
-          <button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer"><i class="ti ti-trash"></i></button>
+        <p class="card-desc">${escHtml(r.desc||'')}</p>
+        <div class="card-footer">
+          <div class="badges">
+            <span class="badge b-${r.niveau}">${r.niveau}ème</span>
+            <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
+          </div>
+          <div class="card-actions">
+            ${qrBtn}${linkBtn}
+            <button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer"><i class="ti ti-trash"></i></button>
+          </div>
         </div>
       </div>
     </article>`;
