@@ -167,6 +167,39 @@
     font-size: 12px; color: var(--text-muted); margin-left: 4px;
   }
 
+  /* ── Sous-thème ── */
+  .subtheme-section { margin-bottom: 1.5rem; }
+  .subtheme-heading {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 0.65rem; margin-left: 2px;
+  }
+  .subtheme-code {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; letter-spacing: .02em; flex-shrink: 0;
+  }
+  .code-ost  { background: #dcfce7; color: #15803d; }
+  .code-sfc  { background: #dbeafe; color: #1d4ed8; }
+  .code-ccri { background: #ffedd5; color: #c2410c; }
+  @media (prefers-color-scheme: dark) {
+    .code-ost  { background: #14532d; color: #4ade80; }
+    .code-sfc  { background: #1e3a5f; color: #93c5fd; }
+    .code-ccri { background: #431407; color: #fdba74; }
+  }
+  .subtheme-name { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+
+  /* Badge code programme sur la carte */
+  .card-code {
+    font-size: 10px; font-weight: 700; padding: 1px 6px;
+    border-radius: 8px; display: inline-block;
+  }
+
+  /* Critère court */
+  .card-critere {
+    font-size: 10px; color: var(--text-hint); line-height: 1.3;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   /* ── Grille de fiches ── */
   .grid {
     display: grid;
@@ -404,7 +437,7 @@ function render() {
   const filtered = resources.filter(r => {
     if (tabNiv && r.niveau !== tabNiv) return false;
     if (themeFilter && r.theme !== themeFilter) return false;
-    if (q && !r.titre.toLowerCase().includes(q) && !(r.desc||'').toLowerCase().includes(q) && !(r.theme||'').toLowerCase().includes(q)) return false;
+    if (q && ![r.titre, r.desc, r.theme, r.sous_theme, r.code, r.critere].some(v => (v||'').toLowerCase().includes(q))) return false;
     return true;
   });
 
@@ -414,24 +447,38 @@ function render() {
     return;
   }
 
-  // Grouper par thème
+  // Grouper par thème puis sous-thème
   const byTheme = {};
   filtered.forEach(r => {
-    const k = r.theme || 'Général';
-    if (!byTheme[k]) byTheme[k] = [];
-    byTheme[k].push(r);
+    const th = r.theme || 'Général';
+    const st = r.sous_theme || 'Autre';
+    if (!byTheme[th]) byTheme[th] = {};
+    if (!byTheme[th][st]) byTheme[th][st] = [];
+    byTheme[th][st].push(r);
   });
 
-  content.innerHTML = Object.entries(byTheme).map(([theme, items]) => `
-    <div class="theme-section">
+  content.innerHTML = Object.entries(byTheme).map(([theme, subthemes]) => {
+    const totalCards = Object.values(subthemes).flat().length;
+    const subHtml = Object.entries(subthemes).map(([st, items]) => {
+      const stCode = items[0].code || '';
+      const codeClass = stCode.startsWith('OST') ? 'code-ost' : stCode.startsWith('SFC') ? 'code-sfc' : 'code-ccri';
+      return `<div class="subtheme-section">
+        <div class="subtheme-heading">
+          <span class="subtheme-code ${codeClass}">${escHtml(stCode)}</span>
+          <span class="subtheme-name">${escHtml(st)}</span>
+        </div>
+        <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
+      </div>`;
+    }).join('');
+    return `<div class="theme-section">
       <div class="theme-heading">
         <div class="theme-icon"><i class="ti ${THEME_ICON[theme]||'ti-folder'}"></i></div>
         <span class="theme-name">${escHtml(theme)}</span>
-        <span class="theme-count">${items.length} fiche${items.length > 1 ? 's' : ''}</span>
+        <span class="theme-count">${totalCards} fiche${totalCards > 1 ? 's' : ''}</span>
       </div>
-      <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
-    </div>
-  `).join('');
+      ${subHtml}
+    </div>`;
+  }).join('');
 }
 
 function cardHtml(r) {
@@ -449,14 +496,24 @@ function cardHtml(r) {
     return `<div class="score-badge" style="background:${bg};color:${col}">${myResult.score}/${myResult.total}</div>`;
   })() : '';
 
-  return `<div class="card">
+  // Badge code programme
+  const codeClass = (r.code||'').startsWith('OST') ? 'code-ost' : (r.code||'').startsWith('SFC') ? 'code-sfc' : 'code-ccri';
+  const codeBadge = r.code ? `<span class="card-code ${codeClass}">${escHtml(r.code)}</span>` : '';
+
+  // Critère (partie après « — »)
+  const critereShort = r.critere ? r.critere.split(' — ').slice(1).join(' — ') : '';
+  const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
+
+  return `<div class="card" title="${escHtml(r.critere||'')}">
     <div class="card-thumb">
       <img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">
       <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
       ${scoreBadge}
     </div>
     <div class="card-body">
+      ${codeBadge}
       <div class="card-title">${escHtml(r.titre)}</div>
+      ${critereHtml}
       <div class="card-actions">${openBtn}${quizBtn}</div>
     </div>
   </div>`;
