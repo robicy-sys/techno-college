@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Techno Collège — Ressources</title>
+<title>Techno Collège — Mes fiches</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,8 +24,10 @@
     --accent-text: #4c1d95;
     --header-bg: #1e1b4b;
     --nav-bg: #312e81;
+    --green: #16a34a; --green-bg: #dcfce7;
+    --orange: #d97706;
+    --red: #dc2626;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0f0e1a; --surface: #1e1b4b;
@@ -34,6 +36,7 @@
       --accent: #818cf8; --accent-dark: #6366f1;
       --accent-bg: #312e81; --accent-text: #c7d2fe;
       --header-bg: #0f0e1a; --nav-bg: #1e1b4b;
+      --green: #4ade80; --green-bg: #14532d;
     }
   }
 
@@ -43,197 +46,227 @@
     min-height: 100vh; font-size: 15px; line-height: 1.5;
   }
 
+  /* ── Header ── */
   header {
     background: var(--header-bg);
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
     display: flex; align-items: center; justify-content: space-between;
-    height: 58px; position: sticky; top: 0; z-index: 20;
+    height: 54px; position: sticky; top: 0; z-index: 30;
   }
   .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 500; font-size: 16px; color: #e0e7ff; text-decoration: none;
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 600; font-size: 15px; color: #e0e7ff; text-decoration: none;
   }
   .logo-icon {
-    width: 34px; height: 34px; background: #6366f1;
-    border-radius: 9px; display: flex; align-items: center;
-    justify-content: center; color: #fff; font-size: 18px;
+    width: 32px; height: 32px; background: #6366f1;
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; color: #fff; font-size: 17px;
   }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .search-inline {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.08); border-radius: 8px;
+    padding: 6px 11px; color: #a5b4fc; font-size: 13px;
+  }
+  .search-inline input {
+    background: none; border: none; outline: none;
+    color: #e0e7ff; font-size: 13px; font-family: inherit;
+    width: 160px;
+  }
+  .search-inline input::placeholder { color: #a5b4fc; }
   .header-badge {
     background: rgba(165,180,252,0.15);
     color: #a5b4fc; border-radius: 6px;
     padding: 4px 10px; font-size: 12px;
   }
 
+  /* ── Nav niveaux ── */
   nav {
-    background: var(--nav-bg); padding: 0 1.5rem;
-    display: flex; gap: 2px; overflow-x: auto;
+    background: var(--nav-bg); padding: 0 1.25rem;
+    display: flex; gap: 0; overflow-x: auto; position: sticky; top: 54px; z-index: 20;
   }
   .nav-tab {
-    padding: 11px 15px; font-size: 14px; cursor: pointer;
-    border: none; border-bottom: 2px solid transparent;
-    color: #a5b4fc; background: none; white-space: nowrap;
+    padding: 12px 20px; font-size: 14px; font-weight: 500; cursor: pointer;
+    border: none; border-bottom: 3px solid transparent;
+    color: rgba(165,180,252,0.7); background: none; white-space: nowrap;
     font-family: inherit; transition: color 0.15s;
   }
   .nav-tab:hover { color: #e0e7ff; }
-  .nav-tab.active { color: #fff; border-bottom-color: #a5b4fc; font-weight: 500; }
-
-  main { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
-
-  .search-wrap { position: relative; max-width: 400px; margin-bottom: 1rem; }
-  .search-wrap .ti {
-    position: absolute; left: 12px; top: 50%;
-    transform: translateY(-50%); color: var(--text-hint); font-size: 17px; pointer-events: none;
+  .nav-tab.active { color: #fff; border-bottom-color: #818cf8; }
+  .nav-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.15); border-radius: 10px;
+    padding: 1px 7px; font-size: 11px; margin-left: 6px;
+    font-weight: 400;
   }
-  .search-wrap input {
-    width: 100%; padding: 10px 12px 10px 38px;
-    border: 0.5px solid var(--border-hover);
-    border-radius: var(--radius-lg); font-size: 14px;
-    background: var(--surface); color: var(--text);
-    font-family: inherit; outline: none;
-  }
-  .search-wrap input:focus { border-color: var(--accent); }
 
-  /* Barre historique */
+  /* ── Main ── */
+  main { padding: 1rem 1.25rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+  /* ── Barre historique compacte ── */
   .history-bar {
-    background: var(--surface); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); margin-bottom: 1rem; overflow: hidden;
-  }
-  .history-head {
     display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px; cursor: pointer; user-select: none;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-md); padding: 8px 12px;
+    margin-bottom: 1rem; cursor: pointer;
   }
-  .history-head:hover { background: var(--accent-bg); }
-  .history-name { font-size: 13px; font-weight: 600; }
-  .history-stats { font-size: 12px; color: var(--text-muted); }
-  .history-toggle { margin-left: auto; font-size: 18px; color: var(--text-hint); transition: transform 0.2s; }
-  .history-toggle.open { transform: rotate(180deg); }
-  .history-body { padding: 0 14px 12px; display: none; }
-  .history-body.open { display: block; }
-  .history-list { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 10px; }
-  .history-item {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 10px; border-radius: 20px; font-size: 12px;
-    text-decoration: none; border: 0.5px solid var(--border-hover);
-    background: var(--bg); color: var(--text); transition: all 0.15s;
+  .history-bar:hover { border-color: var(--accent); }
+  .history-scores { display: flex; gap: 6px; flex-wrap: wrap; margin-left: 4px; }
+  .hs-chip {
+    font-size: 11px; padding: 2px 8px; border-radius: 10px;
+    border: 0.5px solid var(--border-hover); color: var(--text-muted);
+    text-decoration: none; transition: all 0.12s;
   }
-  .history-item:hover { border-color: var(--accent); background: var(--accent-bg); }
-  .history-score { font-weight: 700; }
-  .hs-green { color: var(--green); }
-  .hs-orange { color: #d97706; }
-  .hs-red { color: var(--red); }
-  .history-actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 0.5px solid var(--border); }
-  .history-action-btn { font-size: 11px; color: var(--text-muted); background: none; border: none; cursor: pointer; font-family: inherit; padding: 2px 0; }
-  .history-action-btn:hover { color: var(--accent); }
+  .hs-chip:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent-text); }
+  .hs-green { border-color: #86efac; background: #f0fdf4; color: #15803d; }
+  .hs-orange { border-color: #fcd34d; background: #fffbeb; color: #92400e; }
+  .hs-red { border-color: #fca5a5; background: #fef2f2; color: #b91c1c; }
+  @media (prefers-color-scheme: dark) {
+    .hs-green { border-color: #166534; background: #14532d; color: #4ade80; }
+    .hs-orange { border-color: #78350f; background: #451a03; color: #fcd34d; }
+    .hs-red { border-color: #7f1d1d; background: #450a0a; color: #f87171; }
+  }
+  .history-actions-inline { margin-left: auto; display: flex; gap: 8px; }
+  .hbtn { font-size: 11px; color: var(--text-hint); background: none; border: none; cursor: pointer; font-family: inherit; }
+  .hbtn:hover { color: var(--accent); }
 
-  .filter-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  /* ── Filtres thème ── */
+  .filter-bar {
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .filter-label { font-size: 11px; font-weight: 600; color: var(--text-hint); text-transform: uppercase; letter-spacing: .05em; margin-right: 2px; }
   .chip {
     border: 0.5px solid var(--border-hover); border-radius: 20px;
-    padding: 6px 15px; font-size: 13px; cursor: pointer;
+    padding: 5px 12px; font-size: 12px; cursor: pointer;
     background: transparent; color: var(--text-muted);
     font-family: inherit; display: inline-flex; align-items: center;
-    gap: 5px; transition: all 0.15s;
+    gap: 4px; transition: all 0.15s;
   }
   .chip:hover, .chip.active {
     background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text);
   }
 
-  .section-title {
-    font-size: 13px; font-weight: 600; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: .05em;
-    margin: 1.5rem 0 0.75rem;
+  /* ── Section titre (groupe de thème) ── */
+  .theme-section { margin-bottom: 2rem; }
+  .theme-heading {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 0.85rem; padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent-bg);
+  }
+  .theme-icon {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--accent-bg); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .theme-name {
+    font-size: 14px; font-weight: 700; color: var(--text);
+  }
+  .theme-count {
+    font-size: 12px; color: var(--text-muted); margin-left: 4px;
   }
 
+  /* ── Grille de fiches ── */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
   }
 
+  /* ── Carte fiche — format document portrait ── */
   .card {
     background: var(--surface);
     border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-    display: flex; flex-direction: column;
+    border-radius: var(--radius-md);
     overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    position: relative;
   }
   .card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 6px 20px rgba(99,102,241,0.13);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.16);
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
   }
-  .card-link {
-    display: block; text-decoration: none; color: inherit; cursor: pointer;
+
+  /* Miniature format A4 */
+  .card-thumb {
+    aspect-ratio: 210 / 297;
+    background: #fff;
+    border-bottom: 0.5px solid var(--border);
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
   }
-  .card-img { height: 140px; overflow: hidden; flex-shrink: 0; background: var(--accent-bg); }
-  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
-  .card:hover .card-img img { transform: scale(1.05); }
-  .card-img-placeholder {
+  .card-thumb img {
     width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 44px; color: var(--accent);
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s;
   }
-  .card-body { padding: 1rem 1.1rem; flex: 1; display: flex; flex-direction: column; }
-  .card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
-  .card-icon {
-    width: 36px; height: 36px; border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
+  .card:hover .card-thumb img { transform: scale(1.03); }
+
+  /* Badge niveau en surimpression */
+  .level-badge {
+    position: absolute; top: 6px; left: 6px;
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 8px; pointer-events: none;
   }
-  .card-meta { flex: 1; min-width: 0; }
-  .card-title { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 3px; }
-  .card-sub { font-size: 12px; color: var(--text-muted); }
-  .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; flex: 1; }
-  .card-footer { display: flex; align-items: center; gap: 6px; }
-  .badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 500; }
-
-  .b-5 { background: #FAEEDA; color: #633806; }
-  .b-4 { background: #FAECE7; color: #712B13; }
-  .b-3 { background: #EEEDFE; color: #3C3489; }
-  .b-doc { background: #E6F1FB; color: #0C447C; }
-  .b-vid { background: #FBEAF0; color: #72243E; }
-  .b-lien { background: #EAF3DE; color: #27500A; }
-  .b-ex { background: #FAEEDA; color: #633806; }
-  .b-seq { background: #F0F4FF; color: #3451B2; }
-
+  .lb-5 { background: #FAEEDA; color: #633806; }
+  .lb-4 { background: #FAECE7; color: #712B13; }
+  .lb-3 { background: #EEEDFE; color: #3C3489; }
   @media (prefers-color-scheme: dark) {
-    .b-5 { background: #412402; color: #FAC775; }
-    .b-4 { background: #4A1B0C; color: #F0997B; }
-    .b-3 { background: #26215C; color: #AFA9EC; }
-    .b-doc { background: #042C53; color: #85B7EB; }
-    .b-vid { background: #4B1528; color: #ED93B1; }
-    .b-lien { background: #173404; color: #97C459; }
-    .b-ex { background: #412402; color: #EF9F27; }
-    .b-seq { background: #1e2a5c; color: #93aff5; }
+    .lb-5 { background: #412402; color: #FAC775; }
+    .lb-4 { background: #4A1B0C; color: #F0997B; }
+    .lb-3 { background: #26215C; color: #AFA9EC; }
   }
 
-  .open-icon { margin-left: auto; color: var(--accent); font-size: 16px; }
-  .card-quiz-row {
-    margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--border);
-    display: flex; gap: 6px;
+  /* Badge score quiz en surimpression */
+  .score-badge {
+    position: absolute; top: 6px; right: 6px;
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 8px; pointer-events: none;
   }
-  .quiz-btn, .open-btn {
-    display: inline-flex; align-items: center; gap: 5px;
-    flex: 1; justify-content: center;
-    padding: 8px 6px; border-radius: var(--radius-md);
-    font-size: 13px; font-weight: 500; text-decoration: none;
-    border: 1px solid var(--border-hover); transition: all 0.15s;
-  }
-  .quiz-btn {
-    background: var(--accent-bg); color: var(--accent-text);
-  }
-  .quiz-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .open-btn {
-    background: transparent; color: var(--text-muted);
-  }
-  .open-btn:hover { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent); }
 
+  /* Corps de la carte */
+  .card-body {
+    padding: 8px 10px 10px;
+    flex: 1; display: flex; flex-direction: column; gap: 8px;
+  }
+  .card-title {
+    font-size: 12px; font-weight: 600; line-height: 1.35;
+    color: var(--text);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Boutons action */
+  .card-actions { display: flex; gap: 5px; margin-top: auto; }
+  .btn-open, .btn-quiz {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center;
+    gap: 4px; padding: 6px 4px;
+    border-radius: 6px; font-size: 11px; font-weight: 500;
+    text-decoration: none; border: 0.5px solid var(--border-hover);
+    transition: all 0.15s; font-family: inherit; cursor: pointer;
+  }
+  .btn-open { background: transparent; color: var(--text-muted); }
+  .btn-open:hover { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent); }
+  .btn-quiz { background: var(--accent-bg); color: var(--accent-text); border-color: transparent; }
+  .btn-quiz:hover { background: var(--accent); color: #fff; }
+
+  /* Empty */
   .empty {
-    text-align: center; padding: 4rem 1rem;
-    color: var(--text-muted); grid-column: 1/-1;
+    text-align: center; padding: 4rem 1rem; color: var(--text-muted);
+    grid-column: 1/-1; font-size: 14px;
   }
-  .empty .ti { font-size: 40px; display: block; margin-bottom: 10px; color: var(--text-hint); }
+  .empty i { font-size: 36px; display: block; margin-bottom: 8px; color: var(--text-hint); }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .search-inline { display: none; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+  }
 </style>
 </head>
 <body>
@@ -243,62 +276,52 @@
     <div class="logo-icon"><i class="ti ti-tool"></i></div>
     Techno Collège
   </a>
-  <span class="header-badge"><i class="ti ti-users"></i> Vue élèves</span>
+  <div class="header-right">
+    <div class="search-inline">
+      <i class="ti ti-search" style="font-size:14px"></i>
+      <input type="text" id="search" placeholder="Chercher…" oninput="render()">
+    </div>
+    <span class="header-badge"><i class="ti ti-users"></i> Vue élèves</span>
+  </div>
 </header>
 
-<nav>
-  <button class="nav-tab active" onclick="setTab(this,'')">Tout</button>
-  <button class="nav-tab" onclick="setTab(this,'5')">5ème</button>
-  <button class="nav-tab" onclick="setTab(this,'4')">4ème</button>
-  <button class="nav-tab" onclick="setTab(this,'3')">3ème</button>
+<nav id="nav-bar">
+  <button class="nav-tab active" onclick="setTab(this,'')">
+    Tout <span class="nav-count" id="cnt-all">0</span>
+  </button>
+  <button class="nav-tab" onclick="setTab(this,'5')">
+    5ème <span class="nav-count" id="cnt-5">0</span>
+  </button>
+  <button class="nav-tab" onclick="setTab(this,'4')">
+    4ème <span class="nav-count" id="cnt-4">0</span>
+  </button>
+  <button class="nav-tab" onclick="setTab(this,'3')">
+    3ème <span class="nav-count" id="cnt-3">0</span>
+  </button>
 </nav>
 
 <main>
-  <div class="search-wrap">
-    <i class="ti ti-search"></i>
-    <input type="text" id="search" placeholder="Chercher une fiche, un thème…" oninput="render()">
-  </div>
-
-  <!-- Historique des quiz -->
+  <!-- Historique compact -->
   <div class="history-bar" id="history-bar" style="display:none">
-    <div class="history-head" onclick="toggleHistory()">
-      <i class="ti ti-chart-bar" style="color:var(--accent)"></i>
-      <span class="history-name" id="history-name-lbl"></span>
-      <span class="history-stats" id="history-stats-lbl"></span>
-      <i class="ti ti-chevron-down history-toggle" id="history-chevron"></i>
-    </div>
-    <div class="history-body" id="history-body">
-      <div class="history-list" id="history-list"></div>
-      <div class="history-actions">
-        <button class="history-action-btn" onclick="changeName()"><i class="ti ti-pencil"></i> Changer de prénom</button>
-        <button class="history-action-btn" onclick="clearHistory()" style="color:var(--red)"><i class="ti ti-trash"></i> Effacer l'historique</button>
-      </div>
+    <i class="ti ti-user-circle" style="color:var(--accent);font-size:16px;flex-shrink:0"></i>
+    <span id="history-name-lbl" style="font-size:13px;font-weight:600"></span>
+    <div class="history-scores" id="history-scores"></div>
+    <div class="history-actions-inline">
+      <button class="hbtn" onclick="changeName()"><i class="ti ti-pencil"></i></button>
+      <button class="hbtn" onclick="clearHistory()" style="color:var(--red)"><i class="ti ti-trash"></i></button>
     </div>
   </div>
 
-  <div class="filter-row" id="theme-row"></div>
+  <!-- Filtres thème -->
+  <div class="filter-bar" id="theme-row"></div>
+
   <div id="content"></div>
 </main>
 
 <script>
-const TYPE_LBL = { document:'Document', video:'Vidéo', lien:'Lien', exercice:'Exercice', sequence:'Séquence' };
-const THEME_IMG = {
-  'Objets et systèmes techniques': 'img/themes/systemes.jpg',
-  'Structure et fonctionnement':   'img/themes/mecanique.jpg',
-  'Conception et réalisation':     'img/themes/conception.jpg',
-  'Énergie':                       'img/themes/energie.jpg',
-  'Matériaux':                     'img/themes/materiaux.jpg',
-  'Mécanique':                     'img/themes/mecanique.jpg',
-  'Numérique':                     'img/themes/numerique.jpg',
-  'Réseaux':                       'img/themes/reseaux.jpg',
-  'Programmation':                 'img/themes/programmation.jpg',
-  'Projet':                        'img/themes/projet.jpg',
-  'Développement durable':         'img/themes/developpement-durable.jpg',
-  'Communication':                 'img/themes/communication.jpg',
-};
 const THEME_ICON = {
   'Objets et systèmes techniques': 'ti-cpu',
-  'Structure et fonctionnement':   'ti-settings',
+  'Structure et fonctionnement':   'ti-settings-2',
   'Conception et réalisation':     'ti-ruler-2',
   'Énergie':                       'ti-bolt',
   'Matériaux':                     'ti-building-factory',
@@ -310,30 +333,43 @@ const THEME_ICON = {
   'Développement durable':         'ti-leaf',
   'Communication':                 'ti-antenna',
 };
-const ICONS = {
-  document: { i: 'ti-file-text', bg: '#E6F1FB', c: '#185FA5' },
-  video:    { i: 'ti-video',     bg: '#FBEAF0', c: '#99355A' },
-  lien:     { i: 'ti-link',      bg: '#EAF3DE', c: '#3B6D11' },
-  exercice: { i: 'ti-pencil',    bg: '#FAEEDA', c: '#854F0B' },
-  sequence: { i: 'ti-list-details', bg: '#F0F4FF', c: '#3451B2' },
-};
 const BASE = 'https://robicy-sys.github.io/techno-college/';
 
 let resources = [];
 let tabNiv = '';
 let themeFilter = '';
+let quizResults = [];
 
 async function load() {
   try {
     const r = await fetch('./ressources.json?_=' + Date.now());
-    if (r.ok) { const d = await r.json(); if (Array.isArray(d.resources)) { resources = d.resources; render(); return; } }
+    if (r.ok) {
+      const d = await r.json();
+      if (Array.isArray(d.resources)) {
+        resources = d.resources;
+        updateCounts();
+        buildThemes();
+        render();
+        loadHistory();
+        return;
+      }
+    }
   } catch(e) {}
   document.getElementById('content').innerHTML = '<div class="empty"><i class="ti ti-wifi-off"></i>Impossible de charger les ressources.</div>';
 }
 
+function updateCounts() {
+  document.getElementById('cnt-all').textContent = resources.length;
+  document.getElementById('cnt-5').textContent = resources.filter(r => r.niveau === '5').length;
+  document.getElementById('cnt-4').textContent = resources.filter(r => r.niveau === '4').length;
+  document.getElementById('cnt-3').textContent = resources.filter(r => r.niveau === '3').length;
+}
+
 function setTab(el, niv) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active'); tabNiv = niv; themeFilter = ''; buildThemes(); render();
+  el.classList.add('active');
+  tabNiv = niv; themeFilter = '';
+  buildThemes(); render();
 }
 
 function buildThemes() {
@@ -343,13 +379,17 @@ function buildThemes() {
   const row = document.getElementById('theme-row');
   row.innerHTML = '';
   if (themes.length <= 1) return;
+  const lbl = document.createElement('span');
+  lbl.className = 'filter-label'; lbl.textContent = 'Thème :';
+  row.appendChild(lbl);
   const all = document.createElement('button');
-  all.className = 'chip active'; all.textContent = 'Tous les thèmes';
+  all.className = 'chip active'; all.textContent = 'Tous';
   all.onclick = () => { themeFilter = ''; document.querySelectorAll('#theme-row .chip').forEach(c => c.classList.remove('active')); all.classList.add('active'); render(); };
   row.appendChild(all);
   themes.forEach(th => {
     const btn = document.createElement('button');
-    btn.className = 'chip'; btn.textContent = th;
+    btn.className = 'chip';
+    btn.innerHTML = `<i class="ti ${THEME_ICON[th]||'ti-folder'}" style="font-size:12px"></i> ${escHtml(th)}`;
     btn.onclick = () => {
       themeFilter = th;
       document.querySelectorAll('#theme-row .chip').forEach(c => c.classList.remove('active'));
@@ -360,7 +400,7 @@ function buildThemes() {
 }
 
 function render() {
-  const q = document.getElementById('search').value.toLowerCase().trim();
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
   const filtered = resources.filter(r => {
     if (tabNiv && r.niveau !== tabNiv) return false;
     if (themeFilter && r.theme !== themeFilter) return false;
@@ -383,41 +423,41 @@ function render() {
   });
 
   content.innerHTML = Object.entries(byTheme).map(([theme, items]) => `
-    <div class="section-title"><i class="ti ti-folder" style="margin-right:5px"></i>${escHtml(theme)}</div>
-    <div class="grid" style="margin-bottom:1rem">
-      ${items.map(r => cardHtml(r)).join('')}
+    <div class="theme-section">
+      <div class="theme-heading">
+        <div class="theme-icon"><i class="ti ${THEME_ICON[theme]||'ti-folder'}"></i></div>
+        <span class="theme-name">${escHtml(theme)}</span>
+        <span class="theme-count">${items.length} fiche${items.length > 1 ? 's' : ''}</span>
+      </div>
+      <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
     </div>
   `).join('');
 }
 
 function cardHtml(r) {
-  const ic = ICONS[r.type] || ICONS.document;
   const url = r.url ? (r.url.startsWith('http') ? r.url : BASE + r.url) : null;
   const openBtn = url
-    ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="open-btn" title="Ouvrir la fiche"><i class="ti ti-external-link"></i> Ouvrir</a>`
-    : '';
-  const quizBtn = `<a href="quiz/?id=${r.id}&from=eleves" class="quiz-btn"><i class="ti ti-brain"></i> Quiz</a>`;
-  const thumbSrc = `img/thumbs/thumb-${r.id}.png`;
-  const imgHtml = `<div class="card-img"><img src="${escHtml(thumbSrc)}" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.display='none'"></div>`;
+    ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="btn-open"><i class="ti ti-external-link" style="font-size:11px"></i> Ouvrir</a>`
+    : `<span class="btn-open" style="opacity:.4;cursor:default"><i class="ti ti-external-link" style="font-size:11px"></i> Ouvrir</span>`;
+  const quizBtn = `<a href="quiz/?id=${r.id}&from=eleves" class="btn-quiz"><i class="ti ti-brain" style="font-size:11px"></i> Quiz</a>`;
+
+  // Score badge si déjà fait
+  const myResult = quizResults.find(res => res.id == r.id);
+  const scoreBadge = myResult ? (() => {
+    const pct = Math.round(myResult.score / myResult.total * 100);
+    const [bg, col] = pct >= 80 ? ['#dcfce7','#15803d'] : pct >= 60 ? ['#fffbeb','#92400e'] : ['#fef2f2','#b91c1c'];
+    return `<div class="score-badge" style="background:${bg};color:${col}">${myResult.score}/${myResult.total}</div>`;
+  })() : '';
+
   return `<div class="card">
-    ${imgHtml}
+    <div class="card-thumb">
+      <img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">
+      <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
+      ${scoreBadge}
+    </div>
     <div class="card-body">
-      <div class="card-header">
-        <div class="card-icon" style="background:${ic.bg};color:${ic.c}"><i class="ti ${ic.i}"></i></div>
-        <div class="card-meta">
-          <div class="card-title">${escHtml(r.titre)}</div>
-          <div class="card-sub">${escHtml(r.theme||'')}</div>
-        </div>
-      </div>
-      <p class="card-desc">${escHtml(r.desc||'')}</p>
-      <div class="card-footer">
-        <span class="badge b-${r.niveau}">${r.niveau}ème</span>
-        <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
-      </div>
-      <div class="card-quiz-row">
-        ${openBtn}
-        ${quizBtn}
-      </div>
+      <div class="card-title">${escHtml(r.titre)}</div>
+      <div class="card-actions">${openBtn}${quizBtn}</div>
     </div>
   </div>`;
 }
@@ -432,42 +472,29 @@ function loadHistory() {
   const name = localStorage.getItem('tc_student_name');
   if (!name) return;
   const all = JSON.parse(localStorage.getItem('tc_quiz_results') || '[]');
-  const mine = all.filter(r => r.nom === name);
-  if (!mine.length) return;
+  quizResults = all.filter(r => r.nom === name);
+  if (!quizResults.length) return;
 
-  const bar = document.getElementById('history-bar');
-  bar.style.display = '';
-  document.getElementById('history-name-lbl').textContent = name + ' —';
-  document.getElementById('history-stats-lbl').textContent =
-    mine.length + ' quiz complété' + (mine.length > 1 ? 's' : '') +
-    '  ·  moy. ' + Math.round(mine.reduce((s, r) => s + r.score / r.total, 0) / mine.length * 100) + '%';
+  document.getElementById('history-name-lbl').textContent = name;
+  document.getElementById('history-bar').style.display = 'flex';
 
-  document.getElementById('history-list').innerHTML = mine
+  document.getElementById('history-scores').innerHTML = quizResults
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .map(r => {
       const pct = Math.round(r.score / r.total * 100);
       const cls = pct >= 80 ? 'hs-green' : pct >= 60 ? 'hs-orange' : 'hs-red';
-      const d = new Date(r.date);
-      const dateStr = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-      return `<a href="quiz/?id=${r.id}&from=eleves" class="history-item">
-        <span class="history-score ${cls}">${r.score}/${r.total}</span>
-        <span>${escHtml(r.titre)}</span>
-        <span style="color:var(--text-hint)">${dateStr}</span>
-      </a>`;
+      return `<a href="quiz/?id=${r.id}&from=eleves" class="hs-chip ${cls}" title="${escHtml(r.titre)}">${r.score}/${r.total}</a>`;
     }).join('');
-}
 
-function toggleHistory() {
-  const body = document.getElementById('history-body');
-  const chev = document.getElementById('history-chevron');
-  body.classList.toggle('open');
-  chev.classList.toggle('open');
+  // Rafraîchir les badges sur les cartes
+  render();
 }
 
 function changeName() {
   const newName = prompt('Ton prénom :', localStorage.getItem('tc_student_name') || '');
   if (newName !== null && newName.trim()) {
     localStorage.setItem('tc_student_name', newName.trim());
+    quizResults = [];
     loadHistory();
   }
 }
@@ -477,12 +504,12 @@ function clearHistory() {
   const name = localStorage.getItem('tc_student_name');
   const all = JSON.parse(localStorage.getItem('tc_quiz_results') || '[]');
   localStorage.setItem('tc_quiz_results', JSON.stringify(all.filter(r => r.nom !== name)));
+  quizResults = [];
   document.getElementById('history-bar').style.display = 'none';
+  render();
 }
 
 load();
-buildThemes();
-loadHistory();
 </script>
 </body>
 </html>
