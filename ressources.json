@@ -566,8 +566,18 @@
       "type": "sequence",
       "niveau": "3",
       "url": ""
+    },
+    {
+      "id": 52,
+      "titre": "Test notice",
+      "desc": "Ressource — Séq. 1 5ème — 1.",
+      "type": "document",
+      "categorie": "connaissance",
+      "niveau": "5",
+      "parent_seq": 28,
+      "url": "pdf/seq-28/test-notice.pdf"
     }
   ],
-  "nextId": 52,
+  "nextId": 53,
   "sheetsUrl": ""
 }
