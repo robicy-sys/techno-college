@@ -508,38 +508,49 @@ function render() {
     return;
   }
 
-  // Grouper par thème puis sous-thème
-  const byTheme = {};
-  filtered.forEach(r => {
-    const th = r.theme || 'Général';
-    const st = r.sous_theme || 'Autre';
-    if (!byTheme[th]) byTheme[th] = {};
-    if (!byTheme[th][st]) byTheme[th][st] = [];
-    byTheme[th][st].push(r);
-  });
+  // Séquences : grille plate sans groupement thématique
+  const seqs = filtered.filter(r => r.type === 'sequence');
+  const docs = filtered.filter(r => r.type !== 'sequence');
 
-  content.innerHTML = Object.entries(byTheme).map(([theme, subthemes]) => {
-    const totalCards = Object.values(subthemes).flat().length;
-    const subHtml = Object.entries(subthemes).map(([st, items]) => {
-      const stCode = items[0].code || '';
-      const codeClass = stCode.startsWith('OST') ? 'code-ost' : stCode.startsWith('SFC') ? 'code-sfc' : 'code-ccri';
-      return `<div class="subtheme-section">
-        <div class="subtheme-heading">
-          <span class="subtheme-code ${codeClass}">${escHtml(stCode)}</span>
-          <span class="subtheme-name">${escHtml(st)}</span>
+  let html = '';
+  if (seqs.length) {
+    html += `<div class="grid">${seqs.map(r => cardHtml(r)).join('')}</div>`;
+  }
+
+  if (docs.length) {
+    const byTheme = {};
+    docs.forEach(r => {
+      const th = r.theme || 'Général';
+      const st = r.sous_theme || 'Autre';
+      if (!byTheme[th]) byTheme[th] = {};
+      if (!byTheme[th][st]) byTheme[th][st] = [];
+      byTheme[th][st].push(r);
+    });
+    html += Object.entries(byTheme).map(([theme, subthemes]) => {
+      const totalCards = Object.values(subthemes).flat().length;
+      const subHtml = Object.entries(subthemes).map(([st, items]) => {
+        const stCode = items[0].code || '';
+        const codeClass = stCode.startsWith('OST') ? 'code-ost' : stCode.startsWith('SFC') ? 'code-sfc' : 'code-ccri';
+        return `<div class="subtheme-section">
+          <div class="subtheme-heading">
+            <span class="subtheme-code ${codeClass}">${escHtml(stCode)}</span>
+            <span class="subtheme-name">${escHtml(st)}</span>
+          </div>
+          <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
+        </div>`;
+      }).join('');
+      return `<div class="theme-section">
+        <div class="theme-heading">
+          <div class="theme-icon"><i class="ti ${THEME_ICON[theme]||'ti-folder'}"></i></div>
+          <span class="theme-name">${escHtml(theme)}</span>
+          <span class="theme-count">${totalCards} fiche${totalCards > 1 ? 's' : ''}</span>
         </div>
-        <div class="grid">${items.map(r => cardHtml(r)).join('')}</div>
+        ${subHtml}
       </div>`;
     }).join('');
-    return `<div class="theme-section">
-      <div class="theme-heading">
-        <div class="theme-icon"><i class="ti ${THEME_ICON[theme]||'ti-folder'}"></i></div>
-        <span class="theme-name">${escHtml(theme)}</span>
-        <span class="theme-count">${totalCards} fiche${totalCards > 1 ? 's' : ''}</span>
-      </div>
-      ${subHtml}
-    </div>`;
-  }).join('');
+  }
+
+  content.innerHTML = html;
 }
 
 function cardHtml(r) {
@@ -570,24 +581,17 @@ function cardHtml(r) {
     const voirBtn = subCount > 0
       ? `<button class="btn-open" onclick="viewSeq(${r.id})" style="flex:1;cursor:pointer"><i class="ti ti-books" style="font-size:11px"></i> Voir (${subCount})</button>`
       : `<span class="btn-open" style="opacity:.35;cursor:default;flex:1"><i class="ti ti-books" style="font-size:11px"></i> Aucune</span>`;
-    if (subCount > 0) {
-      const pct = Math.round(
-        resources.filter(s => s.parent_seq === r.id && quizResults.find(qr => qr.id == s.id)).length / subCount * 100
-      );
-    }
     const subDone = quizResults.filter(qr => resources.find(s => s.parent_seq === r.id && s.id == qr.id)).length;
     const progressBadge = subCount > 0 && subDone > 0
       ? `<div class="score-badge" style="background:#dbeafe;color:#1d4ed8">${subDone}/${subCount}</div>` : '';
-    return `<div class="card" title="${escHtml(r.critere||'')}">
+    return `<div class="card">
       <div class="card-thumb">
-        <div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ${THEME_ICON[r.theme]||'ti-book'}"></i></div>
+        <div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ti-book"></i></div>
         <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
         ${progressBadge}
       </div>
       <div class="card-body">
-        ${codeBadge}
         <div class="card-title">${escHtml(r.titre)}</div>
-        ${critereHtml}
         <div class="card-actions">${voirBtn}</div>
       </div>
     </div>`;

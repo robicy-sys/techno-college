@@ -97,9 +97,6 @@ def main():
                 'type'      : 'document',
                 'categorie' : 'connaissance',
                 'niveau'    : seq['niveau'],
-                'theme'     : seq['theme'],
-                'code'      : seq.get('code', ''),
-                'sous_theme': seq.get('sous_theme', ''),
                 'parent_seq': seq_id,
                 'url'       : rel_url,
             }
