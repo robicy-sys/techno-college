@@ -10,7 +10,8 @@
       "code": "OST 1.1",
       "sous_theme": "Évolution des OST",
       "critere": "OST 1.1.1a — Collecter, trier et analyser des données",
-      "url": "pdf/1-Famille lignée - Fonctions Techniques - Invention.pdf"
+      "url": "pdf/1-Famille lignée - Fonctions Techniques - Invention.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 2,
@@ -22,7 +23,8 @@
       "code": "CCRI 1.1",
       "sous_theme": "Gestion de projet technique",
       "critere": "CCRI 1.1.1a — Suivre un processus de conception et de réalisation",
-      "url": "pdf/4.1-Cahier des charges.pdf"
+      "url": "pdf/4.1-Cahier des charges.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 3,
@@ -34,7 +36,8 @@
       "code": "CCRI 1.1",
       "sous_theme": "Gestion de projet technique",
       "critere": "CCRI 1.1.1a — Suivre un processus de conception et de réalisation",
-      "url": "pdf/4.2-Cahier des charges.pdf"
+      "url": "pdf/4.2-Cahier des charges.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 4,
@@ -46,7 +49,8 @@
       "code": "OST 1.2",
       "sous_theme": "Usages et impacts du numérique",
       "critere": "OST 1.2.1a — Décrire le rôle des systèmes d'information",
-      "url": "pdf/5.1-Système d'information et stockage des données.pdf"
+      "url": "pdf/5.1-Système d'information et stockage des données.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 5,
@@ -58,7 +62,8 @@
       "code": "SFC 1.4",
       "sous_theme": "Structuration et traitement des données",
       "critere": "SFC 1.4.1a — Déterminer des descripteurs pour décrire des objets sous forme de données",
-      "url": "pdf/5.2-Representation des données.pdf"
+      "url": "pdf/5.2-Representation des données.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 6,
@@ -70,7 +75,8 @@
       "code": "CCRI 1.2",
       "sous_theme": "Prototypage de solutions",
       "critere": "CCRI 1.2.1a — Fabriquer une solution pour améliorer un OST existant",
-      "url": "pdf/6-Mode de représentation.pdf"
+      "url": "pdf/6-Mode de représentation.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 7,
@@ -82,7 +88,8 @@
       "code": "OST 3.1",
       "sous_theme": "Choix d'un OST — Développement durable",
       "critere": "OST 3.1.1b — Identifier les étapes du cycle de vie influencées par les choix",
-      "url": "pdf/7-Notice.pdf"
+      "url": "pdf/7-Notice.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 8,
@@ -94,7 +101,8 @@
       "code": "OST 3.1",
       "sous_theme": "Choix d'un OST — Développement durable",
       "critere": "OST 3.1.1c — Choisir un OST parmi plusieurs propositions",
-      "url": "pdf/8-Fiabilite-Durabilite-Efficacite-Reparabilite.pdf"
+      "url": "pdf/8-Fiabilite-Durabilite-Efficacite-Reparabilite.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 9,
@@ -106,7 +114,8 @@
       "code": "OST 3.1",
       "sous_theme": "Choix d'un OST — Développement durable",
       "critere": "OST 3.1.1b — Identifier les étapes du cycle de vie influencées par les choix",
-      "url": "pdf/9-Cycle de vie.pdf"
+      "url": "pdf/9-Cycle de vie.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 10,
@@ -118,7 +127,8 @@
       "code": "OST 3.2",
       "sous_theme": "Performance des OST",
       "critere": "OST 3.2.1a — Mesurer et comparer une performance à partir d'un protocole fourni",
-      "url": "pdf/10- Grandeurs et Protocole.pdf"
+      "url": "pdf/10- Grandeurs et Protocole.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 11,
@@ -130,7 +140,8 @@
       "code": "SFC 1.1",
       "sous_theme": "Chaîne d'énergie",
       "critere": "SFC 1.1.1a — Associer des solutions techniques à une ou des fonctions techniques",
-      "url": "pdf/11-Energie.pdf"
+      "url": "pdf/11-Energie.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 12,
@@ -142,7 +153,8 @@
       "code": "SFC 1.2",
       "sous_theme": "Matériaux et procédés",
       "critere": "SFC 1.2.1a — Identifier les principaux matériaux constitutifs d'un OST",
-      "url": "pdf/14-Caractéristique des matériaux.pdf"
+      "url": "pdf/14-Caractéristique des matériaux.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 13,
@@ -154,7 +166,8 @@
       "code": "CCRI 1.1",
       "sous_theme": "Gestion de projet technique",
       "critere": "CCRI 1.1.1a — Suivre un processus de conception et de réalisation",
-      "url": "pdf/21.1-Planification.pdf"
+      "url": "pdf/21.1-Planification.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 14,
@@ -166,7 +179,8 @@
       "code": "CCRI 1.1",
       "sous_theme": "Gestion de projet technique",
       "critere": "CCRI 1.1.1a — Suivre un processus de conception et de réalisation",
-      "url": "pdf/21.2-Etapes du projet - Revue.pdf"
+      "url": "pdf/21.2-Etapes du projet - Revue.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 15,
@@ -178,7 +192,8 @@
       "code": "OST 3.1",
       "sous_theme": "Choix d'un OST — Développement durable",
       "critere": "OST 3.1.1b — Identifier les étapes du cycle de vie influencées par les choix",
-      "url": "pdf/22-Ecoconception-Bioinspiration.pdf"
+      "url": "pdf/22-Ecoconception-Bioinspiration.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 16,
@@ -190,7 +205,8 @@
       "code": "SFC 1.1",
       "sous_theme": "Chaîne d'énergie",
       "critere": "SFC 1.1.2a — Identifier les constituants d'une chaîne d'énergie et les associer à leurs fonctions",
-      "url": "pdf/12-Energie-Chaîne d'énergie-Transmission.pdf"
+      "url": "pdf/12-Energie-Chaîne d'énergie-Transmission.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 17,
@@ -202,7 +218,8 @@
       "code": "SFC 1.1",
       "sous_theme": "Chaîne d'énergie",
       "critere": "SFC 1.1.2a — Identifier les constituants d'une chaîne d'énergie",
-      "url": "pdf/13-Mecanisme de transmission.pdf"
+      "url": "pdf/13-Mecanisme de transmission.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 18,
@@ -214,7 +231,8 @@
       "code": "CCRI 1.6",
       "sous_theme": "Modélisation et fabrication",
       "critere": "CCRI 1.6.2b — Choisir les moyens et produire la forme voulue",
-      "url": "pdf/15-Procédés de mise en forme.pdf"
+      "url": "pdf/15-Procédés de mise en forme.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 19,
@@ -226,7 +244,8 @@
       "code": "SFC 1.3",
       "sous_theme": "Chaîne d'information",
       "critere": "SFC 1.3.2a — Identifier les constituants de la chaîne d'information et les associer à leur fonction",
-      "url": "pdf/16-Information-Capteur-Microcontroleur-IHM.pdf"
+      "url": "pdf/16-Information-Capteur-Microcontroleur-IHM.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 20,
@@ -238,7 +257,8 @@
       "code": "SFC 1.4",
       "sous_theme": "Structuration et traitement des données",
       "critere": "SFC 1.4.2a — Décrire et analyser la transformation des données téléversées ou issues d'un OST",
-      "url": "pdf/17-Traitement des données.pdf"
+      "url": "pdf/17-Traitement des données.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 21,
@@ -250,7 +270,8 @@
       "code": "SFC 1.5",
       "sous_theme": "Réseaux informatiques",
       "critere": "SFC 1.5.2a — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local",
-      "url": "pdf/18.1-ReseauLocal-AdresseIP-Commutateur-Routeur.pdf"
+      "url": "pdf/18.1-ReseauLocal-AdresseIP-Commutateur-Routeur.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 22,
@@ -262,7 +283,8 @@
       "code": "SFC 1.5",
       "sous_theme": "Réseaux informatiques",
       "critere": "SFC 1.5.2a — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local",
-      "url": "pdf/18.2-Reseau Internet.pdf"
+      "url": "pdf/18.2-Reseau Internet.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 23,
@@ -274,7 +296,8 @@
       "code": "SFC 1.5",
       "sous_theme": "Réseaux informatiques",
       "critere": "SFC 1.5.2a — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local",
-      "url": "pdf/18.3-Liaison - Debit.pdf"
+      "url": "pdf/18.3-Liaison - Debit.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 24,
@@ -286,7 +309,8 @@
       "code": "CCRI 3.1",
       "sous_theme": "Programmation des OST",
       "critere": "CCRI 3.1.2b — Traduire un algorithme en un programme",
-      "url": "pdf/19-Algorithme et Programmation.pdf"
+      "url": "pdf/19-Algorithme et Programmation.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 25,
@@ -298,7 +322,8 @@
       "code": "OST 1.1",
       "sous_theme": "Évolution des OST",
       "critere": "OST 1.1.3a — Identifier les innovations de rupture attachées à l'évolution d'un OST",
-      "url": "pdf/2-Intelligence Artificielle.pdf"
+      "url": "pdf/2-Intelligence Artificielle.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 26,
@@ -310,7 +335,8 @@
       "code": "OST 1.2",
       "sous_theme": "Usages et impacts du numérique",
       "critere": "OST 1.2.3a — Exprimer le rôle du développement stratégique du numérique dans la société",
-      "url": "pdf/3-Cybersécurité-Cyberviolence.pdf"
+      "url": "pdf/3-Cybersécurité-Cyberviolence.pdf",
+      "categorie": "connaissance"
     },
     {
       "id": 27,
@@ -322,7 +348,8 @@
       "code": "CCRI 3.1",
       "sous_theme": "Programmation des OST",
       "critere": "CCRI 3.1.3b — Réaliser et mettre au point un programme commandant un système réel avec IHM",
-      "url": "pdf/20-Programmation et IHM.pdf"
+      "url": "pdf/20-Programmation et IHM.pdf",
+      "categorie": "connaissance"
     }
   ],
   "nextId": 28,
