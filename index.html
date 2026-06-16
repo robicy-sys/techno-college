@@ -327,6 +327,51 @@
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
 
+  /* Sync modal */
+  .sync-modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    width: min(520px, 100%);
+    border: 0.5px solid var(--border);
+  }
+  .sync-steps { margin: 1rem 0; }
+  .sync-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .sync-step:last-child { border-bottom: none; }
+  .sync-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .sync-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .sync-cmd {
+    background: var(--bg);
+    border: 0.5px solid var(--border-hover);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--text);
+    word-break: break-all;
+    cursor: pointer;
+    user-select: all;
+    position: relative;
+  }
+  .sync-cmd:hover { border-color: var(--accent); }
+  .sync-indicator {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 3px 8px; border-radius: 10px;
+    margin-left: 8px;
+  }
+  .sync-ok { background: #EAF3DE; color: #27500A; }
+  .sync-warn { background: #FAEEDA; color: #633806; }
+
   /* Toast */
   .toast {
     position: fixed;
@@ -353,6 +398,9 @@
     Techno Collège
   </a>
   <div class="header-right">
+    <button class="btn" onclick="openSync()" title="Synchroniser vers GitHub">
+      <i class="ti ti-cloud-upload"></i> Synchroniser
+    </button>
     <button class="btn" onclick="exportData()" title="Exporter les ressources">
       <i class="ti ti-download"></i> Exporter
     </button>
@@ -449,6 +497,47 @@
   </div>
 </div>
 
+<!-- Modal sync -->
+<div class="modal-bg" id="sync-bg" onclick="closeSyncBg(event)">
+  <div class="sync-modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2><i class="ti ti-cloud-upload" style="margin-right:8px;color:var(--accent)"></i>Synchroniser vers GitHub</h2>
+      <button class="icon-btn" onclick="closeSync()" aria-label="Fermer"><i class="ti ti-x"></i></button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Tes ressources locales seront publiées sur le site en ligne.</p>
+    <div class="sync-steps">
+      <div class="sync-step">
+        <div class="sync-num">1</div>
+        <div style="flex:1">
+          <div class="sync-label">Télécharger le fichier de ressources</div>
+          <button class="btn btn-primary" onclick="downloadForSync()" style="font-size:12px;padding:6px 12px">
+            <i class="ti ti-download"></i> Télécharger ressources.json
+          </button>
+        </div>
+      </div>
+      <div class="sync-step">
+        <div class="sync-num">2</div>
+        <div style="flex:1">
+          <div class="sync-label">Déplacer dans le dossier du site et pousser — colle cette commande dans Terminal :</div>
+          <div class="sync-cmd" id="sync-cmd" onclick="copyCmd()" title="Cliquer pour copier">cp ~/Downloads/ressources.json ~/techno-college/ressources.json &amp;&amp; cd ~/techno-college &amp;&amp; git add ressources.json &amp;&amp; git commit -m "Sync ressources" &amp;&amp; git push</div>
+          <button class="btn" onclick="copyCmd()" style="margin-top:8px;font-size:12px;padding:6px 12px">
+            <i class="ti ti-copy"></i> Copier la commande
+          </button>
+        </div>
+      </div>
+      <div class="sync-step">
+        <div class="sync-num">3</div>
+        <div style="flex:1">
+          <div class="sync-label">Attendre ~1 minute, puis le site en ligne est mis à jour.</div>
+          <a href="https://robicy-sys.github.io/techno-college" target="_blank" class="btn" style="font-size:12px;padding:6px 12px">
+            <i class="ti ti-external-link"></i> Voir le site
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -476,7 +565,24 @@ let nextId = 1;
 let tabNiv = '';
 let typeFilter = '';
 
-function load() {
+async function load() {
+  // Essayer de charger depuis ressources.json (version synchronisée GitHub)
+  try {
+    const resp = await fetch('./ressources.json?_=' + Date.now());
+    if (resp.ok) {
+      const data = await resp.json();
+      if (Array.isArray(data.resources)) {
+        resources = data.resources;
+        nextId = data.nextId || (Math.max(...resources.map(r => r.id)) + 1);
+        // Mettre à jour le localStorage avec la version GitHub
+        localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId }));
+        renderCards();
+        return;
+      }
+    }
+  } catch(e) { /* pas de fichier JSON, on continue */ }
+
+  // Fallback : localStorage
   try {
     const saved = localStorage.getItem('techno-ressources');
     if (saved) {
@@ -606,6 +712,24 @@ function addResource() {
   showToast('Ressource ajoutée');
 }
 
+function openSync() { document.getElementById('sync-bg').classList.add('open'); }
+function closeSync() { document.getElementById('sync-bg').classList.remove('open'); }
+function closeSyncBg(e) { if (e.target === document.getElementById('sync-bg')) closeSync(); }
+
+function downloadForSync() {
+  const blob = new Blob([JSON.stringify({ resources, nextId }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ressources.json';
+  a.click();
+  showToast('Fichier téléchargé — exécute la commande Terminal');
+}
+
+function copyCmd() {
+  const cmd = `cp ~/Downloads/ressources.json ~/techno-college/ressources.json && cd ~/techno-college && git add ressources.json && git commit -m "Sync ressources" && git push`;
+  navigator.clipboard.writeText(cmd).then(() => showToast('Commande copiée !'));
+}
+
 function exportData() {
   const blob = new Blob([JSON.stringify({ resources, nextId }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
@@ -647,7 +771,7 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSync(); } });
 
 load();
 </script>
