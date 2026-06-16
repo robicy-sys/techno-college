@@ -56,7 +56,6 @@
   /* Header */
   header {
     background: var(--header-bg);
-    border-bottom: none;
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
@@ -65,179 +64,140 @@
     position: sticky;
     top: 0;
     z-index: 20;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    font-size: 16px;
-    text-decoration: none;
-    color: #e0e7ff;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 500; font-size: 16px;
+    text-decoration: none; color: #e0e7ff;
   }
   .logo-icon {
-    width: 34px; height: 34px;
-    background: #6366f1;
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    color: #ffffff;
-    font-size: 18px;
+    width: 34px; height: 34px; background: #6366f1;
+    border-radius: 9px; display: flex; align-items: center;
+    justify-content: center; color: #fff; font-size: 18px;
   }
-  .header-right { display: flex; align-items: center; gap: 8px; }
+  .header-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
   /* Buttons */
   .btn {
     border: 0.5px solid rgba(165,180,252,0.5);
     border-radius: var(--radius-md);
-    padding: 7px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    background: transparent;
-    color: #c7d2fe;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: inherit;
-    transition: background 0.15s;
-    text-decoration: none;
+    padding: 7px 13px;
+    font-size: 13px; cursor: pointer;
+    background: transparent; color: #c7d2fe;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: inherit; transition: background 0.15s;
+    text-decoration: none; white-space: nowrap;
   }
   .btn:hover { background: rgba(255,255,255,0.1); }
   .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
   .btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+  .btn-ghost { border-color: transparent; color: #a5b4fc; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); }
 
   /* Nav tabs */
   nav {
     background: var(--nav-bg);
-    border-bottom: none;
     padding: 0 1.5rem;
-    display: flex;
-    gap: 2px;
-    overflow-x: auto;
+    display: flex; gap: 2px; overflow-x: auto;
   }
   .nav-tab {
-    padding: 11px 15px;
-    font-size: 13px;
-    cursor: pointer;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: #a5b4fc;
-    background: none;
-    white-space: nowrap;
-    font-family: inherit;
-    transition: color 0.15s;
+    padding: 11px 15px; font-size: 13px; cursor: pointer;
+    border: none; border-bottom: 2px solid transparent;
+    color: #a5b4fc; background: none; white-space: nowrap;
+    font-family: inherit; transition: color 0.15s;
   }
   .nav-tab:hover { color: #e0e7ff; }
   .nav-tab.active { color: #fff; border-bottom-color: #a5b4fc; font-weight: 500; }
 
   /* Main */
-  main { padding: 1.5rem; max-width: 1140px; margin: 0 auto; }
+  main { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
 
-  /* Stats */
+  /* Stats — 3 axes BO + total */
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 1.5rem;
+    gap: 10px; margin-bottom: 1.5rem;
   }
-  @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 680px) { .stats { grid-template-columns: repeat(2, 1fr); } }
   .stat {
     background: var(--surface);
-    border: 0.5px solid #e0e7ff;
+    border: 0.5px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 1rem;
+    padding: 0.9rem 1rem;
     text-align: center;
   }
-  .stat-n { color: var(--accent); }
-  .stat-n { font-size: 24px; font-weight: 500; margin-bottom: 2px; }
-  .stat-l { font-size: 12px; color: var(--text-muted); }
+  .stat-n { font-size: 24px; font-weight: 500; color: var(--accent); margin-bottom: 2px; }
+  .stat-l { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
 
   /* Filters */
-  .filters {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-    align-items: center;
+  .filter-section { margin-bottom: 1.25rem; }
+  .filter-row {
+    display: flex; gap: 7px; flex-wrap: wrap;
+    align-items: center; margin-bottom: 7px;
   }
-  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 320px; }
+  .filter-label {
+    font-size: 11px; color: var(--text-hint);
+    text-transform: uppercase; letter-spacing: .04em;
+    white-space: nowrap; padding: 0 2px;
+  }
+  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 300px; }
   .search-wrap .ti {
     position: absolute; left: 10px; top: 50%;
     transform: translateY(-50%);
-    color: var(--text-hint); font-size: 16px;
-    pointer-events: none;
+    color: var(--text-hint); font-size: 16px; pointer-events: none;
   }
   .search-wrap input {
-    width: 100%;
-    padding: 8px 10px 8px 34px;
+    width: 100%; padding: 8px 10px 8px 34px;
     border: 0.5px solid var(--border-hover);
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    background: var(--surface);
-    color: var(--text);
-    font-family: inherit;
-    outline: none;
+    border-radius: var(--radius-md); font-size: 13px;
+    background: var(--surface); color: var(--text);
+    font-family: inherit; outline: none;
   }
   .search-wrap input:focus { border-color: var(--accent); }
   .filter-chip {
     border: 0.5px solid var(--border-hover);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 12px;
-    cursor: pointer;
-    background: transparent;
-    color: var(--text-muted);
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.15s;
+    border-radius: 20px; padding: 5px 13px;
+    font-size: 12px; cursor: pointer;
+    background: transparent; color: var(--text-muted);
+    font-family: inherit; display: inline-flex;
+    align-items: center; gap: 4px; transition: all 0.15s;
+    white-space: nowrap;
   }
   .filter-chip:hover, .filter-chip.active {
-    background: var(--accent-bg);
-    border-color: var(--accent);
-    color: var(--accent-text);
+    background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text);
   }
 
   /* Grid */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
   }
   .card {
     background: var(--surface);
-    border: 0.5px solid #e0e7ff;
+    border: 0.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.1rem;
     transition: border-color 0.15s, box-shadow 0.15s;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
   }
-  .card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.08); }
-  .card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.07); }
+  .card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
   .card-icon {
-    width: 38px; height: 38px;
-    border-radius: 9px;
+    width: 36px; height: 36px; border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px;
-    flex-shrink: 0;
+    font-size: 17px; flex-shrink: 0;
   }
   .card-meta { flex: 1; min-width: 0; }
-  .card-title { font-size: 14px; font-weight: 500; line-height: 1.3; margin-bottom: 3px; }
-  .card-sub { font-size: 12px; color: var(--text-muted); }
-  .card-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.55;
-    margin-bottom: 12px;
-    flex: 1;
-  }
-  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .badges { display: flex; gap: 5px; flex-wrap: wrap; }
-  .badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
+  .card-title { font-size: 13.5px; font-weight: 500; line-height: 1.3; margin-bottom: 2px; }
+  .card-sub { font-size: 11px; color: var(--text-muted); }
+  .card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; flex: 1; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .badges { display: flex; gap: 4px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 2px 9px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
 
-  /* Badge colors */
-  .b-6 { background: #EAF3DE; color: #27500A; }
   .b-5 { background: #FAEEDA; color: #633806; }
   .b-4 { background: #FAECE7; color: #712B13; }
   .b-3 { background: #EEEDFE; color: #3C3489; }
@@ -245,9 +205,9 @@
   .b-vid { background: #FBEAF0; color: #72243E; }
   .b-lien { background: #EAF3DE; color: #27500A; }
   .b-ex { background: #FAEEDA; color: #633806; }
+  .b-seq { background: #F0F4FF; color: #3451B2; }
 
   @media (prefers-color-scheme: dark) {
-    .b-6 { background: #173404; color: #C0DD97; }
     .b-5 { background: #412402; color: #FAC775; }
     .b-4 { background: #4A1B0C; color: #F0997B; }
     .b-3 { background: #26215C; color: #AFA9EC; }
@@ -255,30 +215,26 @@
     .b-vid { background: #4B1528; color: #ED93B1; }
     .b-lien { background: #173404; color: #97C459; }
     .b-ex { background: #412402; color: #EF9F27; }
+    .b-seq { background: #1e2a5c; color: #93aff5; }
   }
 
-  .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .card-actions { display: flex; gap: 5px; flex-shrink: 0; }
   .icon-btn {
-    width: 30px; height: 30px;
+    width: 28px; height: 28px;
     border: 0.5px solid var(--border);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    background: transparent;
-    color: var(--text-muted);
-    font-size: 15px;
-    transition: all 0.15s;
-    text-decoration: none;
+    border-radius: 6px; display: flex;
+    align-items: center; justify-content: center;
+    cursor: pointer; background: transparent;
+    color: var(--text-muted); font-size: 14px;
+    transition: all 0.15s; text-decoration: none;
   }
   .icon-btn:hover { background: var(--bg); color: var(--text); border-color: var(--border-hover); }
   .icon-btn.danger:hover { background: #FCEBEB; color: #A32D2D; border-color: #F09595; }
 
   /* Empty */
   .empty {
-    text-align: center;
-    padding: 4rem 1rem;
-    color: var(--text-muted);
-    grid-column: 1 / -1;
+    text-align: center; padding: 4rem 1rem;
+    color: var(--text-muted); grid-column: 1 / -1;
   }
   .empty .ti { font-size: 36px; display: block; margin-bottom: 10px; color: var(--text-hint); }
 
@@ -286,11 +242,8 @@
   .modal-bg {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.45);
-    z-index: 100;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 1rem;
   }
   .modal-bg.open { display: flex; }
   .modal {
@@ -298,34 +251,30 @@
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     width: min(480px, 100%);
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: 90vh; overflow-y: auto;
     border: 0.5px solid var(--border);
   }
   .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
-  .modal h2 { font-size: 16px; font-weight: 500; }
+  .modal h2 { font-size: 15px; font-weight: 500; }
   .form-row { margin-bottom: 1rem; }
   .form-row label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
   .form-row input,
   .form-row textarea,
   .form-row select {
-    width: 100%;
-    padding: 8px 10px;
+    width: 100%; padding: 8px 10px;
     border: 0.5px solid var(--border-hover);
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    background: var(--surface);
-    color: var(--text);
-    font-family: inherit;
-    outline: none;
+    border-radius: var(--radius-md); font-size: 13px;
+    background: var(--surface); color: var(--text);
+    font-family: inherit; outline: none;
   }
   .form-row input:focus,
   .form-row textarea:focus,
-  .form-row select:focus { border-color: #185FA5; }
-  .form-row textarea { resize: vertical; min-height: 75px; }
+  .form-row select:focus { border-color: var(--accent); }
+  .form-row textarea { resize: vertical; min-height: 70px; }
   .form-row select { cursor: pointer; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+  .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; line-height: 1.5; }
 
   /* Sync modal */
   .sync-modal {
@@ -334,13 +283,10 @@
     padding: 1.5rem;
     width: min(520px, 100%);
     border: 0.5px solid var(--border);
+    max-height: 90vh; overflow-y: auto;
   }
   .sync-steps { margin: 1rem 0; }
-  .sync-step {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 10px 0;
-    border-bottom: 0.5px solid var(--border);
-  }
+  .sync-step { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
   .sync-step:last-child { border-bottom: none; }
   .sync-num {
     width: 24px; height: 24px; border-radius: 50%;
@@ -351,43 +297,56 @@
   }
   .sync-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
   .sync-cmd {
-    background: var(--bg);
-    border: 0.5px solid var(--border-hover);
-    border-radius: var(--radius-md);
-    padding: 8px 12px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--text);
-    word-break: break-all;
-    cursor: pointer;
-    user-select: all;
-    position: relative;
+    background: var(--bg); border: 0.5px solid var(--border-hover);
+    border-radius: var(--radius-md); padding: 8px 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
+    color: var(--text); word-break: break-all;
+    cursor: pointer; user-select: all;
   }
   .sync-cmd:hover { border-color: var(--accent); }
-  .sync-indicator {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 11px; padding: 3px 8px; border-radius: 10px;
-    margin-left: 8px;
+
+  /* QR modal */
+  .qr-modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+    width: min(320px, 100%); text-align: center;
+    border: 0.5px solid var(--border);
   }
-  .sync-ok { background: #EAF3DE; color: #27500A; }
-  .sync-warn { background: #FAEEDA; color: #633806; }
+  .qr-modal img { border-radius: var(--radius-md); margin: 1rem auto; display: block; }
+  .qr-titre { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .qr-url { font-size: 11px; color: var(--text-muted); word-break: break-all; }
 
   /* Toast */
   .toast {
-    position: fixed;
-    bottom: 1.5rem; right: 1.5rem;
-    background: var(--text);
-    color: var(--surface);
-    padding: 10px 18px;
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    z-index: 200;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.2s;
-    pointer-events: none;
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--text); color: var(--surface);
+    padding: 10px 18px; border-radius: var(--radius-md);
+    font-size: 13px; z-index: 200;
+    opacity: 0; transform: translateY(8px);
+    transition: all 0.2s; pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Print */
+  @media print {
+    header, nav, .filter-section, .card-actions, .modal-bg, .toast { display: none !important; }
+    body { background: white; color: black; font-size: 12px; }
+    .stats { display: none; }
+    main { padding: 0; max-width: 100%; }
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .card { border: 1px solid #ccc; break-inside: avoid; padding: 8px; }
+    .card-title { font-size: 12px; }
+    .card-desc { font-size: 11px; }
+    .print-header { display: block !important; }
+  }
+  .print-header {
+    display: none;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1e1b4b;
+  }
+  .print-header h1 { font-size: 18px; }
+  .print-header p { font-size: 12px; color: #666; }
 </style>
 </head>
 <body>
@@ -398,13 +357,19 @@
     Techno Collège
   </a>
   <div class="header-right">
-    <button class="btn" onclick="openSync()" title="Synchroniser vers GitHub">
+    <a class="btn btn-ghost" href="eleves.html" target="_blank" title="Vue élèves">
+      <i class="ti ti-users"></i> Vue élèves
+    </a>
+    <button class="btn btn-ghost" onclick="window.print()" title="Imprimer / PDF">
+      <i class="ti ti-printer"></i> Imprimer
+    </button>
+    <button class="btn" onclick="openSync()">
       <i class="ti ti-cloud-upload"></i> Synchroniser
     </button>
-    <button class="btn" onclick="exportData()" title="Exporter les ressources">
+    <button class="btn" onclick="exportData()">
       <i class="ti ti-download"></i> Exporter
     </button>
-    <label class="btn" title="Importer des ressources" style="cursor:pointer">
+    <label class="btn" style="cursor:pointer">
       <i class="ti ti-upload"></i> Importer
       <input type="file" accept=".json" style="display:none" onchange="importData(event)">
     </label>
@@ -422,23 +387,36 @@
 </nav>
 
 <main>
-  <div class="stats">
-    <div class="stat"><div class="stat-n" id="s-total">0</div><div class="stat-l">ressources</div></div>
-    <div class="stat"><div class="stat-n" id="s-doc">0</div><div class="stat-l">documents</div></div>
-    <div class="stat"><div class="stat-n" id="s-vid">0</div><div class="stat-l">vidéos</div></div>
-    <div class="stat"><div class="stat-n" id="s-ex">0</div><div class="stat-l">exercices</div></div>
+  <div class="print-header">
+    <h1>Techno Collège — Ressources pédagogiques</h1>
+    <p id="print-subtitle"></p>
   </div>
 
-  <div class="filters">
-    <div class="search-wrap">
-      <i class="ti ti-search"></i>
-      <input type="text" id="search" placeholder="Rechercher…" oninput="renderCards()">
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="s-total">0</div><div class="stat-l">ressources</div></div>
+    <div class="stat"><div class="stat-n" id="s-ax1">0</div><div class="stat-l">Objets &amp; systèmes</div></div>
+    <div class="stat"><div class="stat-n" id="s-ax2">0</div><div class="stat-l">Structure &amp; fonct.</div></div>
+    <div class="stat"><div class="stat-n" id="s-ax3">0</div><div class="stat-l">Conception &amp; réal.</div></div>
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-row">
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" id="search" placeholder="Rechercher…" oninput="renderCards()">
+      </div>
+      <span class="filter-label">Type :</span>
+      <button class="filter-chip active" onclick="setType(this,'')">Tout</button>
+      <button class="filter-chip" onclick="setType(this,'document')"><i class="ti ti-file-text"></i> Document</button>
+      <button class="filter-chip" onclick="setType(this,'video')"><i class="ti ti-video"></i> Vidéo</button>
+      <button class="filter-chip" onclick="setType(this,'lien')"><i class="ti ti-link"></i> Lien</button>
+      <button class="filter-chip" onclick="setType(this,'exercice')"><i class="ti ti-pencil"></i> Exercice</button>
+      <button class="filter-chip" onclick="setType(this,'sequence')"><i class="ti ti-list-details"></i> Séquence</button>
     </div>
-    <button class="filter-chip active" onclick="setType(this,'')">Tout type</button>
-    <button class="filter-chip" onclick="setType(this,'document')"><i class="ti ti-file-text"></i> Document</button>
-    <button class="filter-chip" onclick="setType(this,'video')"><i class="ti ti-video"></i> Vidéo</button>
-    <button class="filter-chip" onclick="setType(this,'lien')"><i class="ti ti-link"></i> Lien</button>
-    <button class="filter-chip" onclick="setType(this,'exercice')"><i class="ti ti-pencil"></i> Exercice</button>
+    <div class="filter-row" id="theme-filters">
+      <span class="filter-label">Thème :</span>
+      <button class="filter-chip active" onclick="setTheme(this,'')">Tous</button>
+    </div>
   </div>
 
   <div class="grid" id="grid">
@@ -448,31 +426,32 @@
 
 <!-- Modal ajout -->
 <div class="modal-bg" id="modal-bg" onclick="closeBg(event)">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-header">
-      <h2 id="modal-title">Nouvelle ressource</h2>
-      <button class="icon-btn" onclick="closeModal()" aria-label="Fermer"><i class="ti ti-x"></i></button>
+      <h2>Nouvelle ressource</h2>
+      <button class="icon-btn" onclick="closeModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="form-row">
-      <label for="f-titre">Titre *</label>
+      <label>Titre *</label>
       <input type="text" id="f-titre" placeholder="Ex : Cours sur les matériaux">
     </div>
     <div class="form-row">
-      <label for="f-desc">Description</label>
+      <label>Description</label>
       <textarea id="f-desc" placeholder="Décrivez brièvement le contenu…"></textarea>
     </div>
     <div class="form-grid">
       <div class="form-row">
-        <label for="f-type">Type</label>
+        <label>Type</label>
         <select id="f-type">
           <option value="document">Document</option>
           <option value="video">Vidéo</option>
           <option value="lien">Lien web</option>
           <option value="exercice">Exercice / TP</option>
+          <option value="sequence">Séquence de cours</option>
         </select>
       </div>
       <div class="form-row">
-        <label for="f-niveau">Niveau</label>
+        <label>Niveau</label>
         <select id="f-niveau">
           <option value="5">5ème</option>
           <option value="4">4ème</option>
@@ -481,30 +460,25 @@
       </div>
     </div>
     <div class="form-row">
-      <label for="f-theme">Thème</label>
-      <input type="text" id="f-theme" placeholder="Ex : Matériaux, Informatique, Énergie…">
+      <label>Thème</label>
+      <input type="text" id="f-theme" placeholder="Ex : Énergie, Réseaux, Matériaux…">
     </div>
     <div class="form-row">
       <label>Fichier / Lien</label>
       <div style="display:flex;gap:6px;margin-bottom:8px">
-        <button type="button" class="filter-chip active" id="mode-url" onclick="setLinkMode('url')" style="border-radius:var(--radius-md)"><i class="ti ti-link"></i> Lien web</button>
-        <button type="button" class="filter-chip" id="mode-pdf" onclick="setLinkMode('pdf')" style="border-radius:var(--radius-md)"><i class="ti ti-file-type-pdf"></i> PDF local</button>
+        <button type="button" class="filter-chip active" id="mode-url" onclick="setLinkMode('url')"><i class="ti ti-link"></i> Lien web</button>
+        <button type="button" class="filter-chip" id="mode-pdf" onclick="setLinkMode('pdf')"><i class="ti ti-file-type-pdf"></i> PDF local</button>
       </div>
       <div id="url-field">
         <input type="url" id="f-url" placeholder="https://…">
       </div>
       <div id="pdf-field" style="display:none">
-        <div style="display:flex;gap:6px;align-items:center">
-          <input type="text" id="f-pdf" placeholder="nom-du-fichier.pdf" style="flex:1;padding:8px 10px;border:0.5px solid var(--border-hover);border-radius:var(--radius-md);font-size:13px;background:var(--surface);color:var(--text);font-family:inherit;outline:none">
-        </div>
-        <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">
-          <i class="ti ti-info-circle" style="vertical-align:middle"></i>
-          Place le PDF dans <code style="background:var(--bg);padding:1px 5px;border-radius:4px">~/techno-college/pdf/</code> puis clique <strong>Synchroniser</strong>.
-        </p>
+        <input type="text" id="f-pdf" placeholder="nom-du-fichier.pdf">
+        <p class="form-hint"><i class="ti ti-info-circle" style="vertical-align:middle"></i> Place le PDF dans <code style="background:var(--bg);padding:1px 5px;border-radius:4px">~/techno-college/pdf/</code> puis clique <strong>Synchroniser</strong>.</p>
       </div>
     </div>
     <div class="form-actions">
-      <button class="btn" onclick="closeModal()">Annuler</button>
+      <button class="btn" style="color:var(--text);border-color:var(--border-hover)" onclick="closeModal()">Annuler</button>
       <button class="btn btn-primary" onclick="addResource()"><i class="ti ti-check"></i> Ajouter</button>
     </div>
   </div>
@@ -515,7 +489,7 @@
   <div class="sync-modal" role="dialog" aria-modal="true">
     <div class="modal-header">
       <h2><i class="ti ti-cloud-upload" style="margin-right:8px;color:var(--accent)"></i>Synchroniser vers GitHub</h2>
-      <button class="icon-btn" onclick="closeSync()" aria-label="Fermer"><i class="ti ti-x"></i></button>
+      <button class="icon-btn" onclick="closeSync()"><i class="ti ti-x"></i></button>
     </div>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Tes ressources locales seront publiées sur le site en ligne.</p>
     <div class="sync-steps">
@@ -531,9 +505,9 @@
       <div class="sync-step">
         <div class="sync-num">2</div>
         <div style="flex:1">
-          <div class="sync-label">Déplacer dans le dossier du site et pousser — colle cette commande dans Terminal :</div>
-          <div class="sync-cmd" id="sync-cmd" onclick="copyCmd()" title="Cliquer pour copier">cp ~/Downloads/ressources.json ~/techno-college/ &amp;&amp; cd ~/techno-college &amp;&amp; git add ressources.json pdf/ &amp;&amp; git commit -m "Sync ressources" &amp;&amp; git push</div>
-          <button class="btn" onclick="copyCmd()" style="margin-top:8px;font-size:12px;padding:6px 12px">
+          <div class="sync-label">Colle cette commande dans Terminal :</div>
+          <div class="sync-cmd" onclick="copyCmd()">cp ~/Downloads/ressources.json ~/techno-college/ &amp;&amp; cd ~/techno-college &amp;&amp; git add ressources.json pdf/ &amp;&amp; git commit -m "Sync ressources" &amp;&amp; git push</div>
+          <button class="btn" onclick="copyCmd()" style="margin-top:8px;font-size:12px;padding:6px 12px;color:var(--text);border-color:var(--border-hover)">
             <i class="ti ti-copy"></i> Copier la commande
           </button>
         </div>
@@ -541,8 +515,8 @@
       <div class="sync-step">
         <div class="sync-num">3</div>
         <div style="flex:1">
-          <div class="sync-label">Attendre ~1 minute, puis le site en ligne est mis à jour.</div>
-          <a href="https://robicy-sys.github.io/techno-college" target="_blank" class="btn" style="font-size:12px;padding:6px 12px">
+          <div class="sync-label">Attendre ~1 minute, puis le site est à jour.</div>
+          <a href="https://robicy-sys.github.io/techno-college" target="_blank" class="btn" style="font-size:12px;padding:6px 12px;color:var(--text);border-color:var(--border-hover)">
             <i class="ti ti-external-link"></i> Voir le site
           </a>
         </div>
@@ -551,35 +525,49 @@
   </div>
 </div>
 
+<!-- Modal QR code -->
+<div class="modal-bg" id="qr-bg" onclick="closeQR()">
+  <div class="qr-modal" role="dialog" onclick="event.stopPropagation()">
+    <div class="modal-header" style="margin-bottom:0.5rem">
+      <h2>QR Code</h2>
+      <button class="icon-btn" onclick="closeQR()"><i class="ti ti-x"></i></button>
+    </div>
+    <p class="qr-titre" id="qr-titre"></p>
+    <img id="qr-img" src="" alt="QR Code" width="200" height="200">
+    <p class="qr-url" id="qr-url"></p>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:1rem">
+      <a id="qr-download" href="" download="qrcode.png" class="btn btn-primary" style="font-size:12px">
+        <i class="ti ti-download"></i> Télécharger
+      </a>
+      <button class="btn" onclick="closeQR()" style="font-size:12px;color:var(--text);border-color:var(--border-hover)">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
+const BASE_URL = 'https://robicy-sys.github.io/techno-college/';
+
 const ICONS = {
   document: { i: 'ti-file-text', bg: '#E6F1FB', c: '#185FA5' },
   video:    { i: 'ti-video',     bg: '#FBEAF0', c: '#99355A' },
   lien:     { i: 'ti-link',      bg: '#EAF3DE', c: '#3B6D11' },
   exercice: { i: 'ti-pencil',    bg: '#FAEEDA', c: '#854F0B' },
+  sequence: { i: 'ti-list-details', bg: '#F0F4FF', c: '#3451B2' },
 };
-const TYPE_LBL = { document:'Document', video:'Vidéo', lien:'Lien', exercice:'Exercice' };
-
-const DEFAULTS = [
-  { id:1, titre:'Introduction aux matériaux', desc:'Cours complet sur les familles de matériaux et leurs propriétés physiques.', type:'document', niveau:'6', theme:'Matériaux', url:'' },
-  { id:2, titre:'TP : observer et classer les matériaux', desc:'Activité pratique en classe — fiche élève à imprimer et compléter.', type:'exercice', niveau:'6', theme:'Matériaux', url:'' },
-  { id:3, titre:'Le défi du pont — projet interdisciplinaire', desc:'Séquence projet : concevoir un pont avec contraintes de coût et résistance.', type:'exercice', niveau:'5', theme:'Structures', url:'' },
-  { id:4, titre:'Débuter avec Scratch', desc:'Tutoriel vidéo d\'introduction à la programmation par blocs pour les 5ème.', type:'video', niveau:'5', theme:'Informatique', url:'https://scratch.mit.edu' },
-  { id:5, titre:'Les énergies renouvelables', desc:'Ressource interactive sur les différentes sources d\'énergie et leur impact environnemental.', type:'lien', niveau:'4', theme:'Énergie', url:'https://www.edf.fr/groupe-edf/espaces-dedies/jeunes-enseignants' },
-  { id:6, titre:'Introduction à Python', desc:'Introduction au langage Python — activité débranchée puis codage en ligne.', type:'document', niveau:'4', theme:'Informatique', url:'' },
-  { id:7, titre:'Projet maison connectée (IoT)', desc:'Séquence sur l\'Internet des objets avec micro:bit — capteurs et actionneurs.', type:'exercice', niveau:'3', theme:'Numérique', url:'' },
-  { id:8, titre:'Annales brevet technologie', desc:'Sujets d\'entraînement complets avec corrigés détaillés pour préparer le brevet.', type:'document', niveau:'3', theme:'Révisions', url:'' },
-];
+const TYPE_LBL = { document:'Document', video:'Vidéo', lien:'Lien', exercice:'Exercice', sequence:'Séquence' };
 
 let resources = [];
 let nextId = 1;
 let tabNiv = '';
 let typeFilter = '';
+let themeFilter = '';
+let linkMode = 'url';
+
+// ── Chargement ──────────────────────────────────────────────────────────────
 
 async function load() {
-  // Essayer de charger depuis ressources.json (version synchronisée GitHub)
   try {
     const resp = await fetch('./ressources.json?_=' + Date.now());
     if (resp.ok) {
@@ -587,48 +575,76 @@ async function load() {
       if (Array.isArray(data.resources)) {
         resources = data.resources;
         nextId = data.nextId || (Math.max(...resources.map(r => r.id)) + 1);
-        // Mettre à jour le localStorage avec la version GitHub
         localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId }));
-        renderCards();
+        renderAll();
         return;
       }
     }
-  } catch(e) { /* pas de fichier JSON, on continue */ }
-
-  // Fallback : localStorage
+  } catch(e) {}
   try {
     const saved = localStorage.getItem('techno-ressources');
     if (saved) {
       const data = JSON.parse(saved);
-      resources = data.resources || DEFAULTS;
-      nextId = data.nextId || (Math.max(...resources.map(r => r.id)) + 1);
-    } else {
-      resources = [...DEFAULTS];
-      nextId = DEFAULTS.length + 1;
+      resources = data.resources || [];
+      nextId = data.nextId || 1;
     }
-  } catch(e) {
-    resources = [...DEFAULTS];
-    nextId = DEFAULTS.length + 1;
-  }
-  renderCards();
+  } catch(e) { resources = []; nextId = 1; }
+  renderAll();
 }
 
 function save() {
   localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId }));
 }
 
+// ── Tabs / Filtres ───────────────────────────────────────────────────────────
+
 function setTab(el, niv) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   tabNiv = niv;
-  renderCards();
+  renderAll();
 }
 
 function setType(el, t) {
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.filter-row:first-child .filter-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   typeFilter = t;
   renderCards();
+}
+
+function setTheme(el, t) {
+  document.querySelectorAll('#theme-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  themeFilter = t;
+  renderCards();
+}
+
+function buildThemeFilters() {
+  const themes = [...new Set(resources.map(r => r.theme).filter(Boolean))].sort();
+  const container = document.getElementById('theme-filters');
+  container.innerHTML = '<span class="filter-label">Thème :</span>';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-chip' + (themeFilter === '' ? ' active' : '');
+  allBtn.textContent = 'Tous';
+  allBtn.onclick = () => setTheme(allBtn, '');
+  container.appendChild(allBtn);
+  themes.forEach(th => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-chip' + (themeFilter === th ? ' active' : '');
+    btn.textContent = th;
+    btn.onclick = () => setTheme(btn, th);
+    container.appendChild(btn);
+  });
+}
+
+// ── Rendu ────────────────────────────────────────────────────────────────────
+
+function renderAll() {
+  buildThemeFilters();
+  updateStats();
+  renderCards();
+  document.getElementById('print-subtitle').textContent =
+    'Niveau : ' + (tabNiv ? tabNiv + 'ème' : 'Tous') + ' — ' + resources.length + ' ressources';
 }
 
 function renderCards() {
@@ -636,86 +652,64 @@ function renderCards() {
   const filtered = resources.filter(r => {
     if (tabNiv && r.niveau !== tabNiv) return false;
     if (typeFilter && r.type !== typeFilter) return false;
-    if (q && !r.titre.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q) && !r.theme.toLowerCase().includes(q)) return false;
+    if (themeFilter && r.theme !== themeFilter) return false;
+    if (q && !r.titre.toLowerCase().includes(q) && !(r.desc||'').toLowerCase().includes(q) && !(r.theme||'').toLowerCase().includes(q)) return false;
     return true;
   });
 
   const g = document.getElementById('grid');
-
   if (!filtered.length) {
     g.innerHTML = '<div class="empty"><i class="ti ti-search-off"></i>Aucune ressource trouvée</div>';
-    updateStats();
     return;
   }
 
   g.innerHTML = filtered.map(r => {
     const ic = ICONS[r.type] || ICONS.document;
     const isPdf = r.url && r.url.startsWith('pdf/');
+    const fullUrl = r.url ? (r.url.startsWith('http') ? r.url : BASE_URL + r.url) : '';
     const linkBtn = r.url
       ? `<a class="icon-btn" href="${escHtml(r.url)}" target="_blank" rel="noopener" title="${isPdf ? 'Ouvrir le PDF' : 'Ouvrir le lien'}"><i class="ti ${isPdf ? 'ti-file-type-pdf' : 'ti-external-link'}"></i></a>`
+      : '';
+    const qrBtn = r.url
+      ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code"><i class="ti ti-qrcode"></i></button>`
       : '';
     return `<article class="card">
       <div class="card-header">
         <div class="card-icon" style="background:${ic.bg};color:${ic.c}"><i class="ti ${ic.i}"></i></div>
         <div class="card-meta">
           <div class="card-title">${escHtml(r.titre)}</div>
-          <div class="card-sub">${escHtml(r.theme)}</div>
+          <div class="card-sub">${escHtml(r.theme||'')}</div>
         </div>
       </div>
-      <p class="card-desc">${escHtml(r.desc)}</p>
+      <p class="card-desc">${escHtml(r.desc||'')}</p>
       <div class="card-footer">
         <div class="badges">
           <span class="badge b-${r.niveau}">${r.niveau}ème</span>
-          <span class="badge b-${r.type}">${TYPE_LBL[r.type] || r.type}</span>
+          <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
         </div>
         <div class="card-actions">
-          ${linkBtn}
+          ${qrBtn}${linkBtn}
           <button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer"><i class="ti ti-trash"></i></button>
         </div>
       </div>
     </article>`;
   }).join('');
-
-  updateStats();
 }
 
 function updateStats() {
-  document.getElementById('s-total').textContent = resources.length;
-  document.getElementById('s-doc').textContent = resources.filter(r => r.type === 'document').length;
-  document.getElementById('s-vid').textContent = resources.filter(r => r.type === 'video').length;
-  document.getElementById('s-ex').textContent = resources.filter(r => r.type === 'exercice').length;
+  const src = tabNiv ? resources.filter(r => r.niveau === tabNiv) : resources;
+  document.getElementById('s-total').textContent = src.length;
+  document.getElementById('s-ax1').textContent = src.filter(r => r.theme === 'Objets et systèmes techniques').length;
+  document.getElementById('s-ax2').textContent = src.filter(r => r.theme === 'Structure et fonctionnement').length;
+  document.getElementById('s-ax3').textContent = src.filter(r => r.theme === 'Conception et réalisation').length;
 }
+
+// ── CRUD ─────────────────────────────────────────────────────────────────────
 
 function deleteRes(id) {
   if (!confirm('Supprimer cette ressource ?')) return;
   resources = resources.filter(r => r.id !== id);
-  save();
-  renderCards();
-  showToast('Ressource supprimée');
-}
-
-let linkMode = 'url';
-
-function setLinkMode(mode) {
-  linkMode = mode;
-  document.getElementById('url-field').style.display = mode === 'url' ? '' : 'none';
-  document.getElementById('pdf-field').style.display = mode === 'pdf' ? '' : 'none';
-  document.getElementById('mode-url').classList.toggle('active', mode === 'url');
-  document.getElementById('mode-pdf').classList.toggle('active', mode === 'pdf');
-}
-
-function openModal() {
-  document.getElementById('modal-bg').classList.add('open');
-  setLinkMode('url');
-  setTimeout(() => document.getElementById('f-titre').focus(), 50);
-}
-
-function closeModal() {
-  document.getElementById('modal-bg').classList.remove('open');
-}
-
-function closeBg(e) {
-  if (e.target === document.getElementById('modal-bg')) closeModal();
+  save(); renderAll(); showToast('Ressource supprimée');
 }
 
 function addResource() {
@@ -725,8 +719,7 @@ function addResource() {
     ? (document.getElementById('f-pdf').value.trim() ? 'pdf/' + document.getElementById('f-pdf').value.trim().replace(/^pdf\//,'') : '')
     : document.getElementById('f-url').value.trim();
   resources.unshift({
-    id: nextId++,
-    titre,
+    id: nextId++, titre,
     desc: document.getElementById('f-desc').value.trim() || 'Aucune description.',
     type: document.getElementById('f-type').value,
     niveau: document.getElementById('f-niveau').value,
@@ -735,10 +728,43 @@ function addResource() {
   });
   save();
   ['f-titre','f-desc','f-theme','f-url','f-pdf'].forEach(id => document.getElementById(id).value = '');
-  closeModal();
-  renderCards();
-  showToast('Ressource ajoutée');
+  closeModal(); renderAll(); showToast('Ressource ajoutée');
 }
+
+// ── Modal ajout ──────────────────────────────────────────────────────────────
+
+function openModal() {
+  document.getElementById('modal-bg').classList.add('open');
+  setLinkMode('url');
+  setTimeout(() => document.getElementById('f-titre').focus(), 50);
+}
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+function closeBg(e) { if (e.target === document.getElementById('modal-bg')) closeModal(); }
+
+function setLinkMode(mode) {
+  linkMode = mode;
+  document.getElementById('url-field').style.display = mode === 'url' ? '' : 'none';
+  document.getElementById('pdf-field').style.display = mode === 'pdf' ? '' : 'none';
+  document.getElementById('mode-url').classList.toggle('active', mode === 'url');
+  document.getElementById('mode-pdf').classList.toggle('active', mode === 'pdf');
+}
+
+// ── QR Code ──────────────────────────────────────────────────────────────────
+
+function showQR(id) {
+  const r = resources.find(x => x.id === id);
+  if (!r || !r.url) return;
+  const fullUrl = r.url.startsWith('http') ? r.url : BASE_URL + r.url;
+  const qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(fullUrl);
+  document.getElementById('qr-titre').textContent = r.titre;
+  document.getElementById('qr-url').textContent = fullUrl;
+  document.getElementById('qr-img').src = qrSrc;
+  document.getElementById('qr-download').href = qrSrc + '&format=png';
+  document.getElementById('qr-bg').classList.add('open');
+}
+function closeQR() { document.getElementById('qr-bg').classList.remove('open'); }
+
+// ── Sync ─────────────────────────────────────────────────────────────────────
 
 function openSync() { document.getElementById('sync-bg').classList.add('open'); }
 function closeSync() { document.getElementById('sync-bg').classList.remove('open'); }
@@ -758,6 +784,8 @@ function copyCmd() {
   navigator.clipboard.writeText(cmd).then(() => showToast('Commande copiée !'));
 }
 
+// ── Export / Import ──────────────────────────────────────────────────────────
+
 function exportData() {
   const blob = new Blob([JSON.stringify({ resources, nextId }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
@@ -776,22 +804,19 @@ function importData(e) {
       if (Array.isArray(data.resources)) {
         resources = data.resources;
         nextId = data.nextId || (Math.max(...resources.map(r => r.id)) + 1);
-        save();
-        renderCards();
-        showToast(`${resources.length} ressources importées`);
+        save(); renderAll(); showToast(`${resources.length} ressources importées`);
       }
-    } catch(err) {
-      alert('Fichier invalide.');
-    }
+    } catch(err) { alert('Fichier invalide.'); }
     e.target.value = '';
   };
   reader.readAsText(file);
 }
 
+// ── Toast ────────────────────────────────────────────────────────────────────
+
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
@@ -799,7 +824,9 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSync(); } });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeSync(); closeQR(); }
+});
 
 load();
 </script>
