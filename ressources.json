@@ -354,7 +354,7 @@
     {
       "id": 28,
       "seq_num": 1,
-      "titre": "Évolution des objets techniques",
+      "titre": "5ème — 1",
       "desc": "Famille et lignée d'objets, fonctions techniques et notion d'invention. Découverte de l'histoire des objets techniques.",
       "type": "sequence",
       "niveau": "5",
@@ -366,7 +366,7 @@
     {
       "id": 29,
       "seq_num": 2,
-      "titre": "Numérique et société",
+      "titre": "5ème — 2",
       "desc": "Systèmes d'information, stockage des données et représentation binaire. Place du numérique dans notre quotidien.",
       "type": "sequence",
       "niveau": "5",
@@ -378,7 +378,7 @@
     {
       "id": 30,
       "seq_num": 3,
-      "titre": "Développement durable et cycle de vie",
+      "titre": "5ème — 3",
       "desc": "Notice, fiabilité, durabilité, réparabilité, écoconception et bioinspiration. Analyser le cycle de vie d'un objet.",
       "type": "sequence",
       "niveau": "5",
@@ -390,7 +390,7 @@
     {
       "id": 31,
       "seq_num": 4,
-      "titre": "Performance des systèmes",
+      "titre": "5ème — 4",
       "desc": "Mesure de grandeurs physiques et protocoles d'évaluation. Comparer des performances d'objets techniques.",
       "type": "sequence",
       "niveau": "5",
@@ -402,7 +402,7 @@
     {
       "id": 32,
       "seq_num": 5,
-      "titre": "Chaîne d'énergie",
+      "titre": "5ème — 5",
       "desc": "Formes d'énergie, conversion, puissance et rendement. Identifier les fonctions énergie d'un système.",
       "type": "sequence",
       "niveau": "5",
@@ -414,7 +414,7 @@
     {
       "id": 33,
       "seq_num": 6,
-      "titre": "Matériaux et procédés",
+      "titre": "5ème — 6",
       "desc": "Familles de matériaux, propriétés mécaniques, thermiques et électriques. Choisir un matériau selon l'usage.",
       "type": "sequence",
       "niveau": "5",
@@ -426,7 +426,7 @@
     {
       "id": 34,
       "seq_num": 7,
-      "titre": "Représentation et codage des données",
+      "titre": "5ème — 7",
       "desc": "Codage binaire, images, sons, couleurs numériques. Comprendre comment une information devient un nombre.",
       "type": "sequence",
       "niveau": "5",
@@ -438,7 +438,7 @@
     {
       "id": 35,
       "seq_num": 8,
-      "titre": "Projet — Concevoir et fabriquer",
+      "titre": "5ème — 8",
       "desc": "Cahier des charges, modes de représentation, planification et revue de projet. Du besoin à la réalisation.",
       "type": "sequence",
       "niveau": "5",
@@ -450,7 +450,7 @@
     {
       "id": 36,
       "seq_num": 1,
-      "titre": "Chaîne d'énergie et transmission",
+      "titre": "4ème — 1",
       "desc": "Alimentation, conversion, transmission du mouvement. Mécanismes : engrenages, poulies, vis sans fin.",
       "type": "sequence",
       "niveau": "4",
@@ -462,7 +462,7 @@
     {
       "id": 37,
       "seq_num": 2,
-      "titre": "Matériaux et mise en forme",
+      "titre": "4ème — 2",
       "desc": "Procédés de fabrication : usinage, moulage, formage. Choisir le matériau et le procédé adapté.",
       "type": "sequence",
       "niveau": "4",
@@ -474,7 +474,7 @@
     {
       "id": 38,
       "seq_num": 3,
-      "titre": "Chaîne d'information et capteurs",
+      "titre": "4ème — 3",
       "desc": "Acquisition avec capteurs, traitement par microcontrôleur, interface homme-machine. Du capteur à l'action.",
       "type": "sequence",
       "niveau": "4",
@@ -486,7 +486,7 @@
     {
       "id": 39,
       "seq_num": 4,
-      "titre": "Traitement et structuration des données",
+      "titre": "4ème — 4",
       "desc": "Filtrage, analyse et exploitation de données numériques. Tableaux et bases de données simples.",
       "type": "sequence",
       "niveau": "4",
@@ -498,7 +498,7 @@
     {
       "id": 40,
       "seq_num": 5,
-      "titre": "Réseaux informatiques",
+      "titre": "4ème — 5",
       "desc": "Réseau local, adresse IP, commutateur, routeur. Liaison filaire et sans fil, débit et Internet.",
       "type": "sequence",
       "niveau": "4",
@@ -510,7 +510,7 @@
     {
       "id": 41,
       "seq_num": 6,
-      "titre": "Algorithmique et programmation",
+      "titre": "4ème — 6",
       "desc": "Variables, conditions, boucles, fonctions. Écrire et traduire un algorithme en programme.",
       "type": "sequence",
       "niveau": "4",
@@ -522,7 +522,7 @@
     {
       "id": 42,
       "seq_num": 7,
-      "titre": "Modélisation et fabrication numérique",
+      "titre": "4ème — 7",
       "desc": "CAO, modélisation 3D, fabrication numérique (impression 3D, découpe laser). Produire la forme voulue.",
       "type": "sequence",
       "niveau": "4",
@@ -534,7 +534,7 @@
     {
       "id": 43,
       "seq_num": 8,
-      "titre": "Projet — Gestion et revue",
+      "titre": "4ème — 8",
       "desc": "Planification Gantt, répartition des tâches, revue de projet et bilan. Conduire un projet collaboratif.",
       "type": "sequence",
       "niveau": "4",
@@ -546,7 +546,7 @@
     {
       "id": 44,
       "seq_num": 1,
-      "titre": "Intelligence artificielle et innovations",
+      "titre": "3ème — 1",
       "desc": "Machine learning, reconnaissance d'images, enjeux éthiques. Les innovations de rupture qui transforment nos objets.",
       "type": "sequence",
       "niveau": "3",
@@ -558,7 +558,7 @@
     {
       "id": 45,
       "seq_num": 2,
-      "titre": "Cybersécurité et société numérique",
+      "titre": "3ème — 2",
       "desc": "Risques numériques, protection des données personnelles, cyberviolence. Agir de façon responsable en ligne.",
       "type": "sequence",
       "niveau": "3",
@@ -570,7 +570,7 @@
     {
       "id": 46,
       "seq_num": 3,
-      "titre": "Systèmes communicants et connectés",
+      "titre": "3ème — 3",
       "desc": "Objets connectés, protocoles de communication, réseaux longue portée. L'IoT et les systèmes embarqués.",
       "type": "sequence",
       "niveau": "3",
@@ -582,7 +582,7 @@
     {
       "id": 47,
       "seq_num": 4,
-      "titre": "Données massives et intelligence artificielle",
+      "titre": "3ème — 4",
       "desc": "Collecte, traitement et visualisation de données. Fonctionnement d'un algorithme d'apprentissage automatique.",
       "type": "sequence",
       "niveau": "3",
@@ -594,7 +594,7 @@
     {
       "id": 48,
       "seq_num": 5,
-      "titre": "Programmation avancée et IHM",
+      "titre": "3ème — 5",
       "desc": "Programmation avec interface homme-machine, événements, affichage, interactions. Commander un système réel.",
       "type": "sequence",
       "niveau": "3",
@@ -606,7 +606,7 @@
     {
       "id": 49,
       "seq_num": 6,
-      "titre": "Fabrication et validation",
+      "titre": "3ème — 6",
       "desc": "Procédés avancés, vérification mécanique et validation des performances d'un objet fabriqué.",
       "type": "sequence",
       "niveau": "3",
@@ -618,7 +618,7 @@
     {
       "id": 50,
       "seq_num": 7,
-      "titre": "Développement durable — Choix et impacts",
+      "titre": "3ème — 7",
       "desc": "Analyse du cycle de vie, écoconception avancée, bilan environnemental. Choisir un OST responsable.",
       "type": "sequence",
       "niveau": "3",
@@ -630,7 +630,7 @@
     {
       "id": 51,
       "seq_num": 8,
-      "titre": "Projet — Conception et prototypage",
+      "titre": "3ème — 8",
       "desc": "Du cahier des charges au prototype : conception, modélisation, fabrication et présentation du projet.",
       "type": "sequence",
       "niveau": "3",
