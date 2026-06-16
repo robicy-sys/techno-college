@@ -721,10 +721,8 @@ function renderCards() {
       ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code"><i class="ti ti-qrcode"></i></button>`
       : '';
     const quizBtn = `<a class="icon-btn" href="quiz/?id=${r.id}" target="_blank" title="Faire le quiz"><i class="ti ti-brain"></i></a>`;
-    const imgSrc = THEME_IMG[r.theme];
-    const imgHtml = imgSrc
-      ? `<div class="card-img"><img src="${escHtml(imgSrc)}" alt="${escHtml(r.theme||'')}" loading="lazy"></div>`
-      : `<div class="card-img"><div class="card-img-placeholder"><i class="ti ${THEME_ICON[r.theme]||'ti-file'}"></i></div></div>`;
+    const thumbSrc = `img/thumbs/thumb-${r.id}.png`;
+    const imgHtml = `<div class="card-img"><img src="${escHtml(thumbSrc)}" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.display='none'"></div>`;
     return `<article class="card">
       ${imgHtml}
       <div class="card-body">

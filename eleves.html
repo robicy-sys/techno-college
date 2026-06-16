@@ -347,10 +347,8 @@ function cardHtml(r) {
     ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="open-btn" title="Ouvrir la fiche"><i class="ti ti-external-link"></i> Ouvrir</a>`
     : '';
   const quizBtn = `<a href="quiz/?id=${r.id}&from=eleves" class="quiz-btn"><i class="ti ti-brain"></i> Quiz</a>`;
-  const imgSrc = THEME_IMG[r.theme];
-  const imgHtml = imgSrc
-    ? `<div class="card-img"><img src="${escHtml(imgSrc)}" alt="${escHtml(r.theme||'')}" loading="lazy"></div>`
-    : `<div class="card-img"><div class="card-img-placeholder"><i class="ti ${THEME_ICON[r.theme]||'ti-file'}"></i></div></div>`;
+  const thumbSrc = `img/thumbs/thumb-${r.id}.png`;
+  const imgHtml = `<div class="card-img"><img src="${escHtml(thumbSrc)}" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.display='none'"></div>`;
   return `<div class="card">
     ${imgHtml}
     <div class="card-body">
