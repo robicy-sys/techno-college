@@ -509,7 +509,35 @@
       <h2><i class="ti ti-cloud-upload" style="margin-right:8px;color:var(--accent)"></i>Synchroniser vers GitHub</h2>
       <button class="icon-btn" onclick="closeSync()"><i class="ti ti-x"></i></button>
     </div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Tes ressources locales seront publiées sur le site en ligne.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Tes ressources locales seront publiées sur le site en ligne.</p>
+
+    <!-- Google Sheets config -->
+    <details style="margin-bottom:14px;border:0.5px solid var(--border);border-radius:var(--radius-md);padding:10px 12px">
+      <summary style="font-size:13px;font-weight:500;cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px">
+        <i class="ti ti-table" style="color:var(--accent)"></i> Enregistrer les scores dans Google Sheets
+        <i class="ti ti-chevron-right" style="margin-left:auto;font-size:14px;color:var(--text-hint)"></i>
+      </summary>
+      <div style="margin-top:10px">
+        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:5px">URL du script Google Apps</label>
+        <input type="url" id="sheets-url-input" placeholder="https://script.google.com/macros/s/…/exec"
+          style="width:100%;padding:8px 10px;border:0.5px solid var(--border-hover);border-radius:var(--radius-md);font-size:12px;background:var(--surface);color:var(--text);font-family:inherit;outline:none"
+          oninput="sheetsUrl=this.value.trim();localStorage.setItem('tc_sheets_url',sheetsUrl)">
+        <p style="font-size:11px;color:var(--text-hint);margin-top:5px">
+          Pour créer ce script : ouvre Google Sheets → Extensions → Apps Script → colle le code ci-dessous → Déployer → Application web → Tout le monde.
+        </p>
+        <pre style="margin-top:8px;padding:10px;background:var(--bg);border-radius:6px;font-size:11px;overflow-x:auto;color:var(--text-muted);white-space:pre-wrap">function doPost(e) {
+  const d = JSON.parse(e.postData.contents);
+  const s = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  if (s.getLastRow() === 0)
+    s.appendRow(['Date','Prénom','Fiche','Score','Total','%']);
+  s.appendRow([new Date(d.date), d.nom, d.titre,
+               d.score, d.total,
+               Math.round(d.score/d.total*100)+'%']);
+  return ContentService.createTextOutput('ok');
+}</pre>
+      </div>
+    </details>
+
     <div class="sync-steps">
       <div class="sync-step">
         <div class="sync-num">1</div>
@@ -608,6 +636,7 @@ const TYPE_LBL = { document:'Document', video:'Vidéo', lien:'Lien', exercice:'E
 
 let resources = [];
 let nextId = 1;
+let sheetsUrl = '';
 let tabNiv = '';
 let typeFilter = '';
 let themeFilter = '';
@@ -623,7 +652,8 @@ async function load() {
       if (Array.isArray(data.resources)) {
         resources = data.resources;
         nextId = data.nextId || (Math.max(...resources.map(r => r.id)) + 1);
-        localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId }));
+        sheetsUrl = data.sheetsUrl || localStorage.getItem('tc_sheets_url') || '';
+        localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId, sheetsUrl }));
         renderAll();
         return;
       }
@@ -635,13 +665,14 @@ async function load() {
       const data = JSON.parse(saved);
       resources = data.resources || [];
       nextId = data.nextId || 1;
+      sheetsUrl = data.sheetsUrl || localStorage.getItem('tc_sheets_url') || '';
     }
-  } catch(e) { resources = []; nextId = 1; }
+  } catch(e) { resources = []; nextId = 1; sheetsUrl = ''; }
   renderAll();
 }
 
 function save() {
-  localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId }));
+  localStorage.setItem('techno-ressources', JSON.stringify({ resources, nextId, sheetsUrl }));
 }
 
 // ── Tabs / Filtres ───────────────────────────────────────────────────────────
@@ -819,12 +850,22 @@ function closeQR() { document.getElementById('qr-bg').classList.remove('open'); 
 
 // ── Sync ─────────────────────────────────────────────────────────────────────
 
-function openSync() { document.getElementById('sync-bg').classList.add('open'); }
+function openSync() {
+  document.getElementById('sync-bg').classList.add('open');
+  const inp = document.getElementById('sheets-url-input');
+  if (inp) inp.value = sheetsUrl || localStorage.getItem('tc_sheets_url') || '';
+}
 function closeSync() { document.getElementById('sync-bg').classList.remove('open'); }
 function closeSyncBg(e) { if (e.target === document.getElementById('sync-bg')) closeSync(); }
 
 function downloadForSync() {
-  const blob = new Blob([JSON.stringify({ resources, nextId }, null, 2)], { type: 'application/json' });
+  const inputUrl = document.getElementById('sheets-url-input');
+  if (inputUrl) {
+    sheetsUrl = inputUrl.value.trim();
+    localStorage.setItem('tc_sheets_url', sheetsUrl);
+    save();
+  }
+  const blob = new Blob([JSON.stringify({ resources, nextId, sheetsUrl }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'ressources.json';

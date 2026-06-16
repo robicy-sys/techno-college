@@ -192,6 +192,36 @@
   /* Loading */
   #loading { text-align: center; padding: 4rem; color: var(--text-muted); }
   #error { text-align: center; padding: 4rem; color: var(--red); display: none; }
+
+  /* Name screen */
+  .name-card {
+    max-width: 400px; margin: 3rem auto;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 2rem 1.75rem; text-align: center;
+  }
+  .name-emoji { font-size: 48px; margin-bottom: 12px; }
+  .name-title { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+  .name-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+  .name-input {
+    width: 100%; padding: 12px 14px; text-align: center;
+    border: 1.5px solid var(--border-hover); border-radius: var(--radius-md);
+    font-size: 16px; background: var(--surface); color: var(--text);
+    font-family: inherit; outline: none; margin-bottom: 10px;
+  }
+  .name-input:focus { border-color: var(--accent); }
+  .name-skip {
+    margin-top: 10px; font-size: 12px; color: var(--text-muted);
+    background: none; border: none; cursor: pointer; font-family: inherit;
+    text-decoration: underline;
+  }
+
+  /* Save badge */
+  .save-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-bg); color: var(--green);
+    border: 1px solid var(--green); border-radius: 20px;
+    padding: 6px 14px; font-size: 13px; margin-top: 16px;
+  }
 </style>
 </head>
 <body>
@@ -209,6 +239,21 @@
 <main>
   <div id="loading"><i class="ti ti-loader" style="font-size:32px;display:block;margin-bottom:8px"></i>Chargement du quiz…</div>
   <div id="error"><i class="ti ti-alert-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Quiz non disponible pour cette fiche.</div>
+
+  <!-- Écran prénom -->
+  <div id="name-screen" style="display:none">
+    <div class="name-card">
+      <div class="name-emoji">👋</div>
+      <div class="name-title">Avant de commencer…</div>
+      <p class="name-sub">Ton prénom permettra de sauvegarder ton score.</p>
+      <input type="text" id="name-input" class="name-input" placeholder="Ton prénom" maxlength="30"
+        autocomplete="given-name" onkeydown="if(event.key==='Enter')startQuiz()">
+      <button class="btn-action btn-primary-action" onclick="startQuiz()" style="width:100%;padding:12px;font-size:15px">
+        <i class="ti ti-arrow-right"></i> Commencer
+      </button>
+      <button class="name-skip" onclick="startQuiz(true)">Continuer sans enregistrer</button>
+    </div>
+  </div>
 
   <div id="quiz-container" style="display:none">
     <div class="quiz-header">
@@ -245,9 +290,12 @@
         <button class="btn-action btn-secondary-action" onclick="restartQuiz()">
           <i class="ti ti-refresh"></i> Recommencer
         </button>
-        <a class="btn-action btn-primary-action" href="../eleves.html">
+        <a class="btn-action btn-primary-action" id="back-btn" href="../eleves.html">
           <i class="ti ti-arrow-left"></i> Retour aux fiches
         </a>
+      </div>
+      <div id="save-badge" class="save-badge" style="display:none">
+        <i class="ti ti-circle-check"></i> Score enregistré pour <strong id="save-name"></strong>
       </div>
     </div>
   </div>
@@ -257,31 +305,59 @@
 const params = new URLSearchParams(location.search);
 const resId = params.get('id');
 const fromEleves = params.get('from') === 'eleves';
+const backUrl = fromEleves ? '../eleves.html' : '../';
 
-// Update back link
-document.querySelector('.back-btn').href = fromEleves ? '../eleves.html' : '../';
+document.querySelector('.back-btn').href = backUrl;
 
 let questions = [];
 let current = 0;
 let score = 0;
 let answered = false;
+let quizTitre = '';
+let sheetsUrl = '';
+let studentName = localStorage.getItem('tc_student_name') || '';
 
 async function init() {
   if (!resId) { showError(); return; }
   try {
-    const resp = await fetch('./data.json?_=' + Date.now());
-    const data = await resp.json();
+    const [quizResp, cfgResp] = await Promise.all([
+      fetch('./data.json?_=' + Date.now()),
+      fetch('../ressources.json?_=' + Date.now())
+    ]);
+    const data = await quizResp.json();
     const quiz = data[resId];
     if (!quiz) { showError(); return; }
     questions = quiz.questions;
+    quizTitre = quiz.titre;
     document.getElementById('quiz-title').textContent = quiz.titre;
     document.title = 'Quiz — ' + quiz.titre;
+    if (cfgResp.ok) {
+      const cfg = await cfgResp.json();
+      sheetsUrl = cfg.sheetsUrl || '';
+    }
     document.getElementById('loading').style.display = 'none';
-    document.getElementById('quiz-container').style.display = '';
-    renderQuestion();
-  } catch(e) {
-    showError();
+    if (studentName) {
+      document.getElementById('quiz-container').style.display = '';
+      renderQuestion();
+    } else {
+      document.getElementById('name-screen').style.display = '';
+    }
+  } catch(e) { showError(); }
+}
+
+function startQuiz(anonymous) {
+  const input = document.getElementById('name-input');
+  const val = input ? input.value.trim() : '';
+  if (!anonymous && !val) {
+    input.style.borderColor = 'var(--red)'; input.focus(); return;
   }
+  if (!anonymous && val) {
+    studentName = val;
+    localStorage.setItem('tc_student_name', val);
+  }
+  document.getElementById('name-screen').style.display = 'none';
+  document.getElementById('quiz-container').style.display = '';
+  renderQuestion();
 }
 
 function showError() {
@@ -306,8 +382,7 @@ function renderQuestion() {
   `).join('');
 
   const fb = document.getElementById('feedback');
-  fb.className = 'feedback';
-  fb.innerHTML = '';
+  fb.className = 'feedback'; fb.innerHTML = '';
   document.getElementById('btn-next').classList.add('hidden');
   answered = false;
 }
@@ -315,21 +390,16 @@ function renderQuestion() {
 function answer(idx) {
   if (answered) return;
   answered = true;
-
   const q = questions[current];
   const choices = document.querySelectorAll('.choice');
   choices.forEach(c => c.disabled = true);
-
   const correct = idx === q.a;
   if (correct) score++;
-
   choices[idx].classList.add(correct ? 'correct' : 'wrong');
   if (!correct) choices[q.a].classList.add('correct');
-
   const fb = document.getElementById('feedback');
   fb.className = 'feedback ' + (correct ? 'correct' : 'wrong') + ' show';
   fb.innerHTML = `<i class="ti ${correct ? 'ti-circle-check' : 'ti-circle-x'}"></i><span>${escHtml(q.e)}</span>`;
-
   const isLast = current === questions.length - 1;
   const nextBtn = document.getElementById('btn-next');
   nextBtn.classList.remove('hidden');
@@ -338,11 +408,8 @@ function answer(idx) {
 
 function nextQuestion() {
   current++;
-  if (current >= questions.length) {
-    showScore();
-  } else {
-    renderQuestion();
-  }
+  if (current >= questions.length) showScore();
+  else renderQuestion();
 }
 
 function showScore() {
@@ -364,14 +431,47 @@ function showScore() {
   document.getElementById('prog-fill').style.width = (pct * 100) + '%';
   document.getElementById('prog-label').textContent = 'Terminé !';
   document.getElementById('prog-score').textContent = score + ' / ' + questions.length + ' correct' + (score > 1 ? 's' : '');
+  document.getElementById('back-btn').href = backUrl;
+  document.getElementById('score-card').style.display = 'block';
 
-  document.getElementById('score-card').style.display = '';
+  saveResult();
+}
+
+function saveResult() {
+  const result = {
+    id: resId, titre: quizTitre,
+    score, total: questions.length,
+    date: new Date().toISOString(),
+    nom: studentName || 'Anonyme'
+  };
+
+  // localStorage
+  const saved = JSON.parse(localStorage.getItem('tc_quiz_results') || '[]');
+  const filtered = saved.filter(r => !(r.id === resId && r.nom === result.nom));
+  filtered.push(result);
+  localStorage.setItem('tc_quiz_results', JSON.stringify(filtered));
+
+  // Badge de confirmation
+  if (studentName) {
+    document.getElementById('save-name').textContent = studentName;
+    document.getElementById('save-badge').style.display = '';
+  }
+
+  // Google Sheets (fire-and-forget, no-cors)
+  if (sheetsUrl) {
+    fetch(sheetsUrl, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(result)
+    }).catch(() => {});
+  }
 }
 
 function restartQuiz() {
   current = 0; score = 0; answered = false;
   document.getElementById('question-card').style.display = '';
   document.getElementById('score-card').style.display = 'none';
+  document.getElementById('save-badge').style.display = 'none';
   renderQuestion();
 }
 

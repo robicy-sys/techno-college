@@ -93,6 +93,38 @@
   }
   .search-wrap input:focus { border-color: var(--accent); }
 
+  /* Barre historique */
+  .history-bar {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); margin-bottom: 1rem; overflow: hidden;
+  }
+  .history-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; cursor: pointer; user-select: none;
+  }
+  .history-head:hover { background: var(--accent-bg); }
+  .history-name { font-size: 13px; font-weight: 600; }
+  .history-stats { font-size: 12px; color: var(--text-muted); }
+  .history-toggle { margin-left: auto; font-size: 18px; color: var(--text-hint); transition: transform 0.2s; }
+  .history-toggle.open { transform: rotate(180deg); }
+  .history-body { padding: 0 14px 12px; display: none; }
+  .history-body.open { display: block; }
+  .history-list { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 10px; }
+  .history-item {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border-radius: 20px; font-size: 12px;
+    text-decoration: none; border: 0.5px solid var(--border-hover);
+    background: var(--bg); color: var(--text); transition: all 0.15s;
+  }
+  .history-item:hover { border-color: var(--accent); background: var(--accent-bg); }
+  .history-score { font-weight: 700; }
+  .hs-green { color: var(--green); }
+  .hs-orange { color: #d97706; }
+  .hs-red { color: var(--red); }
+  .history-actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 0.5px solid var(--border); }
+  .history-action-btn { font-size: 11px; color: var(--text-muted); background: none; border: none; cursor: pointer; font-family: inherit; padding: 2px 0; }
+  .history-action-btn:hover { color: var(--accent); }
+
   .filter-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1.25rem; }
   .chip {
     border: 0.5px solid var(--border-hover); border-radius: 20px;
@@ -226,6 +258,24 @@
     <i class="ti ti-search"></i>
     <input type="text" id="search" placeholder="Chercher une fiche, un thème…" oninput="render()">
   </div>
+
+  <!-- Historique des quiz -->
+  <div class="history-bar" id="history-bar" style="display:none">
+    <div class="history-head" onclick="toggleHistory()">
+      <i class="ti ti-chart-bar" style="color:var(--accent)"></i>
+      <span class="history-name" id="history-name-lbl"></span>
+      <span class="history-stats" id="history-stats-lbl"></span>
+      <i class="ti ti-chevron-down history-toggle" id="history-chevron"></i>
+    </div>
+    <div class="history-body" id="history-body">
+      <div class="history-list" id="history-list"></div>
+      <div class="history-actions">
+        <button class="history-action-btn" onclick="changeName()"><i class="ti ti-pencil"></i> Changer de prénom</button>
+        <button class="history-action-btn" onclick="clearHistory()" style="color:var(--red)"><i class="ti ti-trash"></i> Effacer l'historique</button>
+      </div>
+    </div>
+  </div>
+
   <div class="filter-row" id="theme-row"></div>
   <div id="content"></div>
 </main>
@@ -376,8 +426,63 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// ── Historique quiz ──────────────────────────────────────────────────────────
+
+function loadHistory() {
+  const name = localStorage.getItem('tc_student_name');
+  if (!name) return;
+  const all = JSON.parse(localStorage.getItem('tc_quiz_results') || '[]');
+  const mine = all.filter(r => r.nom === name);
+  if (!mine.length) return;
+
+  const bar = document.getElementById('history-bar');
+  bar.style.display = '';
+  document.getElementById('history-name-lbl').textContent = name + ' —';
+  document.getElementById('history-stats-lbl').textContent =
+    mine.length + ' quiz complété' + (mine.length > 1 ? 's' : '') +
+    '  ·  moy. ' + Math.round(mine.reduce((s, r) => s + r.score / r.total, 0) / mine.length * 100) + '%';
+
+  document.getElementById('history-list').innerHTML = mine
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .map(r => {
+      const pct = Math.round(r.score / r.total * 100);
+      const cls = pct >= 80 ? 'hs-green' : pct >= 60 ? 'hs-orange' : 'hs-red';
+      const d = new Date(r.date);
+      const dateStr = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+      return `<a href="quiz/?id=${r.id}&from=eleves" class="history-item">
+        <span class="history-score ${cls}">${r.score}/${r.total}</span>
+        <span>${escHtml(r.titre)}</span>
+        <span style="color:var(--text-hint)">${dateStr}</span>
+      </a>`;
+    }).join('');
+}
+
+function toggleHistory() {
+  const body = document.getElementById('history-body');
+  const chev = document.getElementById('history-chevron');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function changeName() {
+  const newName = prompt('Ton prénom :', localStorage.getItem('tc_student_name') || '');
+  if (newName !== null && newName.trim()) {
+    localStorage.setItem('tc_student_name', newName.trim());
+    loadHistory();
+  }
+}
+
+function clearHistory() {
+  if (!confirm('Effacer tout ton historique de quiz ?')) return;
+  const name = localStorage.getItem('tc_student_name');
+  const all = JSON.parse(localStorage.getItem('tc_quiz_results') || '[]');
+  localStorage.setItem('tc_quiz_results', JSON.stringify(all.filter(r => r.nom !== name)));
+  document.getElementById('history-bar').style.display = 'none';
+}
+
 load();
 buildThemes();
+loadHistory();
 </script>
 </body>
 </html>
