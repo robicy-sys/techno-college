@@ -175,6 +175,16 @@
   }
 
   .open-icon { margin-left: auto; color: var(--accent); font-size: 16px; }
+  .card-quiz-row { margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--border); }
+  .quiz-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    width: 100%; justify-content: center;
+    padding: 8px; border-radius: var(--radius-md);
+    background: var(--accent-bg); color: var(--accent-text);
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--border-hover); transition: all 0.15s;
+  }
+  .quiz-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
   .empty {
     text-align: center; padding: 4rem 1rem;
@@ -325,6 +335,7 @@ function cardHtml(r) {
   const tag = r.url ? 'a' : 'div';
   const attrs = r.url ? `href="${escHtml(url)}" target="_blank" rel="noopener"` : '';
   const openIcon = r.url ? `<i class="ti ti-external-link open-icon"></i>` : '';
+  const quizLink = `<a href="../quiz/?id=${r.id}&from=eleves" class="quiz-btn" onclick="event.stopPropagation()"><i class="ti ti-brain"></i> Quiz</a>`;
   const imgSrc = THEME_IMG[r.theme];
   const imgHtml = imgSrc
     ? `<div class="card-img"><img src="${escHtml(imgSrc)}" alt="${escHtml(r.theme||'')}" loading="lazy"></div>`
@@ -345,6 +356,7 @@ function cardHtml(r) {
         <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
         ${openIcon}
       </div>
+      <div class="card-quiz-row">${quizLink}</div>
     </div>
   </${tag}>`;
 }

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Techno Collège</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f3ff; --surface: #ffffff;
+    --border: rgba(99,102,241,0.15); --border-hover: rgba(99,102,241,0.35);
+    --text: #1e1b4b; --text-muted: #6b7280; --text-hint: #a5b4fc;
+    --radius-md: 8px; --radius-lg: 14px;
+    --accent: #6366f1; --accent-dark: #4f46e5;
+    --accent-bg: #ede9fe; --accent-text: #4c1d95;
+    --header-bg: #1e1b4b; --nav-bg: #312e81;
+    --green: #16a34a; --green-bg: #dcfce7;
+    --red: #dc2626; --red-bg: #fee2e2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0e1a; --surface: #1e1b4b;
+      --border: rgba(165,180,252,0.15); --border-hover: rgba(165,180,252,0.35);
+      --text: #e0e7ff; --text-muted: #a5b4fc; --text-hint: #6366f1;
+      --accent: #818cf8; --accent-dark: #6366f1;
+      --accent-bg: #312e81; --accent-text: #c7d2fe;
+      --header-bg: #0f0e1a; --nav-bg: #1e1b4b;
+      --green: #4ade80; --green-bg: #14532d;
+      --red: #f87171; --red-bg: #7f1d1d;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; font-size: 15px; line-height: 1.5;
+  }
+
+  header {
+    background: var(--header-bg); padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 54px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 500; font-size: 15px; color: #e0e7ff; text-decoration: none;
+  }
+  .logo-icon {
+    width: 30px; height: 30px; background: #6366f1;
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; color: #fff; font-size: 16px;
+  }
+  .back-btn {
+    color: #a5b4fc; font-size: 13px; text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: var(--radius-md);
+    border: 0.5px solid rgba(165,180,252,0.3);
+    transition: background 0.15s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.1); }
+
+  main {
+    max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem;
+  }
+
+  /* Fiche titre */
+  .quiz-header { margin-bottom: 2rem; }
+  .quiz-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--accent-bg); color: var(--accent-text);
+    border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .quiz-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .quiz-subtitle { font-size: 13px; color: var(--text-muted); }
+
+  /* Progress */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 4px; height: 6px; margin-bottom: 1.5rem; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent);
+    border-radius: 4px; transition: width 0.4s ease;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--text-muted); margin-bottom: 6px;
+  }
+
+  /* Question */
+  .question-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .question-num {
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
+  }
+  .question-text {
+    font-size: 17px; font-weight: 600; line-height: 1.45; margin-bottom: 1.5rem;
+  }
+
+  /* Choices */
+  .choices { display: flex; flex-direction: column; gap: 10px; }
+  .choice {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 15px;
+    border: 1.5px solid var(--border-hover);
+    border-radius: var(--radius-md);
+    cursor: pointer; transition: all 0.15s;
+    background: transparent; font-family: inherit;
+    font-size: 14px; color: var(--text); text-align: left;
+    line-height: 1.4;
+  }
+  .choice:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-bg); }
+  .choice-letter {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent-bg); color: var(--accent-text);
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .choice.correct { border-color: var(--green); background: var(--green-bg); }
+  .choice.correct .choice-letter { background: var(--green); color: #fff; }
+  .choice.wrong { border-color: var(--red); background: var(--red-bg); }
+  .choice.wrong .choice-letter { background: var(--red); color: #fff; }
+  .choice:disabled { cursor: default; }
+
+  /* Feedback */
+  .feedback {
+    display: none; margin-top: 1rem;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px; line-height: 1.5;
+  }
+  .feedback.correct { background: var(--green-bg); color: var(--green); border: 1px solid var(--green); }
+  .feedback.wrong { background: var(--red-bg); color: var(--red); border: 1px solid var(--red); }
+  .feedback.show { display: flex; align-items: flex-start; gap: 8px; }
+  .feedback i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Bouton suivant */
+  .btn-next {
+    display: none; width: 100%;
+    padding: 13px; border-radius: var(--radius-md);
+    background: var(--accent); color: #fff;
+    border: none; font-size: 15px; font-weight: 500;
+    cursor: pointer; font-family: inherit;
+    transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-next:hover { background: var(--accent-dark); }
+  .btn-next.hidden { display: none !important; }
+
+  /* Score final */
+  .score-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 2.5rem 2rem;
+    text-align: center; display: none;
+  }
+  .score-emoji { font-size: 56px; margin-bottom: 16px; }
+  .score-number {
+    font-size: 48px; font-weight: 800; color: var(--accent); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .score-total { font-size: 15px; color: var(--text-muted); margin-bottom: 16px; }
+  .score-msg { font-size: 16px; font-weight: 500; margin-bottom: 24px; }
+  .score-detail { margin-bottom: 24px; }
+  .score-detail-item {
+    display: flex; align-items: center; gap: 8px; justify-content: center;
+    font-size: 13px; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .dot-green { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .dot-red { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+  .score-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-action {
+    padding: 10px 20px; border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none; border: none; transition: all 0.15s;
+  }
+  .btn-primary-action { background: var(--accent); color: #fff; }
+  .btn-primary-action:hover { background: var(--accent-dark); }
+  .btn-secondary-action { background: var(--accent-bg); color: var(--accent-text); border: 1px solid var(--border-hover); }
+  .btn-secondary-action:hover { border-color: var(--accent); }
+
+  /* Loading */
+  #loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+  #error { text-align: center; padding: 4rem; color: var(--red); display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../">
+    <div class="logo-icon"><i class="ti ti-tool"></i></div>
+    Techno Collège
+  </a>
+  <a class="back-btn" href="javascript:history.back()">
+    <i class="ti ti-arrow-left"></i> Retour
+  </a>
+</header>
+
+<main>
+  <div id="loading"><i class="ti ti-loader" style="font-size:32px;display:block;margin-bottom:8px"></i>Chargement du quiz…</div>
+  <div id="error"><i class="ti ti-alert-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Quiz non disponible pour cette fiche.</div>
+
+  <div id="quiz-container" style="display:none">
+    <div class="quiz-header">
+      <div class="quiz-badge"><i class="ti ti-brain"></i> Quiz</div>
+      <div class="quiz-title" id="quiz-title"></div>
+      <div class="quiz-subtitle">5 questions — Vérifie tes connaissances</div>
+    </div>
+
+    <div class="progress-label">
+      <span id="prog-label">Question 1 / 5</span>
+      <span id="prog-score">0 / 0 correct</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="q-num"></div>
+      <div class="question-text" id="q-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+
+    <button class="btn-next hidden" id="btn-next" onclick="nextQuestion()">
+      <span id="btn-next-label">Question suivante</span>
+      <i class="ti ti-arrow-right"></i>
+    </button>
+
+    <div class="score-card" id="score-card">
+      <div class="score-emoji" id="score-emoji"></div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-total" id="score-total"></div>
+      <div class="score-msg" id="score-msg"></div>
+      <div class="score-detail" id="score-detail"></div>
+      <div class="score-actions">
+        <button class="btn-action btn-secondary-action" onclick="restartQuiz()">
+          <i class="ti ti-refresh"></i> Recommencer
+        </button>
+        <a class="btn-action btn-primary-action" href="../eleves.html">
+          <i class="ti ti-arrow-left"></i> Retour aux fiches
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const params = new URLSearchParams(location.search);
+const resId = params.get('id');
+const fromEleves = params.get('from') === 'eleves';
+
+// Update back link
+document.querySelector('.back-btn').href = fromEleves ? '../eleves.html' : '../';
+
+let questions = [];
+let current = 0;
+let score = 0;
+let answered = false;
+
+async function init() {
+  if (!resId) { showError(); return; }
+  try {
+    const resp = await fetch('./data.json?_=' + Date.now());
+    const data = await resp.json();
+    const quiz = data[resId];
+    if (!quiz) { showError(); return; }
+    questions = quiz.questions;
+    document.getElementById('quiz-title').textContent = quiz.titre;
+    document.title = 'Quiz — ' + quiz.titre;
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('quiz-container').style.display = '';
+    renderQuestion();
+  } catch(e) {
+    showError();
+  }
+}
+
+function showError() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('error').style.display = '';
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('q-num').textContent = 'Question ' + (current + 1);
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('prog-label').textContent = 'Question ' + (current + 1) + ' / ' + questions.length;
+  document.getElementById('prog-score').textContent = score + ' / ' + current + ' correct' + (current > 1 ? 's' : '');
+  document.getElementById('prog-fill').style.width = (current / questions.length * 100) + '%';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('choices').innerHTML = q.c.map((c, i) => `
+    <button class="choice" onclick="answer(${i})">
+      <span class="choice-letter">${letters[i]}</span>
+      <span>${escHtml(c)}</span>
+    </button>
+  `).join('');
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.innerHTML = '';
+  document.getElementById('btn-next').classList.add('hidden');
+  answered = false;
+}
+
+function answer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[current];
+  const choices = document.querySelectorAll('.choice');
+  choices.forEach(c => c.disabled = true);
+
+  const correct = idx === q.a;
+  if (correct) score++;
+
+  choices[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) choices[q.a].classList.add('correct');
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'wrong') + ' show';
+  fb.innerHTML = `<i class="ti ${correct ? 'ti-circle-check' : 'ti-circle-x'}"></i><span>${escHtml(q.e)}</span>`;
+
+  const isLast = current === questions.length - 1;
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.classList.remove('hidden');
+  document.getElementById('btn-next-label').textContent = isLast ? 'Voir mon score' : 'Question suivante';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showScore();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showScore() {
+  document.getElementById('question-card').style.display = 'none';
+  document.getElementById('btn-next').classList.add('hidden');
+
+  const pct = score / questions.length;
+  let emoji, msg;
+  if (pct === 1)      { emoji = '🏆'; msg = 'Parfait ! Tu maîtrises cette fiche !'; }
+  else if (pct >= .8) { emoji = '🌟'; msg = 'Excellent travail, bravo !'; }
+  else if (pct >= .6) { emoji = '👍'; msg = 'Bien ! Quelques points à revoir.'; }
+  else if (pct >= .4) { emoji = '📚'; msg = 'Relis la fiche, tu vas y arriver !'; }
+  else                { emoji = '💪'; msg = 'Courage ! Relis bien la fiche et réessaie.'; }
+
+  document.getElementById('score-emoji').textContent = emoji;
+  document.getElementById('score-number').textContent = score + ' / ' + questions.length;
+  document.getElementById('score-total').textContent = 'bonnes réponses';
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('prog-fill').style.width = (pct * 100) + '%';
+  document.getElementById('prog-label').textContent = 'Terminé !';
+  document.getElementById('prog-score').textContent = score + ' / ' + questions.length + ' correct' + (score > 1 ? 's' : '');
+
+  document.getElementById('score-card').style.display = '';
+}
+
+function restartQuiz() {
+  current = 0; score = 0; answered = false;
+  document.getElementById('question-card').style.display = '';
+  document.getElementById('score-card').style.display = 'none';
+  renderQuestion();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>

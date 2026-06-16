@@ -720,6 +720,7 @@ function renderCards() {
     const qrBtn = r.url
       ? `<button class="icon-btn" onclick="showQR(${r.id})" title="QR Code"><i class="ti ti-qrcode"></i></button>`
       : '';
+    const quizBtn = `<a class="icon-btn" href="quiz/?id=${r.id}" target="_blank" title="Faire le quiz"><i class="ti ti-brain"></i></a>`;
     const imgSrc = THEME_IMG[r.theme];
     const imgHtml = imgSrc
       ? `<div class="card-img"><img src="${escHtml(imgSrc)}" alt="${escHtml(r.theme||'')}" loading="lazy"></div>`
@@ -741,7 +742,7 @@ function renderCards() {
             <span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>
           </div>
           <div class="card-actions">
-            ${qrBtn}${linkBtn}
+            ${quizBtn}${qrBtn}${linkBtn}
             <button class="icon-btn danger" onclick="deleteRes(${r.id})" title="Supprimer"><i class="ti ti-trash"></i></button>
           </div>
         </div>
