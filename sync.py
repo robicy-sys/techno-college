@@ -32,9 +32,10 @@ def title_from_filename(name):
     return name[:1].upper() + name[1:] if name else name
 
 def find_thumb(base, thumb_dir):
-    """Cherche le .png généré par qlmanage (gère NFD/NFC et suffixe 001)."""
-    for suffix in ['', '001']:
-        candidate = f'{base}{suffix}.png'
+    """Cherche le .png généré par qlmanage (gère NFD/NFC, suffixe 001, et .pdf.png)."""
+    candidates = [f'{base}{s}.png' for s in ('', '001')] + \
+                 [f'{base}.pdf{s}.png' for s in ('', '001')]
+    for candidate in candidates:
         for f in os.listdir(thumb_dir):
             if nfc(f) == nfc(candidate):
                 return os.path.join(thumb_dir, f)
