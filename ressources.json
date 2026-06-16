@@ -358,6 +358,9 @@
       "desc": "Famille et lignée d'objets, fonctions techniques et notion d'invention. Découverte de l'histoire des objets techniques.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 1.1",
+      "sous_theme": "Évolution des OST",
       "url": ""
     },
     {
@@ -367,6 +370,9 @@
       "desc": "Systèmes d'information, stockage des données et représentation binaire. Place du numérique dans notre quotidien.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 1.2",
+      "sous_theme": "Usages et impacts du numérique",
       "url": ""
     },
     {
@@ -376,6 +382,9 @@
       "desc": "Notice, fiabilité, durabilité, réparabilité, écoconception et bioinspiration. Analyser le cycle de vie d'un objet.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 3.1",
+      "sous_theme": "Choix d'un OST — Développement durable",
       "url": ""
     },
     {
@@ -385,6 +394,9 @@
       "desc": "Mesure de grandeurs physiques et protocoles d'évaluation. Comparer des performances d'objets techniques.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 3.2",
+      "sous_theme": "Performance des OST",
       "url": ""
     },
     {
@@ -394,6 +406,9 @@
       "desc": "Formes d'énergie, conversion, puissance et rendement. Identifier les fonctions énergie d'un système.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.1",
+      "sous_theme": "Chaîne d'énergie",
       "url": ""
     },
     {
@@ -403,6 +418,9 @@
       "desc": "Familles de matériaux, propriétés mécaniques, thermiques et électriques. Choisir un matériau selon l'usage.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.2",
+      "sous_theme": "Matériaux et procédés",
       "url": ""
     },
     {
@@ -412,6 +430,9 @@
       "desc": "Codage binaire, images, sons, couleurs numériques. Comprendre comment une information devient un nombre.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.4",
+      "sous_theme": "Structuration et traitement des données",
       "url": ""
     },
     {
@@ -421,6 +442,9 @@
       "desc": "Cahier des charges, modes de représentation, planification et revue de projet. Du besoin à la réalisation.",
       "type": "sequence",
       "niveau": "5",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 1.1",
+      "sous_theme": "Gestion de projet technique",
       "url": ""
     },
     {
@@ -430,6 +454,9 @@
       "desc": "Alimentation, conversion, transmission du mouvement. Mécanismes : engrenages, poulies, vis sans fin.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.1",
+      "sous_theme": "Chaîne d'énergie",
       "url": ""
     },
     {
@@ -439,6 +466,9 @@
       "desc": "Procédés de fabrication : usinage, moulage, formage. Choisir le matériau et le procédé adapté.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.2",
+      "sous_theme": "Matériaux et procédés",
       "url": ""
     },
     {
@@ -448,6 +478,9 @@
       "desc": "Acquisition avec capteurs, traitement par microcontrôleur, interface homme-machine. Du capteur à l'action.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.3",
+      "sous_theme": "Chaîne d'information",
       "url": ""
     },
     {
@@ -457,6 +490,9 @@
       "desc": "Filtrage, analyse et exploitation de données numériques. Tableaux et bases de données simples.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.4",
+      "sous_theme": "Structuration et traitement des données",
       "url": ""
     },
     {
@@ -466,6 +502,9 @@
       "desc": "Réseau local, adresse IP, commutateur, routeur. Liaison filaire et sans fil, débit et Internet.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.5",
+      "sous_theme": "Réseaux informatiques",
       "url": ""
     },
     {
@@ -475,6 +514,9 @@
       "desc": "Variables, conditions, boucles, fonctions. Écrire et traduire un algorithme en programme.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 3.1",
+      "sous_theme": "Programmation des OST",
       "url": ""
     },
     {
@@ -484,6 +526,9 @@
       "desc": "CAO, modélisation 3D, fabrication numérique (impression 3D, découpe laser). Produire la forme voulue.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 1.6",
+      "sous_theme": "Modélisation et fabrication",
       "url": ""
     },
     {
@@ -493,6 +538,9 @@
       "desc": "Planification Gantt, répartition des tâches, revue de projet et bilan. Conduire un projet collaboratif.",
       "type": "sequence",
       "niveau": "4",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 1.1",
+      "sous_theme": "Gestion de projet technique",
       "url": ""
     },
     {
@@ -502,6 +550,9 @@
       "desc": "Machine learning, reconnaissance d'images, enjeux éthiques. Les innovations de rupture qui transforment nos objets.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 1.1",
+      "sous_theme": "Évolution des OST",
       "url": ""
     },
     {
@@ -511,6 +562,9 @@
       "desc": "Risques numériques, protection des données personnelles, cyberviolence. Agir de façon responsable en ligne.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 1.2",
+      "sous_theme": "Usages et impacts du numérique",
       "url": ""
     },
     {
@@ -520,6 +574,9 @@
       "desc": "Objets connectés, protocoles de communication, réseaux longue portée. L'IoT et les systèmes embarqués.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.5",
+      "sous_theme": "Réseaux informatiques",
       "url": ""
     },
     {
@@ -529,6 +586,9 @@
       "desc": "Collecte, traitement et visualisation de données. Fonctionnement d'un algorithme d'apprentissage automatique.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Structure et fonctionnement",
+      "code": "SFC 1.4",
+      "sous_theme": "Structuration et traitement des données",
       "url": ""
     },
     {
@@ -538,6 +598,9 @@
       "desc": "Programmation avec interface homme-machine, événements, affichage, interactions. Commander un système réel.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 3.1",
+      "sous_theme": "Programmation des OST",
       "url": ""
     },
     {
@@ -547,6 +610,9 @@
       "desc": "Procédés avancés, vérification mécanique et validation des performances d'un objet fabriqué.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 1.6",
+      "sous_theme": "Modélisation et fabrication",
       "url": ""
     },
     {
@@ -556,6 +622,9 @@
       "desc": "Analyse du cycle de vie, écoconception avancée, bilan environnemental. Choisir un OST responsable.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Objets et systèmes techniques",
+      "code": "OST 3.1",
+      "sous_theme": "Choix d'un OST — Développement durable",
       "url": ""
     },
     {
@@ -565,6 +634,9 @@
       "desc": "Du cahier des charges au prototype : conception, modélisation, fabrication et présentation du projet.",
       "type": "sequence",
       "niveau": "3",
+      "theme": "Conception et réalisation",
+      "code": "CCRI 1.1",
+      "sous_theme": "Gestion de projet technique",
       "url": ""
     }
   ],
