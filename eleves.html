@@ -331,6 +331,12 @@
   <button class="nav-tab" onclick="setTab(this,'3')">
     3ème <span class="nav-count" id="cnt-3">0</span>
   </button>
+  <button class="nav-tab" onclick="setTab(this,'connaissance')">
+    Connaissances <span class="nav-count" id="cnt-conn">0</span>
+  </button>
+  <button class="nav-tab" onclick="setTab(this,'outil')">
+    Outils <span class="nav-count" id="cnt-outil">0</span>
+  </button>
 </nav>
 
 <main>
@@ -391,11 +397,15 @@ async function load() {
   document.getElementById('content').innerHTML = '<div class="empty"><i class="ti ti-wifi-off"></i>Impossible de charger les ressources.</div>';
 }
 
+function isCours(r) { return !r.categorie || r.categorie === 'cours'; }
+
 function updateCounts() {
   document.getElementById('cnt-all').textContent = resources.length;
-  document.getElementById('cnt-5').textContent = resources.filter(r => r.niveau === '5').length;
-  document.getElementById('cnt-4').textContent = resources.filter(r => r.niveau === '4').length;
-  document.getElementById('cnt-3').textContent = resources.filter(r => r.niveau === '3').length;
+  document.getElementById('cnt-5').textContent = resources.filter(r => isCours(r) && r.niveau === '5').length;
+  document.getElementById('cnt-4').textContent = resources.filter(r => isCours(r) && r.niveau === '4').length;
+  document.getElementById('cnt-3').textContent = resources.filter(r => isCours(r) && r.niveau === '3').length;
+  document.getElementById('cnt-conn').textContent = resources.filter(r => r.categorie === 'connaissance').length;
+  document.getElementById('cnt-outil').textContent = resources.filter(r => r.categorie === 'outil').length;
 }
 
 function setTab(el, niv) {
@@ -435,7 +445,10 @@ function buildThemes() {
 function render() {
   const q = (document.getElementById('search').value || '').toLowerCase().trim();
   const filtered = resources.filter(r => {
-    if (tabNiv && r.niveau !== tabNiv) return false;
+    const cat = r.categorie || 'cours';
+    if (tabNiv === 'connaissance') { if (cat !== 'connaissance') return false; }
+    else if (tabNiv === 'outil')   { if (cat !== 'outil') return false; }
+    else if (tabNiv)               { if (cat !== 'cours' || r.niveau !== tabNiv) return false; }
     if (themeFilter && r.theme !== themeFilter) return false;
     if (q && ![r.titre, r.desc, r.theme, r.sous_theme, r.code, r.critere].some(v => (v||'').toLowerCase().includes(q))) return false;
     return true;

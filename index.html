@@ -220,9 +220,11 @@
   .b-4 { background: #FAECE7; color: #712B13; }
   .b-3 { background: #EEEDFE; color: #3C3489; }
   .b-doc { background: #E6F1FB; color: #0C447C; }
-  .b-ost  { background: #dcfce7; color: #15803d; }
-  .b-sfc  { background: #dbeafe; color: #1d4ed8; }
-  .b-ccri { background: #ffedd5; color: #c2410c; }
+  .b-ost          { background: #dcfce7; color: #15803d; }
+  .b-sfc          { background: #dbeafe; color: #1d4ed8; }
+  .b-ccri         { background: #ffedd5; color: #c2410c; }
+  .b-connaissance { background: #fdf4ff; color: #7e22ce; }
+  .b-outil        { background: #fefce8; color: #854d0e; }
   .b-vid { background: #FBEAF0; color: #72243E; }
   .b-lien { background: #EAF3DE; color: #27500A; }
   .b-ex { background: #FAEEDA; color: #633806; }
@@ -236,9 +238,11 @@
     .b-vid { background: #4B1528; color: #ED93B1; }
     .b-lien { background: #173404; color: #97C459; }
     .b-ex { background: #412402; color: #EF9F27; }
-    .b-ost  { background: #14532d; color: #4ade80; }
-    .b-sfc  { background: #1e3a5f; color: #93c5fd; }
-    .b-ccri { background: #431407; color: #fdba74; }
+    .b-ost          { background: #14532d; color: #4ade80; }
+    .b-sfc          { background: #1e3a5f; color: #93c5fd; }
+    .b-ccri         { background: #431407; color: #fdba74; }
+    .b-connaissance { background: #3b0764; color: #e9d5ff; }
+    .b-outil        { background: #422006; color: #fde68a; }
     .b-seq { background: #1e2a5c; color: #93aff5; }
   }
 
@@ -465,13 +469,11 @@
     </div>
     <div class="form-grid">
       <div class="form-row">
-        <label>Type</label>
-        <select id="f-type">
-          <option value="document">Document</option>
-          <option value="video">Vidéo</option>
-          <option value="lien">Lien web</option>
-          <option value="exercice">Exercice / TP</option>
-          <option value="sequence">Séquence de cours</option>
+        <label>Catégorie</label>
+        <select id="f-categorie">
+          <option value="cours">Fiche de cours</option>
+          <option value="connaissance">Fiche de connaissances</option>
+          <option value="outil">Fiche outil</option>
         </select>
       </div>
       <div class="form-row">
@@ -480,6 +482,18 @@
           <option value="5">5ème</option>
           <option value="4">4ème</option>
           <option value="3">3ème</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Type</label>
+        <select id="f-type">
+          <option value="document">Document</option>
+          <option value="video">Vidéo</option>
+          <option value="lien">Lien web</option>
+          <option value="exercice">Exercice / TP</option>
+          <option value="sequence">Séquence de cours</option>
         </select>
       </div>
     </div>
@@ -774,7 +788,11 @@ function renderCards() {
         <div class="card-footer">
           <div class="badges">
             <span class="badge b-${r.niveau}">${r.niveau}ème</span>
-            ${r.code ? `<span class="badge b-${(r.code.startsWith('OST')?'ost':r.code.startsWith('SFC')?'sfc':'ccri')}">${escHtml(r.code)}</span>` : `<span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>`}
+            ${r.categorie && r.categorie !== 'cours'
+              ? `<span class="badge b-${r.categorie}">${r.categorie === 'connaissance' ? 'Connaissances' : 'Outil'}</span>`
+              : r.code
+                ? `<span class="badge b-${r.code.startsWith('OST')?'ost':r.code.startsWith('SFC')?'sfc':'ccri'}">${escHtml(r.code)}</span>`
+                : `<span class="badge b-${r.type}">${TYPE_LBL[r.type]||r.type}</span>`}
           </div>
           <div class="card-actions">
             ${quizBtn}${qrBtn}${linkBtn}
@@ -808,10 +826,12 @@ function addResource() {
   const url = linkMode === 'pdf'
     ? (document.getElementById('f-pdf').value.trim() ? 'pdf/' + document.getElementById('f-pdf').value.trim().replace(/^pdf\//,'') : '')
     : document.getElementById('f-url').value.trim();
+  const categorie = document.getElementById('f-categorie').value;
   resources.unshift({
     id: nextId++, titre,
     desc: document.getElementById('f-desc').value.trim() || 'Aucune description.',
     type: document.getElementById('f-type').value,
+    categorie: categorie !== 'cours' ? categorie : undefined,
     niveau: document.getElementById('f-niveau').value,
     theme: document.getElementById('f-theme').value.trim() || 'Général',
     url,
