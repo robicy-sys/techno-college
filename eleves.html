@@ -346,7 +346,7 @@
   <button class="nav-tab" onclick="setTab(this,'3')">
     3ème <span class="nav-count" id="cnt-3">0</span>
   </button>
-  <button class="nav-tab" onclick="setTab(this,'connaissance')">
+  <button class="nav-tab" id="tab-conn" onclick="setTab(this,'connaissance')">
     Connaissances <span class="nav-count" id="cnt-conn">0</span>
   </button>
   <button class="nav-tab" onclick="setTab(this,'outil')">
@@ -393,6 +393,7 @@ let resources = [];
 let tabNiv = '';
 let themeFilter = '';
 let quizResults = [];
+let seqFilter = null; // ID séquence sélectionnée (onglet Connaissances)
 
 async function load() {
   try {
@@ -426,16 +427,42 @@ function updateCounts() {
 function setTab(el, niv) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  tabNiv = niv; themeFilter = '';
+  tabNiv = niv; themeFilter = ''; seqFilter = null;
   buildThemes(); render();
 }
 
+function viewSeq(seqId) {
+  seqFilter = seqId;
+  tabNiv = 'connaissance'; themeFilter = '';
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-conn').classList.add('active');
+  buildThemes(); render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function buildThemes() {
-  const themes = [...new Set(
-    resources.filter(r => !tabNiv || r.niveau === tabNiv).map(r => r.theme).filter(Boolean)
-  )].sort();
   const row = document.getElementById('theme-row');
   row.innerHTML = '';
+
+  // Quand on filtre par séquence : afficher un chip de retour + titre séquence
+  if (seqFilter) {
+    const seq = resources.find(r => r.id === seqFilter);
+    const back = document.createElement('button');
+    back.className = 'chip active';
+    back.innerHTML = `<i class="ti ti-arrow-left" style="font-size:11px"></i> Toutes les connaissances`;
+    back.onclick = () => { seqFilter = null; buildThemes(); render(); };
+    row.appendChild(back);
+    if (seq) {
+      const lbl = document.createElement('span');
+      lbl.style.cssText = 'font-size:12px;color:var(--text-muted);margin-left:4px';
+      lbl.innerHTML = `Fiches de : <strong>${escHtml(seq.titre)}</strong>`;
+      row.appendChild(lbl);
+    }
+    return;
+  }
+
+  const visible = resources.filter(r => matchTab(r));
+  const themes = [...new Set(visible.map(r => r.theme).filter(Boolean))].sort();
   if (themes.length <= 1) return;
   const lbl = document.createElement('span');
   lbl.className = 'filter-label'; lbl.textContent = 'Thème :';
@@ -457,13 +484,19 @@ function buildThemes() {
   });
 }
 
+function matchTab(r) {
+  const cat = r.categorie || 'cours';
+  if (tabNiv === 'connaissance') return cat === 'connaissance';
+  if (tabNiv === 'outil')        return cat === 'outil';
+  if (tabNiv)                    return cat === 'cours' && r.niveau === tabNiv;
+  return true;
+}
+
 function render() {
   const q = (document.getElementById('search').value || '').toLowerCase().trim();
   const filtered = resources.filter(r => {
-    const cat = r.categorie || 'cours';
-    if (tabNiv === 'connaissance') { if (cat !== 'connaissance') return false; }
-    else if (tabNiv === 'outil')   { if (cat !== 'outil') return false; }
-    else if (tabNiv)               { if (cat !== 'cours' || r.niveau !== tabNiv) return false; }
+    if (!matchTab(r)) return false;
+    if (seqFilter !== null && r.parent_seq !== seqFilter) return false;
     if (themeFilter && r.theme !== themeFilter) return false;
     if (q && ![r.titre, r.desc, r.theme, r.sous_theme, r.code, r.critere].some(v => (v||'').toLowerCase().includes(q))) return false;
     return true;
@@ -532,13 +565,37 @@ function cardHtml(r) {
   const critereShort = r.critere ? r.critere.split(' — ').slice(1).join(' — ') : '';
   const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
 
-  const thumbInner = r.type === 'sequence'
-    ? `<div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ${THEME_ICON[r.theme]||'ti-book'}"></i></div>`
-    : `<img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">`;
+  if (r.type === 'sequence') {
+    const subCount = resources.filter(s => s.parent_seq === r.id).length;
+    const voirBtn = subCount > 0
+      ? `<button class="btn-open" onclick="viewSeq(${r.id})" style="flex:1;cursor:pointer"><i class="ti ti-books" style="font-size:11px"></i> Voir (${subCount})</button>`
+      : `<span class="btn-open" style="opacity:.35;cursor:default;flex:1"><i class="ti ti-books" style="font-size:11px"></i> Aucune</span>`;
+    if (subCount > 0) {
+      const pct = Math.round(
+        resources.filter(s => s.parent_seq === r.id && quizResults.find(qr => qr.id == s.id)).length / subCount * 100
+      );
+    }
+    const subDone = quizResults.filter(qr => resources.find(s => s.parent_seq === r.id && s.id == qr.id)).length;
+    const progressBadge = subCount > 0 && subDone > 0
+      ? `<div class="score-badge" style="background:#dbeafe;color:#1d4ed8">${subDone}/${subCount}</div>` : '';
+    return `<div class="card" title="${escHtml(r.critere||'')}">
+      <div class="card-thumb">
+        <div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ${THEME_ICON[r.theme]||'ti-book'}"></i></div>
+        <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
+        ${progressBadge}
+      </div>
+      <div class="card-body">
+        ${codeBadge}
+        <div class="card-title">${escHtml(r.titre)}</div>
+        ${critereHtml}
+        <div class="card-actions">${voirBtn}${quizBtn}</div>
+      </div>
+    </div>`;
+  }
 
   return `<div class="card" title="${escHtml(r.critere||'')}">
     <div class="card-thumb">
-      ${thumbInner}
+      <img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre)}" loading="lazy" onerror="this.style.opacity='.3'">
       <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
       ${scoreBadge}
     </div>
