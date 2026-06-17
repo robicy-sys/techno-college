@@ -437,6 +437,65 @@
   }
   .toast.show { opacity: 1; transform: translateY(0); }
 
+  /* Calendrier scolaire */
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+  .cal-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .cal-subtitle { font-size: 11px; font-weight: 400; color: var(--text-hint); margin-left: 8px; }
+  .cal-legend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .cal-leg { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-muted); }
+  .cal-leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .cal-periodes {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px; margin-bottom: 1.25rem;
+  }
+  .cal-periode {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 10px 12px;
+  }
+  .cal-periode-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .cal-periode-label { font-size: 12px; font-weight: 600; color: var(--text); }
+  .cal-periode-date { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 12px;
+  }
+  .cal-month {
+    background: var(--surface); border-radius: 10px; padding: 12px;
+    border: 0.5px solid var(--border);
+  }
+  .cal-month-name {
+    font-size: 12px; font-weight: 700; text-align: center;
+    margin-bottom: 8px; color: var(--text); text-transform: uppercase; letter-spacing: .04em;
+  }
+  .cal-dow {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 1px; margin-bottom: 3px;
+  }
+  .cal-dow span {
+    font-size: 9px; font-weight: 600; color: var(--text-hint);
+    text-align: center; padding: 2px 0;
+  }
+  .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+  .cal-day {
+    font-size: 10px; text-align: center; padding: 3px 1px;
+    border-radius: 3px; min-height: 20px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text);
+  }
+  .cal-day.we { color: var(--text-hint); }
+  .cal-day.vac { font-weight: 600; }
+  .cal-day.ferie:not(.vac) { font-weight: 700; }
+  .cal-ferie-dot {
+    position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%);
+    width: 3px; height: 3px; border-radius: 50%; background: #ca8a04;
+  }
+
   /* Print */
   @media print {
     header, nav, .filter-section, .card-actions, .modal-bg, .toast { display: none !important; }
@@ -487,6 +546,7 @@
   <button class="nav-tab" onclick="setTab(this,'3')">3ème <span class="nav-count" id="cnt-3">0</span></button>
   <button class="nav-tab" onclick="setTab(this,'connaissance')">Connaissances <span class="nav-count" id="cnt-conn">0</span></button>
   <button class="nav-tab" onclick="setTab(this,'outil')">Outils <span class="nav-count" id="cnt-outil">0</span></button>
+  <button class="nav-tab" onclick="setTab(this,'calendrier')"><i class="ti ti-calendar-event" style="font-size:13px;vertical-align:-1px"></i> Calendrier</button>
 </nav>
 
 <main>
@@ -808,6 +868,8 @@ function buildThemes() {
 }
 
 function matchTab(r) {
+  if (r.type === 'seance') return false;
+  if (tabNiv === 'calendrier') return false;
   const cat = r.categorie || 'cours';
   if (tabNiv === 'connaissance') return cat === 'connaissance';
   if (tabNiv === 'outil') return cat === 'outil';
@@ -836,7 +898,107 @@ function updateCounts() {
   document.getElementById('cnt-outil').textContent = resources.filter(r => r.categorie === 'outil').length;
 }
 
+function renderCalendar() {
+  const VACANCES = [
+    { nom: 'Toussaint', deb: '2026-10-17', fin: '2026-11-02', bg: '#fef3c7', fg: '#92400e', icon: 'ti-leaf',       color: '#d97706' },
+    { nom: 'Noël',      deb: '2026-12-19', fin: '2027-01-04', bg: '#dbeafe', fg: '#1e40af', icon: 'ti-snowflake',  color: '#3b82f6' },
+    { nom: 'Hiver',     deb: '2027-02-20', fin: '2027-03-08', bg: '#ede9fe', fg: '#5b21b6', icon: 'ti-mountain',   color: '#8b5cf6' },
+    { nom: 'Printemps', deb: '2027-04-17', fin: '2027-05-03', bg: '#d1fae5', fg: '#065f46', icon: 'ti-flower',     color: '#10b981' },
+    { nom: 'Été',       deb: '2027-07-03', fin: '2027-09-01', bg: '#fee2e2', fg: '#991b1b', icon: 'ti-sun',        color: '#ef4444' },
+  ];
+  const FERIES = {
+    '2026-11-01': 'Toussaint',      '2026-11-11': 'Armistice',
+    '2026-12-25': 'Noël',           '2027-01-01': "Jour de l'An",
+    '2027-03-29': 'Lundi de Pâques','2027-05-01': 'Fête du Travail',
+    '2027-05-06': 'Ascension',      '2027-05-08': 'Victoire 1945',
+    '2027-07-14': 'Fête Nationale',
+  };
+  const MOIS_NOMS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const MONTHS = [
+    {y:2026,m:8},{y:2026,m:9},{y:2026,m:10},{y:2026,m:11},
+    {y:2027,m:0},{y:2027,m:1},{y:2027,m:2},{y:2027,m:3},{y:2027,m:4},{y:2027,m:5},{y:2027,m:6}
+  ];
+
+  function dk(d) { return d.toISOString().slice(0,10); }
+  function vacOf(d) {
+    const t = d.getTime();
+    for (const v of VACANCES) {
+      if (t >= new Date(v.deb).getTime() && t <= new Date(v.fin).getTime()) return v;
+    }
+    return null;
+  }
+
+  function monthHtml({y, m}) {
+    const first = new Date(y, m, 1);
+    const last  = new Date(y, m+1, 0).getDate();
+    const startDow = (first.getDay() + 6) % 7; // 0=lun
+    let days = '';
+    for (let i = 0; i < startDow; i++) days += '<div></div>';
+    for (let d = 1; d <= last; d++) {
+      const date = new Date(y, m, d);
+      const dow  = date.getDay();
+      const we   = dow === 0 || dow === 6;
+      const key  = dk(date);
+      const vac  = vacOf(date);
+      const fer  = FERIES[key];
+      let cls = 'cal-day', style = '', title = '';
+      if (we) cls += ' we';
+      if (vac) { cls += ' vac'; style = `background:${vac.bg};color:${vac.fg}`; title = vac.nom; }
+      else if (fer) { cls += ' ferie'; style = 'background:#fef9c3;color:#713f12'; title = fer; }
+      const dot = fer && !vac ? '<span class="cal-ferie-dot"></span>' : '';
+      days += `<div class="${cls}" style="${style}" title="${title}">${d}${dot}</div>`;
+    }
+    return `<div class="cal-month">
+      <div class="cal-month-name">${MOIS_NOMS[m]} ${y}</div>
+      <div class="cal-dow"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+      <div class="cal-days">${days}</div>
+    </div>`;
+  }
+
+  const PERIODES_LIST = [
+    { label:'Rentrée',    date:'mar. 1er sept. 2026',             icon:'ti-school',     color:'var(--accent)' },
+    ...VACANCES.map(v => ({
+      label: v.nom,
+      date: fmtPeriode(v.deb, v.fin, v.nom),
+      icon: v.icon, color: v.color
+    })),
+  ];
+  function fmtPeriode(deb, fin, nom) {
+    if (nom === 'Été') return 'à partir du sam. 3 juil. 2027';
+    const d1 = new Date(deb), d2 = new Date(fin);
+    const days = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+    const mois = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+    const fmt = d => `${days[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()}`;
+    return `${fmt(d1)} → ${fmt(d2)}`;
+  }
+
+  const legend = VACANCES.map(v =>
+    `<span class="cal-leg"><span class="cal-leg-dot" style="background:${v.bg};border:1px solid ${v.color}"></span>${v.nom}</span>`
+  ).join('') + `<span class="cal-leg"><span class="cal-leg-dot" style="background:#fef9c3;border:1px solid #ca8a04"></span>Jour férié</span>`;
+
+  const periodes = PERIODES_LIST.map(p =>
+    `<div class="cal-periode">
+      <div class="cal-periode-icon" style="background:${p.color}22;color:${p.color}"><i class="ti ${p.icon}"></i></div>
+      <div>
+        <div class="cal-periode-label">${p.label}</div>
+        <div class="cal-periode-date">${p.date}</div>
+      </div>
+    </div>`
+  ).join('');
+
+  document.getElementById('content').innerHTML = `
+    <div>
+      <div class="cal-header">
+        <span class="cal-title">Calendrier scolaire 2026–2027<span class="cal-subtitle">Zone B</span></span>
+        <div class="cal-legend">${legend}</div>
+      </div>
+      <div class="cal-periodes">${periodes}</div>
+      <div class="cal-grid">${MONTHS.map(monthHtml).join('')}</div>
+    </div>`;
+}
+
 function renderCards() {
+  if (tabNiv === 'calendrier') { renderCalendar(); return; }
   const q = (document.getElementById('search').value || '').toLowerCase().trim();
   const filtered = resources.filter(r => {
     if (!matchTab(r)) return false;
@@ -911,23 +1073,31 @@ function cardHtml(r) {
   const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
 
   if (r.type === 'sequence') {
-    const subCount = resources.filter(s => s.parent_seq === r.id).length;
-    const folderPath = `~/techno-college/pdf/seq-${r.id}/`;
+    const seances = resources.filter(s => s.type === 'seance' && s.parent_seq === r.id).sort((a,b) => a.seance_num - b.seance_num);
+    const subCount = resources.filter(s => s.parent_seq === r.id && s.type !== 'seance' && s.type !== 'sequence').length;
+    const folderBase = `~/techno-college/pdf/seq-${r.id}/`;
+    const folderHtml = seances.length
+      ? seances.map(s => {
+          const n = resources.filter(x => x.parent_seance === s.id).length;
+          return `<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);margin-top:3px">
+            <i class="ti ti-folder" style="font-size:10px;color:var(--accent)"></i>
+            <span style="color:var(--text)">Séance ${s.seance_num}</span>
+            <span style="opacity:.6">seance-${s.seance_num}/</span>
+            <span style="margin-left:auto;color:var(--accent)">${n} fich${n>1?'es':'ier'}</span>
+          </div>`;
+        }).join('')
+      : `<div class="card-critere seq-folder"><i class="ti ti-folder" style="font-size:10px"></i> ${escHtml(folderBase)}</div>`;
     return `<article class="card">
       <div class="card-thumb">
         <div class="seq-thumb"><span class="seq-num">Séq. ${r.seq_num||''}</span><i class="ti ti-book"></i></div>
         <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
-        ${subCount > 0 ? `<div class="score-badge" style="background:#dbeafe;color:#1d4ed8">${subCount} fiche${subCount>1?'s':''}</div>` : ''}
+        ${subCount > 0 ? `<div class="score-badge" style="background:#dbeafe;color:#1d4ed8">${subCount} fich${subCount>1?'es':'ier'}</div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-title">${escHtml(r.titre)}</div>
-        <div class="card-critere seq-folder"><i class="ti ti-folder" style="font-size:10px"></i> ${escHtml(folderPath)}</div>
-        <div class="card-actions">
-          <span class="btn-open" style="opacity:.5;cursor:default;font-size:10px;flex:1;justify-content:flex-start;padding:4px 6px">
-            <i class="ti ti-files" style="font-size:10px"></i> ${subCount} ressource${subCount>1?'s':''}
-          </span>
-        </div>
-        <div class="card-teacher">${delBtn}</div>
+        <div style="font-size:9px;color:var(--text-hint);margin-bottom:4px">${escHtml(folderBase)}</div>
+        ${folderHtml}
+        <div class="card-teacher" style="margin-top:6px">${delBtn}</div>
       </div>
     </article>`;
   }

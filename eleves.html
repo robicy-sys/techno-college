@@ -147,6 +147,23 @@
     background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text);
   }
 
+  /* ── Séance ── */
+  .seance-section { margin-bottom: 1.75rem; }
+  .seance-heading {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 0.75rem; padding: 6px 10px;
+    background: var(--accent-bg); border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+  .seance-label {
+    font-size: 12px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: .05em;
+  }
+  .seance-empty {
+    color: var(--text-hint); font-size: 12px; font-style: italic;
+    padding: 8px 0 8px 4px;
+  }
+
   /* ── Section titre (groupe de thème) ── */
   .theme-section { margin-bottom: 2rem; }
   .theme-heading {
@@ -485,6 +502,7 @@ function buildThemes() {
 }
 
 function matchTab(r) {
+  if (r.type === 'seance') return false;
   const cat = r.categorie || 'cours';
   if (tabNiv === 'connaissance') return cat === 'connaissance';
   if (tabNiv === 'outil')        return cat === 'outil';
@@ -494,6 +512,29 @@ function matchTab(r) {
 
 function render() {
   const q = (document.getElementById('search').value || '').toLowerCase().trim();
+  const content = document.getElementById('content');
+
+  // Vue séance : grouper les ressources par séance si la séquence en a
+  if (seqFilter !== null) {
+    const seances = resources
+      .filter(r => r.type === 'seance' && r.parent_seq === seqFilter)
+      .sort((a, b) => a.seance_num - b.seance_num);
+    if (seances.length) {
+      content.innerHTML = seances.map(seance => {
+        let res = resources.filter(r => r.parent_seance === seance.id);
+        if (q) res = res.filter(r => [r.titre, r.desc].some(v => (v||'').toLowerCase().includes(q)));
+        const grid = res.length
+          ? `<div class="grid">${res.map(r => cardHtml(r)).join('')}</div>`
+          : `<p class="seance-empty"><i class="ti ti-folder-open" style="font-size:11px"></i> Aucune ressource — glisse des PDF dans <code>pdf/seq-${seqFilter}/seance-${seance.seance_num}/</code></p>`;
+        return `<div class="seance-section">
+          <div class="seance-heading"><span class="seance-label">Séance ${seance.seance_num}</span></div>
+          ${grid}
+        </div>`;
+      }).join('');
+      return;
+    }
+  }
+
   const filtered = resources.filter(r => {
     if (!matchTab(r)) return false;
     if (seqFilter !== null && r.parent_seq !== seqFilter) return false;
@@ -502,7 +543,6 @@ function render() {
     return true;
   });
 
-  const content = document.getElementById('content');
   if (!filtered.length) {
     content.innerHTML = '<div class="grid"><div class="empty"><i class="ti ti-search-off"></i>Aucune fiche trouvée</div></div>';
     return;
@@ -577,11 +617,12 @@ function cardHtml(r) {
   const critereHtml = critereShort ? `<div class="card-critere">${escHtml(critereShort)}</div>` : '';
 
   if (r.type === 'sequence') {
-    const subCount = resources.filter(s => s.parent_seq === r.id).length;
-    const voirBtn = subCount > 0
-      ? `<button class="btn-open" onclick="viewSeq(${r.id})" style="flex:1;cursor:pointer"><i class="ti ti-books" style="font-size:11px"></i> Voir (${subCount})</button>`
+    const hasSeances = resources.some(s => s.type === 'seance' && s.parent_seq === r.id);
+    const subCount = resources.filter(s => s.parent_seq === r.id && s.type !== 'seance' && s.type !== 'sequence').length;
+    const voirBtn = (hasSeances || subCount > 0)
+      ? `<button class="btn-open" onclick="viewSeq(${r.id})" style="flex:1;cursor:pointer"><i class="ti ti-books" style="font-size:11px"></i> Voir${subCount > 0 ? ' ('+subCount+')' : ''}</button>`
       : `<span class="btn-open" style="opacity:.35;cursor:default;flex:1"><i class="ti ti-books" style="font-size:11px"></i> Aucune</span>`;
-    const subDone = quizResults.filter(qr => resources.find(s => s.parent_seq === r.id && s.id == qr.id)).length;
+    const subDone = quizResults.filter(qr => resources.find(s => s.parent_seq === r.id && s.type !== 'seance' && s.id == qr.id)).length;
     const progressBadge = subCount > 0 && subDone > 0
       ? `<div class="score-badge" style="background:#dbeafe;color:#1d4ed8">${subDone}/${subCount}</div>` : '';
     return `<div class="card">

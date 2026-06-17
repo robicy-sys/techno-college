@@ -69,7 +69,11 @@ def main():
     resources = data['resources']
     next_id   = data['nextId']
 
-    seqs         = {r['id']: r for r in resources if r.get('type') == 'sequence'}
+    seqs          = {r['id']: r for r in resources if r.get('type') == 'sequence'}
+    seances_by_seq = {}  # seq_id → {seance_num: seance_resource}
+    for r in resources:
+        if r.get('type') == 'seance':
+            seances_by_seq.setdefault(r['parent_seq'], {})[r['seance_num']] = r
     existing_urls = {r.get('url', '') for r in resources}
     added = []
 
@@ -77,6 +81,43 @@ def main():
         folder = os.path.join(REPO, 'pdf', f'seq-{seq_id}')
         os.makedirs(folder, exist_ok=True)
 
+        # ── Scan des sous-dossiers séance-N/ ──────────────────────────
+        for seance_num, seance in sorted(seances_by_seq.get(seq_id, {}).items()):
+            seance_folder = os.path.join(folder, f'seance-{seance_num}')
+            os.makedirs(seance_folder, exist_ok=True)
+
+            files = sorted(
+                f for f in os.listdir(seance_folder)
+                if f.lower().endswith('.pdf') and not f.startswith('.')
+            )
+            for filename in files:
+                rel_url = f'pdf/seq-{seq_id}/seance-{seance_num}/{filename}'
+                if rel_url in existing_urls:
+                    continue
+
+                res_id  = next_id
+                next_id += 1
+                titre   = title_from_filename(filename)
+                new_res = {
+                    'id'           : res_id,
+                    'titre'        : titre,
+                    'desc'         : f'Ressource — {seq["titre"]}, séance {seance_num}.',
+                    'type'         : 'document',
+                    'categorie'    : 'connaissance',
+                    'niveau'       : seq['niveau'],
+                    'parent_seq'   : seq_id,
+                    'parent_seance': seance['id'],
+                    'url'          : rel_url,
+                }
+                resources.append(new_res)
+                existing_urls.add(rel_url)
+                added.append((res_id, rel_url))
+                print(f'  + ID {res_id} : {rel_url}')
+                pdf_full = os.path.join(REPO, rel_url)
+                ok = generate_thumb(pdf_full, res_id, THUMB_DIR)
+                print(f'    {"→" if ok else "! pas de"} miniature thumb-{res_id}.png')
+
+        # ── Scan des PDFs à la racine du dossier séquence ─────────────
         files = sorted(
             f for f in os.listdir(folder)
             if f.lower().endswith('.pdf') and not f.startswith('.')
