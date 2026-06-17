@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche outil — Les structures algorithmiques</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="fiche-header">
+  <div>
+    <div class="fiche-title">Les structures algorithmiques</div>
+    <div class="fiche-sub">Séquence · Alternative · Répétition</div>
+  </div>
+  <div class="fiche-badges">
+    <span class="badge">Cycle 4</span>
+    <span class="badge">Programmation</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Qu'est-ce qu'un algorithme ?</div>
+  <p>Un <strong>algorithme</strong> est une suite d'instructions précises pour résoudre un problème ou accomplir une tâche. Il est composé de 3 structures de base que l'on peut combiner à l'infini.</p>
+</div>
+
+<div class="grid-3" style="margin-bottom:11px">
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">1 — Séquence</div>
+    <p style="margin-bottom:8px">Les instructions s'exécutent <strong>les unes après les autres</strong>, dans l'ordre.</p>
+    <pre><span class="cm">// Pseudocode</span>
+Allumer la LED
+Attendre 1 seconde
+Éteindre la LED</pre>
+    <div class="flow" style="margin-top:10px">
+      <div class="flow-box">Instruction 1</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-box">Instruction 2</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-box">Instruction 3</div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">2 — Alternative</div>
+    <p style="margin-bottom:8px">On exécute une instruction <strong>seulement si</strong> une condition est vraie. Sinon on fait autre chose.</p>
+    <pre><span class="kw">SI</span> température &gt; 25 <span class="kw">ALORS</span>
+  Allumer ventilateur
+<span class="kw">SINON</span>
+  Éteindre ventilateur
+<span class="kw">FIN SI</span></pre>
+    <div class="flow" style="margin-top:10px">
+      <div class="flow-box">Condition ?</div>
+      <div class="flow-arrow"></div>
+      <div style="display:flex;gap:18px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <span class="small">VRAI</span>
+          <div class="flow-box" style="background:#d1fae5;border-color:#10b981;font-size:10px">Bloc ALORS</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <span class="small">FAUX</span>
+          <div class="flow-box" style="background:#fee2e2;border-color:#ef4444;font-size:10px">Bloc SINON</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">3 — Répétition</div>
+    <p style="margin-bottom:8px">On répète un bloc d'instructions <strong>plusieurs fois</strong> : un nombre fixe ou tant qu'une condition est vraie.</p>
+    <pre><span class="kw">RÉPÉTER</span> 10 <span class="kw">FOIS</span>
+  Clignoter LED
+<span class="kw">FIN RÉPÉTER</span>
+
+<span class="kw">TANT QUE</span> bouton = appuyé
+  Moteur tourne
+<span class="kw">FIN TANT QUE</span></pre>
+    <div class="flow" style="margin-top:10px">
+      <div class="flow-box">Condition ?</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-box" style="background:#ede9fe">Bloc répété</div>
+      <div class="flow-arrow"></div>
+      <div class="small" style="color:#6366f1">↑ retour au test</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="section-title">Exemple complet — Détection de lumière</div>
+  <div class="grid-2">
+    <div>
+      <p style="margin-bottom:6px"><strong>Problème :</strong> allumer une LED si la pièce est sombre, et la faire clignoter 3 fois si elle est très sombre.</p>
+      <pre><span class="cm">// Algorithme complet</span>
+<span class="kw">RÉPÉTER</span> indéfiniment
+  lire capteurLumière → valeur
+  <span class="kw">SI</span> valeur &lt; 100 <span class="kw">ALORS</span>
+    <span class="kw">SI</span> valeur &lt; 20 <span class="kw">ALORS</span>
+      <span class="kw">RÉPÉTER</span> 3 <span class="kw">FOIS</span>
+        LED allumée
+        attendre 200 ms
+        LED éteinte
+        attendre 200 ms
+      <span class="kw">FIN RÉPÉTER</span>
+    <span class="kw">SINON</span>
+      LED allumée
+    <span class="kw">FIN SI</span>
+  <span class="kw">SINON</span>
+    LED éteinte
+  <span class="kw">FIN SI</span>
+<span class="kw">FIN RÉPÉTER</span></pre>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:8px">
+        <div class="card-title">3 structures imbriquées</div>
+        <ul>
+          <li><strong>Répétition</strong> infinie (boucle principale)</li>
+          <li><strong>Alternative</strong> : valeur &lt; 100 ?</li>
+          <li><strong>Alternative</strong> imbriquée : valeur &lt; 20 ?</li>
+          <li><strong>Répétition</strong> 3 fois pour le clignotement</li>
+        </ul>
+      </div>
+      <div class="tip">
+        <b>Astuce :</b> On peut imbriquer les 3 structures comme on veut. C'est ce qui permet de programmer n'importe quel comportement !
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-3" style="margin-bottom:0">
+  <div class="card">
+    <div class="card-title">Mots-clés pseudocode</div>
+    <ul class="small">
+      <li><code>SI … ALORS … SINON … FIN SI</code></li>
+      <li><code>RÉPÉTER N FOIS … FIN RÉPÉTER</code></li>
+      <li><code>TANT QUE … FIN TANT QUE</code></li>
+      <li><code>POUR … ALLANT DE … À …</code></li>
+    </ul>
+  </div>
+  <div class="card orange">
+    <div class="card-title">En Python</div>
+    <ul class="small">
+      <li><code>if … : elif … : else :</code></li>
+      <li><code>for i in range(n) :</code></li>
+      <li><code>while condition :</code></li>
+    </ul>
+  </div>
+  <div class="card green">
+    <div class="card-title">En Scratch</div>
+    <ul class="small">
+      <li>Bloc <em>Si … alors … sinon</em></li>
+      <li>Bloc <em>Répéter N fois</em></li>
+      <li>Bloc <em>Répéter jusqu'à ce que</em></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

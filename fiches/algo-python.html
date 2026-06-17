@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche outil — Programmer avec Python</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="fiche-header">
+  <div>
+    <div class="fiche-title">Programmer avec Python</div>
+    <div class="fiche-sub">Variables · Conditions · Boucles · Fonctions</div>
+  </div>
+  <div class="fiche-badges">
+    <span class="badge">Cycle 4</span>
+    <span class="badge">Programmation</span>
+  </div>
+</div>
+
+<div class="grid-2" style="margin-bottom:11px">
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Variables &amp; Types</div>
+    <p style="margin-bottom:8px">Une <strong>variable</strong> stocke une valeur. Python reconnaît le type automatiquement.</p>
+    <pre><span class="fn">age</span>      = <span class="nb">15</span>          <span class="cm"># entier (int)</span>
+<span class="fn">taille</span>   = <span class="nb">1.72</span>        <span class="cm"># décimal (float)</span>
+<span class="fn">prenom</span>   = <span class="str">"Alice"</span>     <span class="cm"># texte (str)</span>
+<span class="fn">allume</span>   = <span class="kw">True</span>        <span class="cm"># booléen (bool)</span>
+
+<span class="cm"># Afficher et saisir</span>
+<span class="fn">print</span>(<span class="str">"Bonjour"</span>, prenom)
+prenom = <span class="fn">input</span>(<span class="str">"Ton prénom ? "</span>)</pre>
+    <div class="grid-4" style="margin-top:8px">
+      <div class="card" style="padding:6px 8px;text-align:center"><div class="card-title" style="font-size:10px">int</div><code style="font-size:10px">15</code></div>
+      <div class="card orange" style="padding:6px 8px;text-align:center"><div class="card-title" style="font-size:10px">float</div><code style="font-size:10px">1.72</code></div>
+      <div class="card green" style="padding:6px 8px;text-align:center"><div class="card-title" style="font-size:10px">str</div><code style="font-size:10px">"texte"</code></div>
+      <div class="card blue" style="padding:6px 8px;text-align:center"><div class="card-title" style="font-size:10px">bool</div><code style="font-size:10px">True</code></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Conditions</div>
+    <p style="margin-bottom:8px">Tester si une condition est vraie ou fausse.</p>
+    <pre><span class="fn">note</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ta note : "</span>))
+
+<span class="kw">if</span> note >= <span class="nb">15</span>:
+    <span class="fn">print</span>(<span class="str">"Très bien !"</span>)
+<span class="kw">elif</span> note >= <span class="nb">10</span>:
+    <span class="fn">print</span>(<span class="str">"Bien"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"À retravailler"</span>)</pre>
+    <div class="grid-3" style="margin-top:8px;font-size:11px">
+      <div><code>==</code> égal à</div>
+      <div><code>!=</code> différent</div>
+      <div><code>&gt;</code> <code>&lt;</code> supérieur/inférieur</div>
+      <div><code>&gt;=</code> <code>&lt;=</code></div>
+      <div><code>and</code> ET</div>
+      <div><code>or</code> OU</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="grid-2" style="margin-bottom:11px">
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Boucles</div>
+    <pre><span class="cm"># for : répéter N fois</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">5</span>):
+    <span class="fn">print</span>(<span class="str">"Tour n°"</span>, i)
+<span class="cm"># i vaut 0, 1, 2, 3, 4</span>
+
+<span class="cm"># while : tant que condition vraie</span>
+compteur = <span class="nb">0</span>
+<span class="kw">while</span> compteur &lt; <span class="nb">10</span>:
+    compteur = compteur + <span class="nb">1</span>
+<span class="fn">print</span>(<span class="str">"Fini !"</span>, compteur)</pre>
+    <div class="tip" style="margin-top:8px">
+      <b>range(5)</b> génère les nombres 0, 1, 2, 3, 4.<br>
+      <b>range(1, 6)</b> génère 1, 2, 3, 4, 5.
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Fonctions</div>
+    <p style="margin-bottom:8px">Une fonction est un bloc réutilisable. On la <strong>définit</strong> une fois, on l'<strong>appelle</strong> autant qu'on veut.</p>
+    <pre><span class="cm"># Définir une fonction</span>
+<span class="kw">def</span> <span class="fn">saluer</span>(prenom):
+    <span class="fn">print</span>(<span class="str">"Bonjour"</span>, prenom)
+
+<span class="kw">def</span> <span class="fn">addition</span>(a, b):
+    <span class="kw">return</span> a + b
+
+<span class="cm"># Appeler les fonctions</span>
+<span class="fn">saluer</span>(<span class="str">"Alice"</span>)
+resultat = <span class="fn">addition</span>(<span class="nb">3</span>, <span class="nb">4</span>)
+<span class="fn">print</span>(resultat)   <span class="cm"># affiche 7</span></pre>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="section-title">Exemple complet — Jeu de devinette</div>
+  <div class="grid-2">
+    <pre><span class="kw">import</span> random
+
+<span class="cm"># Le programme choisit un nombre secret</span>
+secret = random.<span class="fn">randint</span>(<span class="nb">1</span>, <span class="nb">100</span>)
+essais = <span class="nb">0</span>
+
+<span class="fn">print</span>(<span class="str">"Devine le nombre entre 1 et 100 !"</span>)
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    guess = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ton essai : "</span>))
+    essais += <span class="nb">1</span>
+    <span class="kw">if</span> guess &lt; secret:
+        <span class="fn">print</span>(<span class="str">"Trop petit !"</span>)
+    <span class="kw">elif</span> guess &gt; secret:
+        <span class="fn">print</span>(<span class="str">"Trop grand !"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"Bravo en"</span>, essais, <span class="str">"essais !"</span>)
+        <span class="kw">break</span></pre>
+    <div>
+      <div class="card" style="margin-bottom:8px">
+        <div class="card-title">Concepts utilisés</div>
+        <ul class="small">
+          <li><strong>import</strong> random — charger un module</li>
+          <li><strong>randint(1, 100)</strong> — nombre aléatoire</li>
+          <li><strong>while True</strong> — boucle infinie</li>
+          <li><strong>break</strong> — sortir de la boucle</li>
+          <li><strong>+=</strong> — raccourci pour <code>x = x + 1</code></li>
+        </ul>
+      </div>
+      <div class="note">
+        <b>Indentation :</b> en Python, chaque bloc (if, while, def…) doit être indenté de <strong>4 espaces</strong>. C'est obligatoire !
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

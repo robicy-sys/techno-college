@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche outil — Lire et écrire un algorithme</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="fiche-header">
+  <div>
+    <div class="fiche-title">Lire et écrire un algorithme</div>
+    <div class="fiche-sub">Pseudocode · Organigramme · Méthode</div>
+  </div>
+  <div class="fiche-badges">
+    <span class="badge">Cycle 4</span>
+    <span class="badge">Programmation</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Deux façons d'écrire un algorithme</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">📝 Le pseudocode</div>
+      <p class="small">Texte structuré qui décrit les étapes dans un langage proche du français. Pas de syntaxe stricte, mais des conventions à respecter.</p>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔷 L'organigramme</div>
+      <p class="small">Représentation graphique utilisant des symboles normalisés reliés par des flèches. Plus visuel, idéal pour les algorithmes complexes.</p>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2" style="margin-bottom:11px">
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Le pseudocode — conventions</div>
+    <pre><span class="cm">// Variables : EN MAJUSCULES</span>
+VARIABLES : NOTE en entier, MSG en texte
+
+<span class="cm">// Entrée / Sortie</span>
+LIRE NOTE
+AFFICHER <span class="str">"Votre note est : "</span>, NOTE
+
+<span class="cm">// Affectation</span>
+RESULTAT ← NOTE × 2
+
+<span class="cm">// Alternative</span>
+<span class="kw">SI</span> NOTE ≥ 10 <span class="kw">ALORS</span>
+    MSG ← <span class="str">"Reçu"</span>
+<span class="kw">SINON</span>
+    MSG ← <span class="str">"Recalé"</span>
+<span class="kw">FIN SI</span>
+
+<span class="cm">// Boucle bornée</span>
+<span class="kw">POUR</span> i <span class="kw">ALLANT DE</span> 1 <span class="kw">À</span> 10 <span class="kw">FAIRE</span>
+    AFFICHER i
+<span class="kw">FIN POUR</span>
+
+<span class="cm">// Boucle non bornée</span>
+<span class="kw">TANT QUE</span> NOTE &lt; 0 <span class="kw">OU</span> NOTE &gt; 20 <span class="kw">FAIRE</span>
+    LIRE NOTE
+<span class="kw">FIN TANT QUE</span></pre>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">L'organigramme — symboles</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:90px;height:32px;background:#d1fae5;border:2px solid #16a34a;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#14532d;flex-shrink:0">Début / Fin</div>
+        <p class="small">Ovale arrondi — marque le début ou la fin de l'algorithme</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:90px;height:32px;background:var(--accent-bg);border:2px solid var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0">Action</div>
+        <p class="small">Rectangle — une instruction ou une affectation</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:90px;height:40px;background:#fff3cd;border:2px solid #d97706;transform:skewX(-15deg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#92400e;flex-shrink:0"><span style="transform:skewX(15deg)">Saisie</span></div>
+        <p class="small">Parallélogramme — entrée (LIRE) ou sortie (AFFICHER)</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:90px;height:44px;background:#fee2e2;border:2px solid #ef4444;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#991b1b;flex-shrink:0">Condition ?</div>
+        <p class="small">Losange — test avec deux sorties : <strong>OUI</strong> et <strong>NON</strong></p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:90px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <div style="font-size:22px;color:var(--muted)">→</div>
+        </div>
+        <p class="small">Flèche — indique le sens d'exécution (toujours vers le bas ou vers la droite, sauf pour les boucles)</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="section-title">Exemple résolu — Calculer la mention au brevet</div>
+  <div class="grid-2">
+    <div>
+      <p style="font-size:12px;margin-bottom:8px"><strong>Problème :</strong> saisir une note sur 20 et afficher la mention correspondante.</p>
+      <pre><span class="cm">// Pseudocode</span>
+VARIABLE NOTE en entier
+
+<span class="cm">// Saisie et vérification</span>
+<span class="kw">RÉPÉTER</span>
+    AFFICHER <span class="str">"Entrez une note (0-20) :"</span>
+    LIRE NOTE
+<span class="kw">JUSQU'À</span> NOTE ≥ 0 <span class="kw">ET</span> NOTE ≤ 20
+
+<span class="cm">// Traitement</span>
+<span class="kw">SI</span> NOTE ≥ 16 <span class="kw">ALORS</span>
+    AFFICHER <span class="str">"Très bien"</span>
+<span class="kw">SINON SI</span> NOTE ≥ 14 <span class="kw">ALORS</span>
+    AFFICHER <span class="str">"Bien"</span>
+<span class="kw">SINON SI</span> NOTE ≥ 12 <span class="kw">ALORS</span>
+    AFFICHER <span class="str">"Assez bien"</span>
+<span class="kw">SINON</span>
+    AFFICHER <span class="str">"Sans mention"</span>
+<span class="kw">FIN SI</span></pre>
+    </div>
+    <div>
+      <p style="font-size:12px;margin-bottom:8px"><strong>Organigramme :</strong></p>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0;font-size:10px">
+        <div style="padding:5px 20px;background:#d1fae5;border:1.5px solid #16a34a;border-radius:14px">Début</div>
+        <div style="width:1.5px;height:12px;background:#9ca3af"></div>
+        <div style="padding:5px 12px;background:#fff3cd;border:1.5px solid #d97706;transform:skewX(-15deg)"><span style="transform:skewX(15deg);display:block">Lire NOTE</span></div>
+        <div style="width:1.5px;height:12px;background:#9ca3af"></div>
+        <div style="padding:5px 14px;background:#fee2e2;border:1.5px solid #ef4444;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);min-width:120px;min-height:38px;display:flex;align-items:center;justify-content:center">NOTE 0–20 ?</div>
+        <div style="display:flex;gap:30px;align-items:flex-start;margin-top:0">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="font-size:9px;color:#16a34a;font-weight:700">OUI</span>
+            <div style="width:1.5px;height:10px;background:#9ca3af"></div>
+            <div style="padding:4px 10px;background:var(--accent-bg);border:1.5px solid var(--accent);border-radius:3px">NOTE ≥ 16 ?</div>
+            <div style="font-size:9px;color:#16a34a;font-weight:700">OUI → "Très bien"</div>
+            <div style="font-size:9px;color:#ef4444;font-weight:700">NON → 14 ? 12 ?…</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="font-size:9px;color:#ef4444;font-weight:700">NON</span>
+            <div style="width:1.5px;height:10px;background:#9ca3af"></div>
+            <div style="padding:4px 10px;background:#fff3cd;border:1.5px solid #d97706;border-radius:3px">Retour saisie</div>
+          </div>
+        </div>
+        <div style="width:1.5px;height:10px;background:#9ca3af;margin-top:4px"></div>
+        <div style="padding:5px 20px;background:#d1fae5;border:1.5px solid #16a34a;border-radius:14px">Fin</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-3">
+  <div class="card">
+    <div class="card-title">Méthode en 4 étapes</div>
+    <ol class="small" style="padding-left:16px">
+      <li>Identifier les <strong>entrées</strong> et les <strong>sorties</strong></li>
+      <li>Décomposer en étapes simples</li>
+      <li>Écrire le pseudocode ou l'organigramme</li>
+      <li>Vérifier avec un exemple</li>
+    </ol>
+  </div>
+  <div class="card orange">
+    <div class="card-title">Opérateurs logiques</div>
+    <ul class="small">
+      <li><code>ET</code> — les deux conditions vraies</li>
+      <li><code>OU</code> — au moins une vraie</li>
+      <li><code>NON</code> — inverse la condition</li>
+    </ul>
+  </div>
+  <div class="card green">
+    <div class="card-title">Tracer = tester à la main</div>
+    <p class="small">Simuler l'algorithme avec des valeurs précises, ligne par ligne, pour vérifier qu'il fonctionne correctement.</p>
+  </div>
+</div>
+
+</body>
+</html>

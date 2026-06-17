@@ -1105,7 +1105,7 @@ function cardHtml(r) {
   return `<article class="card" title="${escHtml(r.critere||'')}">
     <div class="card-thumb">
       <img src="img/thumbs/thumb-${r.id}.png" alt="${escHtml(r.titre||'')}" loading="lazy" onerror="this.style.opacity='.3'">
-      <div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>
+      ${r.niveau ? `<div class="level-badge lb-${r.niveau}">${r.niveau}ème</div>` : ''}
     </div>
     <div class="card-body">
       ${codeBadge}

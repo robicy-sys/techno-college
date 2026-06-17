@@ -998,8 +998,63 @@
       "seance_num": 3,
       "parent_seq": 49,
       "niveau": "3"
+    },
+    {
+      "id": 106,
+      "titre": "Les structures algorithmiques",
+      "desc": "Les 3 structures de base : séquence, alternative (si/sinon) et répétition (boucles). Avec organigrammes et pseudocode.",
+      "type": "document",
+      "categorie": "outil",
+      "theme": "Programmation",
+      "sous_theme": "Algorithmique",
+      "url": "fiches/algo-structures.html",
+      "pdf_url": "pdf/fiches/algo-structures.pdf"
+    },
+    {
+      "id": 107,
+      "titre": "Programmer avec Python",
+      "desc": "Variables, types, conditions (if/elif/else), boucles (for/while) et fonctions (def). Exemples commentés.",
+      "type": "document",
+      "categorie": "outil",
+      "theme": "Programmation",
+      "sous_theme": "Python",
+      "url": "fiches/algo-python.html",
+      "pdf_url": "pdf/fiches/algo-python.pdf"
+    },
+    {
+      "id": 108,
+      "titre": "Programmer avec Scratch",
+      "desc": "Interface Scratch, 8 catégories de blocs, blocs essentiels et exemple de programme commenté.",
+      "type": "document",
+      "categorie": "outil",
+      "theme": "Programmation",
+      "sous_theme": "Scratch",
+      "url": "fiches/algo-scratch.html",
+      "pdf_url": "pdf/fiches/algo-scratch.pdf"
+    },
+    {
+      "id": 109,
+      "titre": "Programmer le micro:bit",
+      "desc": "Composants de la carte, environnement MakeCode, blocs fondamentaux, broches et capteurs externes.",
+      "type": "document",
+      "categorie": "outil",
+      "theme": "Programmation",
+      "sous_theme": "Micro:bit",
+      "url": "fiches/algo-microbit.html",
+      "pdf_url": "pdf/fiches/algo-microbit.pdf"
+    },
+    {
+      "id": 110,
+      "titre": "Lire et écrire un algorithme",
+      "desc": "Pseudocode et organigramme : conventions, symboles normalisés et méthode en 4 étapes avec exemple résolu.",
+      "type": "document",
+      "categorie": "outil",
+      "theme": "Programmation",
+      "sous_theme": "Algorithmique",
+      "url": "fiches/algo-algorithme.html",
+      "pdf_url": "pdf/fiches/algo-algorithme.pdf"
     }
   ],
-  "nextId": 106,
+  "nextId": 111,
   "sheetsUrl": ""
 }

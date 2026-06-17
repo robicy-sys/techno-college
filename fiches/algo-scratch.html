@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche outil — Programmer avec Scratch</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="fiche-header">
+  <div>
+    <div class="fiche-title">Programmer avec Scratch</div>
+    <div class="fiche-sub">Interface · Blocs · Événements · Variables</div>
+  </div>
+  <div class="fiche-badges">
+    <span class="badge">Cycle 4</span>
+    <span class="badge">Programmation</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Interface Scratch</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">🎬 Zone de scène</div>
+      <p class="small">C'est ici que le programme s'exécute et que les lutins bougent. Elle mesure 480 × 360 pixels. Le centre est le point (0, 0).</p>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🧩 Zone des blocs</div>
+      <p class="small">Palette de tous les blocs disponibles, classés par catégories colorées. On les fait glisser dans la zone de scripts.</p>
+    </div>
+    <div class="card green">
+      <div class="card-title">📜 Zone de scripts</div>
+      <p class="small">On assemble les blocs ici pour créer le programme du lutin sélectionné. Chaque lutin a ses propres scripts.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Les 8 catégories de blocs</div>
+  <div class="grid-4">
+    <div style="background:#4C97FF;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🔵 Mouvement</div>
+      <div class="small" style="color:#dbeafe">Avancer, tourner, aller à (x,y), rebondir</div>
+    </div>
+    <div style="background:#9966FF;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🟣 Apparence</div>
+      <div class="small" style="color:#ede9fe">Dire, changer costume, afficher/cacher</div>
+    </div>
+    <div style="background:#CF63CF;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🔊 Son</div>
+      <div class="small" style="color:#fae8ff">Jouer un son, régler le volume</div>
+    </div>
+    <div style="background:#FFAB19;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">⚙️ Événements</div>
+      <div class="small" style="color:#fef9c3">Quand ▶ cliqué, Quand touche pressée</div>
+    </div>
+    <div style="background:#FFAB19;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🔄 Contrôle</div>
+      <div class="small" style="color:#fef9c3">Répéter, Si…alors, Attendre, Arrêter</div>
+    </div>
+    <div style="background:#5CB1D6;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🔍 Capteurs</div>
+      <div class="small" style="color:#e0f2fe">Touche la couleur ?, Demander, Timer</div>
+    </div>
+    <div style="background:#59C059;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">🔢 Opérateurs</div>
+      <div class="small" style="color:#dcfce7">+, −, ×, ÷, mod, =, &lt;, &gt;, et, ou</div>
+    </div>
+    <div style="background:#FF8C1A;color:#fff;border-radius:8px;padding:8px 10px">
+      <div style="font-weight:700;font-size:11px;margin-bottom:4px">📦 Variables</div>
+      <div class="small" style="color:#fef9c3">Créer une variable, Mettre à, Ajouter à</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Blocs essentiels à connaître</div>
+  <div class="grid-2">
+    <div>
+      <p style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px">ÉVÉNEMENTS (chapeau orange)</p>
+      <div class="card" style="margin-bottom:6px;border-left:4px solid #FFAB19">
+        <code style="background:#fff3cd">Quand ▶ est cliqué</code>
+        <p class="small" style="margin-top:3px">Démarre le script quand on clique sur le drapeau vert</p>
+      </div>
+      <div class="card" style="border-left:4px solid #FFAB19">
+        <code style="background:#fff3cd">Quand la touche [espace] est pressée</code>
+        <p class="small" style="margin-top:3px">Déclenche le script avec une touche du clavier</p>
+      </div>
+      <p style="font-size:11px;font-weight:700;color:var(--muted);margin:10px 0 6px">CONTRÔLE (orange foncé)</p>
+      <div class="card orange" style="margin-bottom:6px">
+        <code>Répéter 10 fois … fin</code>
+        <p class="small" style="margin-top:3px">Boucle bornée — répète N fois</p>
+      </div>
+      <div class="card orange" style="margin-bottom:6px">
+        <code>Répéter indéfiniment … fin</code>
+        <p class="small" style="margin-top:3px">Boucle infinie — s'arrête avec "Arrêter tout"</p>
+      </div>
+      <div class="card orange">
+        <code>Si &lt;condition&gt; alors … fin</code>
+        <p class="small" style="margin-top:3px">Alternative — exécute le bloc si la condition est vraie</p>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px">EXEMPLE DE PROGRAMME COMPLET</p>
+      <div style="background:#1e1b4b;border-radius:10px;padding:14px;font-size:11px;color:#e0e7ff;font-family:'SF Mono',monospace;line-height:2">
+        <div style="color:#FFAB19;font-weight:700">Quand ▶ est cliqué</div>
+        <div style="padding-left:16px;color:#FF8C1A">mettre <span style="color:#fcd34d">score</span> à <span style="color:#93c5fd">0</span></div>
+        <div style="color:#FFAB19;font-weight:700">Répéter indéfiniment</div>
+        <div style="padding-left:16px;color:#4C97FF">avancer de <span style="color:#93c5fd">5</span> pas</div>
+        <div style="padding-left:16px;color:#FFAB19;font-weight:600">Si <span style="color:#5CB1D6">&lt;touche bord ?&gt;</span> alors</div>
+        <div style="padding-left:32px;color:#CF63CF">jouer le son [pop]</div>
+        <div style="padding-left:32px;color:#4C97FF">rebondir</div>
+        <div style="padding-left:32px;color:#FF8C1A">ajouter <span style="color:#93c5fd">1</span> à <span style="color:#fcd34d">score</span></div>
+        <div style="padding-left:16px;color:#FFAB19">fin</div>
+        <div style="color:#FFAB19;font-weight:700">fin</div>
+      </div>
+      <div class="tip" style="margin-top:8px">
+        <b>Lutin vs Scène :</b> chaque lutin a ses propres scripts. La scène peut aussi avoir des scripts (fond musical, score affiché…)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-3">
+  <div class="card">
+    <div class="card-title">Coordonnées (x, y)</div>
+    <p class="small">La scène va de −240 à +240 en x et de −180 à +180 en y. Le centre (0, 0) est au milieu.</p>
+  </div>
+  <div class="card orange">
+    <div class="card-title">Variables</div>
+    <p class="small">Créer dans "Variables" → "Créer une variable". Utiliser <em>Mettre à</em> pour affecter, <em>Ajouter à</em> pour incrémenter.</p>
+  </div>
+  <div class="card green">
+    <div class="card-title">Diffuser un message</div>
+    <p class="small">Permet de faire communiquer les lutins entre eux. Bloc <em>Envoyer à tous</em> + <em>Quand je reçois</em>.</p>
+  </div>
+</div>
+
+</body>
+</html>

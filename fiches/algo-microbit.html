@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche outil — Programmer le micro:bit</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="fiche-header">
+  <div>
+    <div class="fiche-title">Programmer le micro:bit</div>
+    <div class="fiche-sub">MakeCode · Afficheur LED · Boutons · Capteurs · Broches</div>
+  </div>
+  <div class="fiche-badges">
+    <span class="badge">Cycle 4</span>
+    <span class="badge">Programmation</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">La carte micro:bit — composants principaux</div>
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-title">💡 Afficheur 5×5</div>
+      <p class="small">25 LEDs disposées en grille. Peut afficher des icônes, du texte défilant, des nombres ou des animations.</p>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔘 Boutons A et B</div>
+      <p class="small">Deux boutons poussoirs. Détectables individuellement ou en combinaison (A+B ensemble).</p>
+    </div>
+    <div class="card green">
+      <div class="card-title">📡 Capteurs intégrés</div>
+      <p class="small">Accéléromètre (mouvement, secousse), boussole, thermomètre, lumière, son (v2).</p>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔌 Broches (pins)</div>
+      <p class="small">P0, P1, P2 + alimentation (3V, GND). Permettent de brancher des capteurs et actionneurs externes.</p>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2" style="margin-bottom:11px">
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Environnement MakeCode</div>
+    <p style="margin-bottom:8px">Site : <strong>makecode.microbit.org</strong> — pas d'installation requise.</p>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-title">Blocs → JavaScript → Python</div>
+      <p class="small">MakeCode propose 3 modes : blocs graphiques, JavaScript et Python. On peut passer de l'un à l'autre à tout moment.</p>
+    </div>
+    <div class="card orange">
+      <div class="card-title">Téléverser le programme</div>
+      <ol class="small" style="padding-left:16px">
+        <li>Cliquer sur <strong>Télécharger</strong> → fichier <code>.hex</code></li>
+        <li>Brancher le micro:bit en USB</li>
+        <li>Glisser le fichier dans le lecteur <code>MICROBIT</code></li>
+        <li>La LED orange clignote, puis le programme démarre</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0">
+    <div class="section-title">Blocs fondamentaux</div>
+    <div style="background:#1e1b4b;border-radius:10px;padding:14px;font-size:11px;color:#e0e7ff;font-family:'SF Mono',monospace;line-height:2.1">
+      <div style="color:#c4b5fd;font-weight:700">au démarrage</div>
+      <div style="padding-left:16px">afficher icône ♥</div>
+      <div style="height:4px"></div>
+      <div style="color:#c4b5fd;font-weight:700">toujours</div>
+      <div style="padding-left:16px;color:#86efac">si bouton A pressé</div>
+      <div style="padding-left:32px">afficher nombre <span style="color:#fcd34d">température()</span></div>
+      <div style="padding-left:16px;color:#86efac">si bouton B pressé</div>
+      <div style="padding-left:32px">effacer l'écran</div>
+      <div style="height:4px"></div>
+      <div style="color:#c4b5fd;font-weight:700">quand secouer</div>
+      <div style="padding-left:16px">afficher texte <span style="color:#86efac">"Aïe !"</span></div>
+    </div>
+    <div class="tip" style="margin-top:8px">
+      <b>au démarrage</b> s'exécute une seule fois.<br>
+      <b>toujours</b> tourne en boucle infinie.
+    </div>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="section-title">Utiliser les broches — capteurs et actionneurs externes</div>
+  <div class="grid-2">
+    <div>
+      <div class="card" style="margin-bottom:8px">
+        <div class="card-title">Lire une broche (capteur)</div>
+        <pre style="font-size:11px"><span class="cm"># Python MicroPython</span>
+<span class="kw">from</span> microbit <span class="kw">import</span> *
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    val = pin0.<span class="fn">read_analog</span>()  <span class="cm"># 0–1023</span>
+    <span class="kw">if</span> val &gt; <span class="nb">500</span>:
+        display.<span class="fn">show</span>(Image.YES)
+    <span class="kw">else</span>:
+        display.<span class="fn">show</span>(Image.NO)
+    sleep(<span class="nb">200</span>)</pre>
+      </div>
+    </div>
+    <div>
+      <div class="card green" style="margin-bottom:8px">
+        <div class="card-title">Écrire sur une broche (actionneur)</div>
+        <pre style="font-size:11px"><span class="cm"># Allumer une LED externe</span>
+pin1.<span class="fn">write_digital</span>(<span class="nb">1</span>)  <span class="cm"># allumé</span>
+sleep(<span class="nb">1000</span>)
+pin1.<span class="fn">write_digital</span>(<span class="nb">0</span>)  <span class="cm"># éteint</span>
+
+<span class="cm"># Signal analogique (PWM)</span>
+pin0.<span class="fn">write_analog</span>(<span class="nb">512</span>) <span class="cm"># 0–1023</span></pre>
+      </div>
+    </div>
+  </div>
+  <div class="grid-4" style="margin-top:4px;font-size:11px">
+    <div class="card"><div class="card-title">Lecture numérique</div><code>pin0.read_digital()</code><br><span class="small">Retourne 0 ou 1</span></div>
+    <div class="card orange"><div class="card-title">Lecture analogique</div><code>pin0.read_analog()</code><br><span class="small">Retourne 0 à 1023</span></div>
+    <div class="card green"><div class="card-title">Écriture numérique</div><code>pin1.write_digital(1)</code><br><span class="small">0 = éteint, 1 = allumé</span></div>
+    <div class="card blue"><div class="card-title">Écriture analogique</div><code>pin1.write_analog(512)</code><br><span class="small">0 à 1023 (PWM)</span></div>
+  </div>
+</div>
+
+<div class="grid-3">
+  <div class="card">
+    <div class="card-title">Fonctions utiles</div>
+    <ul class="small">
+      <li><code>temperature()</code> — °C interne</li>
+      <li><code>accelerometer.get_x()</code></li>
+      <li><code>compass.heading()</code> — boussole</li>
+      <li><code>sleep(ms)</code> — pause en ms</li>
+    </ul>
+  </div>
+  <div class="card orange">
+    <div class="card-title">Affichage</div>
+    <ul class="small">
+      <li><code>display.show("Hello")</code></li>
+      <li><code>display.show(42)</code></li>
+      <li><code>display.show(Image.HEART)</code></li>
+      <li><code>display.clear()</code></li>
+      <li><code>display.set_pixel(x,y,b)</code></li>
+    </ul>
+  </div>
+  <div class="card green">
+    <div class="card-title">Branchement GND</div>
+    <p class="small">Tout capteur ou actionneur doit être relié à <strong>GND</strong> (masse). L'alimentation se prend sur <strong>3V</strong> (max 90 mA au total).</p>
+  </div>
+</div>
+
+</body>
+</html>
