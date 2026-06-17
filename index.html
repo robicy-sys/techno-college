@@ -680,7 +680,7 @@
         <div class="sync-num">1</div>
         <div style="flex:1">
           <div class="sync-label">Ajouter des fichiers dans les dossiers de séquences :</div>
-          <div class="sync-cmd" style="cursor:default;user-select:text">~/techno-college/pdf/seq-28/ &nbsp;← Séq 5ème Évolution OST<br>~/techno-college/pdf/seq-29/ &nbsp;← Séq 5ème Numérique…<br>~/techno-college/pdf/seq-36/ &nbsp;← Séq 4ème Chaîne énergie<br><span style="color:var(--text-hint)">…un dossier par séquence (seq-28 à seq-51)</span></div>
+          <div class="sync-cmd" style="cursor:default;user-select:text">~/techno-college/pdf/5eme-seq-1-seance-1/ &nbsp;← 5ème séq. 1, séance 1<br>~/techno-college/pdf/5eme-seq-1-seance-2/ &nbsp;← 5ème séq. 1, séance 2<br>~/techno-college/pdf/4eme-seq-3-seance-1/ &nbsp;← 4ème séq. 3, séance 1<br><span style="color:var(--text-hint)">…un dossier par séance (5eme/4eme/3eme · seq-1 à 8 · seance-1 à 3)</span></div>
         </div>
       </div>
       <div class="sync-step">
@@ -1075,14 +1075,16 @@ function cardHtml(r) {
   if (r.type === 'sequence') {
     const seances = resources.filter(s => s.type === 'seance' && s.parent_seq === r.id).sort((a,b) => a.seance_num - b.seance_num);
     const subCount = resources.filter(s => s.parent_seq === r.id && s.type !== 'seance' && s.type !== 'sequence').length;
-    const folderBase = `~/techno-college/pdf/seq-${r.id}/`;
+    const nivStr = r.niveau === '5' ? '5eme' : r.niveau === '4' ? '4eme' : r.niveau === '3' ? '3eme' : r.niveau;
+    const folderName = `${nivStr}-seq-${r.seq_num}`;
+    const folderBase = `~/techno-college/pdf/${folderName}/`;
     const folderHtml = seances.length
       ? seances.map(s => {
           const n = resources.filter(x => x.parent_seance === s.id).length;
           return `<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);margin-top:3px">
             <i class="ti ti-folder" style="font-size:10px;color:var(--accent)"></i>
             <span style="color:var(--text)">Séance ${s.seance_num}</span>
-            <span style="opacity:.6">seance-${s.seance_num}/</span>
+            <span style="opacity:.6">${folderName}-seance-${s.seance_num}/</span>
             <span style="margin-left:auto;color:var(--accent)">${n} fich${n>1?'es':'ier'}</span>
           </div>`;
         }).join('')
